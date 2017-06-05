@@ -213,6 +213,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/nats-io/nats-streaming-server",
+			"repository": "https://github.com/nats-io/nats-streaming-server",
+			"vcs": "git",
+			"revision": "b46db9dc898e6cd243ba78d47729dae1268b81a8",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/nats-io/nuid",
 			"repository": "https://github.com/nats-io/nuid",
 			"vcs": "git",
