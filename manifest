@@ -11,6 +11,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/gobwas/glob",
+			"repository": "https://github.com/gobwas/glob",
+			"vcs": "git",
+			"revision": "51eb1ee00b6d931c66d229ceeb7c31b985563420",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/gogo/protobuf/gogoproto",
 			"repository": "https://github.com/gogo/protobuf",
 			"vcs": "git",
