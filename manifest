@@ -11,6 +11,31 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/Sirupsen/logrus",
+			"repository": "https://github.com/Sirupsen/logrus",
+			"vcs": "git",
+			"revision": "3d4380f53a34dcdc95f0c1db702615992b38d9a4",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/coreos/pkg/flagutil",
+			"repository": "https://github.com/coreos/pkg",
+			"vcs": "git",
+			"revision": "8dbaa491b063ed47e2474b5363de0c0db91cf9f2",
+			"branch": "master",
+			"path": "/flagutil",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/dghubble/sling",
+			"repository": "https://github.com/dghubble/sling",
+			"vcs": "git",
+			"revision": "bbfb8293bd33a6baad33d718aacf66ef73a29f30",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/gobwas/glob",
 			"repository": "https://github.com/gobwas/glob",
 			"vcs": "git",
@@ -81,6 +106,15 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/golang/protobuf/jsonpb",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "jsonpb",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/golang/protobuf/proto",
 			"repository": "https://github.com/golang/protobuf",
 			"vcs": "git",
@@ -99,12 +133,100 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/golang/protobuf/protoc-gen-go/generator",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "protoc-gen-go/generator",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/protoc-gen-go/plugin",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "protoc-gen-go/plugin",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/golang/protobuf/ptypes/any",
 			"repository": "https://github.com/golang/protobuf",
 			"vcs": "git",
 			"revision": "6e4cc92cc905d5f4a73041c1b8228ea08f4c6147",
 			"branch": "master",
 			"path": "ptypes/any",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/duration",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "/ptypes/duration",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/empty",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "ptypes/empty",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/struct",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "ptypes/struct",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/timestamp",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "ptypes/timestamp",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/golang/protobuf/ptypes/wrappers",
+			"repository": "https://github.com/golang/protobuf",
+			"vcs": "git",
+			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
+			"branch": "master",
+			"path": "ptypes/wrappers",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/google/go-querystring/query",
+			"repository": "https://github.com/google/go-querystring",
+			"vcs": "git",
+			"revision": "53e6ce116135b80d037921a7fdd5138cf32d7a8a",
+			"branch": "master",
+			"path": "/query",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/gorilla/websocket",
+			"repository": "https://github.com/gorilla/websocket",
+			"vcs": "git",
+			"revision": "ea4d1f681babbce9545c9c5f3d5194a789c89f5b",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/grpc-ecosystem/grpc-gateway",
+			"repository": "https://github.com/grpc-ecosystem/grpc-gateway",
+			"vcs": "git",
+			"revision": "d64f5319e5fab76565cc3be5c3ce8b18f931de5b",
+			"branch": "master",
 			"notests": true
 		},
 		{
@@ -234,6 +356,31 @@
 			"vcs": "git",
 			"revision": "3cf34f9fca4e88afa9da8eabd75e3326c9941b44",
 			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/rogpeppe/fastuuid",
+			"repository": "https://github.com/rogpeppe/fastuuid",
+			"vcs": "git",
+			"revision": "6724a57986aff9bff1a1770e9347036def7c89f6",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/sirupsen/logrus",
+			"repository": "https://github.com/sirupsen/logrus",
+			"vcs": "git",
+			"revision": "3d4380f53a34dcdc95f0c1db702615992b38d9a4",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/tmc/grpc-websocket-proxy/wsproxy",
+			"repository": "https://github.com/tmc/grpc-websocket-proxy",
+			"vcs": "git",
+			"revision": "0ac28561c14aa840b22c64653586e06ec4985e7d",
+			"branch": "master",
+			"path": "/wsproxy",
 			"notests": true
 		},
 		{
@@ -451,6 +598,15 @@
 			"notests": true
 		},
 		{
+			"importpath": "google.golang.org/genproto/googleapis/api/annotations",
+			"repository": "https://github.com/google/go-genproto",
+			"vcs": "git",
+			"revision": "aa2eb687b4d3e17154372564ad8d6bf11c3cf21f",
+			"branch": "master",
+			"path": "/googleapis/api/annotations",
+			"notests": true
+		},
+		{
 			"importpath": "google.golang.org/genproto/googleapis/rpc/status",
 			"repository": "https://github.com/google/go-genproto",
 			"vcs": "git",
@@ -464,6 +620,22 @@
 			"repository": "https://github.com/grpc/grpc-go",
 			"vcs": "git",
 			"revision": "1e47334c738272e285e0a256d1f3f346bfdc8109",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "gopkg.in/airbrake/gobrake.v2",
+			"repository": "https://gopkg.in/airbrake/gobrake.v2",
+			"vcs": "git",
+			"revision": "668876711219e8b0206e2994bf0a59d889c775aa",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "gopkg.in/gemnasium/logrus-airbrake-hook.v2",
+			"repository": "https://gopkg.in/gemnasium/logrus-airbrake-hook.v2",
+			"vcs": "git",
+			"revision": "e928b033a891c0175fb643d5aa0779e86325eb12",
 			"branch": "master",
 			"notests": true
 		}
