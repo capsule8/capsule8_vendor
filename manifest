@@ -238,14 +238,6 @@
 			"notests": true
 		},
 		{
-			"importpath": "github.com/mitchellh/hashstructure",
-			"repository": "https://github.com/mitchellh/hashstructure",
-			"vcs": "git",
-			"revision": "9204ce590301a868e3e86938bc12eadd416b211e",
-			"branch": "master",
-			"notests": true
-		},
-		{
 			"importpath": "github.com/nats-io/gnatsd/conf",
 			"repository": "https://github.com/nats-io/gnatsd",
 			"vcs": "git",
