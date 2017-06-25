@@ -151,12 +151,12 @@
 			"notests": true
 		},
 		{
-			"importpath": "github.com/golang/protobuf/ptypes/any",
+			"importpath": "github.com/golang/protobuf/ptypes",
 			"repository": "https://github.com/golang/protobuf",
 			"vcs": "git",
-			"revision": "6e4cc92cc905d5f4a73041c1b8228ea08f4c6147",
+			"revision": "6a1fa9404c0aebf36c879bc50152edcc953910d2",
 			"branch": "master",
-			"path": "ptypes/any",
+			"path": "/ptypes",
 			"notests": true
 		},
 		{
