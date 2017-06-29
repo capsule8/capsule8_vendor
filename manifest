@@ -36,6 +36,15 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/go-resty/resty",
+			"repository": "https://github.com/go-resty/resty",
+			"vcs": "git",
+			"revision": "cf81ed0a604d373be63b4c036c6b05c06520615f",
+			"branch": "master",
+			"notests": true,
+			"allfiles": true
+		},
+		{
 			"importpath": "github.com/gobwas/glob",
 			"repository": "https://github.com/gobwas/glob",
 			"vcs": "git",
@@ -44,49 +53,13 @@
 			"notests": true
 		},
 		{
-			"importpath": "github.com/gogo/protobuf/gogoproto",
+			"importpath": "github.com/gogo/protobuf",
 			"repository": "https://github.com/gogo/protobuf",
 			"vcs": "git",
-			"revision": "b79ae77db468f92c7ef48e12c9c5d70e6a20c3b8",
+			"revision": "baaac160ed234ed06b347cf51202683a0068efe4",
 			"branch": "master",
-			"path": "/gogoproto",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/gogo/protobuf/proto",
-			"repository": "https://github.com/gogo/protobuf",
-			"vcs": "git",
-			"revision": "b79ae77db468f92c7ef48e12c9c5d70e6a20c3b8",
-			"branch": "master",
-			"path": "proto",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/gogo/protobuf/protoc-gen-gogo/descriptor",
-			"repository": "https://github.com/gogo/protobuf",
-			"vcs": "git",
-			"revision": "b79ae77db468f92c7ef48e12c9c5d70e6a20c3b8",
-			"branch": "master",
-			"path": "protoc-gen-gogo/descriptor",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/gogo/protobuf/sortkeys",
-			"repository": "https://github.com/gogo/protobuf",
-			"vcs": "git",
-			"revision": "b79ae77db468f92c7ef48e12c9c5d70e6a20c3b8",
-			"branch": "master",
-			"path": "sortkeys",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/gogo/protobuf/types",
-			"repository": "https://github.com/gogo/protobuf",
-			"vcs": "git",
-			"revision": "b79ae77db468f92c7ef48e12c9c5d70e6a20c3b8",
-			"branch": "master",
-			"path": "types",
-			"notests": true
+			"notests": true,
+			"allfiles": true
 		},
 		{
 			"importpath": "github.com/golang/glog",
@@ -157,52 +130,8 @@
 			"revision": "6a1fa9404c0aebf36c879bc50152edcc953910d2",
 			"branch": "master",
 			"path": "/ptypes",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/golang/protobuf/ptypes/duration",
-			"repository": "https://github.com/golang/protobuf",
-			"vcs": "git",
-			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
-			"branch": "master",
-			"path": "/ptypes/duration",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/golang/protobuf/ptypes/empty",
-			"repository": "https://github.com/golang/protobuf",
-			"vcs": "git",
-			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
-			"branch": "master",
-			"path": "ptypes/empty",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/golang/protobuf/ptypes/struct",
-			"repository": "https://github.com/golang/protobuf",
-			"vcs": "git",
-			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
-			"branch": "master",
-			"path": "ptypes/struct",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/golang/protobuf/ptypes/timestamp",
-			"repository": "https://github.com/golang/protobuf",
-			"vcs": "git",
-			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
-			"branch": "master",
-			"path": "ptypes/timestamp",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/golang/protobuf/ptypes/wrappers",
-			"repository": "https://github.com/golang/protobuf",
-			"vcs": "git",
-			"revision": "e325f446bebc2998605911c0a2650d9920361d4a",
-			"branch": "master",
-			"path": "ptypes/wrappers",
-			"notests": true
+			"notests": true,
+			"allfiles": true
 		},
 		{
 			"importpath": "github.com/google/go-querystring/query",
@@ -225,9 +154,10 @@
 			"importpath": "github.com/grpc-ecosystem/grpc-gateway",
 			"repository": "https://github.com/grpc-ecosystem/grpc-gateway",
 			"vcs": "git",
-			"revision": "d64f5319e5fab76565cc3be5c3ce8b18f931de5b",
+			"revision": "a5c7982c02e20b0d22f1f50ff20fbb85aa30433a",
 			"branch": "master",
-			"notests": true
+			"notests": true,
+			"allfiles": true
 		},
 		{
 			"importpath": "github.com/kelseyhightower/envconfig",
@@ -454,6 +384,26 @@
 			"branch": "master",
 			"path": "lex/httplex",
 			"notests": true
+		},
+		{
+			"importpath": "golang.org/x/net/proxy",
+			"repository": "https://go.googlesource.com/net",
+			"vcs": "git",
+			"revision": "d4223d6710aad90f892de3ed4f1e7539ccc444a0",
+			"branch": "master",
+			"path": "/proxy",
+			"notests": true,
+			"allfiles": true
+		},
+		{
+			"importpath": "golang.org/x/net/publicsuffix",
+			"repository": "https://go.googlesource.com/net",
+			"vcs": "git",
+			"revision": "d4223d6710aad90f892de3ed4f1e7539ccc444a0",
+			"branch": "master",
+			"path": "publicsuffix",
+			"notests": true,
+			"allfiles": true
 		},
 		{
 			"importpath": "golang.org/x/net/trace",
