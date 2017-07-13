@@ -27,6 +27,15 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/capsule8/api",
+			"repository": "https://github.com/capsule8/api",
+			"vcs": "git",
+			"revision": "4d35aec2cf7ed1d8f4e4098fd70cc1548fec82f0",
+			"branch": "master",
+			"notests": true,
+			"allfiles": true
+		},
+		{
 			"importpath": "github.com/codahale/hdrhistogram",
 			"repository": "https://github.com/codahale/hdrhistogram",
 			"vcs": "git",
