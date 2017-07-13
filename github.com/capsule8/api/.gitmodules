@@ -1,0 +1,6 @@
+[submodule "third_party/google/protobuf"]
+	path = third_party/protobuf
+	url = https://github.com/google/protobuf.git
+[submodule "third_party/google/googleapis"]
+	path = third_party/googleapis
+	url = https://github.com/googleapis/googleapis
