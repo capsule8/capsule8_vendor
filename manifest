@@ -35,6 +35,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/ashishgandhi/buffer",
+			"repository": "https://github.com/ashishgandhi/buffer",
+			"vcs": "git",
+			"revision": "399621bd0308ec8d33c4447d0c6f324dcc7a52e7",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/coreos/pkg/flagutil",
 			"repository": "https://github.com/coreos/pkg",
 			"vcs": "git",
