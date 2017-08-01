@@ -27,10 +27,18 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/ashishgandhi/buffer",
+			"repository": "https://github.com/ashishgandhi/buffer",
+			"vcs": "git",
+			"revision": "399621bd0308ec8d33c4447d0c6f324dcc7a52e7",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/capsule8/api",
 			"repository": "https://github.com/capsule8/api",
 			"vcs": "git",
-			"revision": "4d35aec2cf7ed1d8f4e4098fd70cc1548fec82f0",
+			"revision": "f7a8cb5e1c8f1db979404e43ba47562256efbc40",
 			"branch": "master",
 			"notests": true,
 			"allfiles": true
@@ -40,14 +48,6 @@
 			"repository": "https://github.com/codahale/hdrhistogram",
 			"vcs": "git",
 			"revision": "3a0bb77429bd3a61596f5e8a3172445844342120",
-			"branch": "master",
-			"notests": true
-		},
-		{
-			"importpath": "github.com/ashishgandhi/buffer",
-			"repository": "https://github.com/ashishgandhi/buffer",
-			"vcs": "git",
-			"revision": "399621bd0308ec8d33c4447d0c6f324dcc7a52e7",
 			"branch": "master",
 			"notests": true
 		},
@@ -220,7 +220,7 @@
 			"importpath": "github.com/golang/protobuf/ptypes",
 			"repository": "https://github.com/golang/protobuf",
 			"vcs": "git",
-			"revision": "6a1fa9404c0aebf36c879bc50152edcc953910d2",
+			"revision": "748d386b5c1ea99658fd69fe9f03991ce86a90c1",
 			"branch": "master",
 			"path": "/ptypes",
 			"notests": true,

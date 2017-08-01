@@ -3,9 +3,9 @@
 syntax = "proto3";
 
 package capsule8.api.v0;
-option go_package = "v0";
+option go_package = "github.com/capsule8/api/v0";
 
-import "sensor.proto";
+import "capsule8/api/v0/sensor.proto";
 
 message Discover {
     oneof info {

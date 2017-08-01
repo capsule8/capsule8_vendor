@@ -3,11 +3,10 @@
 syntax = "proto3";
 
 package capsule8.api.v0;
+option go_package = "github.com/capsule8/api/v0";
 
-option go_package = "v0";
-
+import "capsule8/api/v0/event.proto";
 import "google/protobuf/wrappers.proto";
-import "event.proto";
 
 //
 // SignedSubscription wraps a subscription and signature.

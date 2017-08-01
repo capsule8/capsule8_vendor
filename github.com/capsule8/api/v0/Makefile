@@ -1,17 +1,20 @@
-PROTOC_GEN_GO=$$GOPATH/bin/protoc-gen-go
-PROTOC_GEN_GRPC_GATEWAY=$$GOPATH/bin/protoc-gen-grpc-gateway
-GRPC_OUT=.
+#
+# Hackery so that import "capsule8/api/v0/file.proto" works
+#
+PROTO_ROOT=../../../
+
+PROTOC_GEN_GO=${GOPATH}/bin/protoc-gen-go
+PROTOC_GEN_GRPC_GATEWAY=${GOPATH}/bin/protoc-gen-grpc-gateway
+
+GRPC_OUT=$(PROTO_ROOT)
 GRPC_GATEWAY_OUT=$(GRPC_OUT)
-VENDOR=../vendor
 
-INC=-I. -I../third_party/protobuf/src/ \
-	-I../third_party/googleapis/
+IMPORT_PATH=github.com/capsule8/api/v0
 
-# Directories containing one or more .proto files
-PROTODIRS=$(shell find . -name "*.proto" | sed 's/\(.*\)\/.*/\1/' | uniq)
+INC=-I$(PROTO_ROOT) -I../third_party/googleapis -I../third_party/protobuf/src
 
 .PHONY: api
-api: *.proto
+api: $(PROTO_ROOT)/capsule8/api/v0/*.proto
 	mkdir -p $(GRPC_OUT) $(GRPC_GATEWAY_OUT)
 
         # Compile grpc and gateway stubs
