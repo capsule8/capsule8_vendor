@@ -1,0 +1,41 @@
+// Copyright 2017 Capsule8 Inc. All rights reserved.
+
+syntax = "proto3";
+
+package capsule8.api.v0;
+option go_package = "github.com/capsule8/api/v0";
+
+import "capsule8/api/v0/subscription.proto";
+import "capsule8/api/v0/event.proto";
+import "google/api/annotations.proto";
+
+//
+// Capsule8 Telemetry API
+//
+// The Telemetry API is used by capsulators to get telemetry events.
+//
+service TelemetryService {
+    // Get telemetry events
+    rpc GetEvents(GetEventsRequest) returns (stream GetEventsResponse) {
+        option (google.api.http) = {
+            post: "/v0/events"
+            body: "*"
+        };
+    }
+}
+
+// Publishes a message to topic
+message GetEventsRequest {
+    // Can publish one or more message(s) at a time
+    Subscription subscription = 1;
+}
+
+message GetEventsResponse {
+    repeated TelemetryEvent events = 1;
+}
+
+message TelemetryEvent {
+    int64 publish_time_micros = 1;
+    Event event = 2;
+    bytes ack = 3;
+}

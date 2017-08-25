@@ -9,17 +9,6 @@ import "capsule8/api/v0/event.proto";
 import "google/protobuf/wrappers.proto";
 
 //
-// SignedSubscription wraps a subscription and signature.
-//
-message SignedSubscription {
-        Subscription subscription = 1;
-        string subscription_id    = 2;
-
-        // (Soon to be) Required, will used to sign the subscription
-        string signature = 3;
-}
-
-//
 // Subscription identifies a subscriber's interest in events. The optional
 // Filter field restricts the subscription to the nodes and processes
 // specified within. The optional Selector field specifies the types and

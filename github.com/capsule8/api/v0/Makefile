@@ -6,8 +6,8 @@ PROTO_ROOT=../../../
 PROTOC_GEN_GO=${GOPATH}/bin/protoc-gen-go
 PROTOC_GEN_GRPC_GATEWAY=${GOPATH}/bin/protoc-gen-grpc-gateway
 
-GRPC_OUT=$(PROTO_ROOT)
-GRPC_GATEWAY_OUT=$(GRPC_OUT)
+GRPC_OUT=$(PROTO_ROOT)../
+GRPC_GATEWAY_OUT=$(PROTO_ROOT)
 
 IMPORT_PATH=github.com/capsule8/api/v0
 
