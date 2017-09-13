@@ -35,6 +35,11 @@ message Event {
         // intervals between events with the same sensor_id.
         int64 sensor_monotime_nanos = 7;
 
+        // Process Lineage contains one process context for each process in the
+        // hierarchy, starting with the current process, up to the root of the
+        // process namespace.
+        repeated Process process_lineage = 8;
+
         oneof event {
                 //
                 // Kernel-level events
@@ -171,4 +176,9 @@ message FileEvent {
         string filename   = 10;
         sint32 open_flags = 11;
         sint32 open_mode  = 12;
+}
+
+message Process {
+        sint32 pid = 1;
+        string command = 2;
 }

@@ -50,6 +50,7 @@ It has these top-level messages:
 	ProcessEvent
 	SyscallEvent
 	FileEvent
+	Process
 	GetEventsRequest
 	GetEventsResponse
 	TelemetryEvent

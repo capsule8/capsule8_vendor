@@ -43,6 +43,10 @@ message Subscription {
 
         // If not empty, apply the specified modifier to the subscription.
         Modifier modifier = 20;
+
+        // If PROCESS_VIEW_FULL, every event will include additional process
+        // ancestry context.
+        ProcessView process_view = 30;
 }
 
 message SensorFilter {
@@ -185,4 +189,12 @@ message ThrottleModifier {
 message LimitModifier {
         // Limit the number of events
         int64 limit = 1;
+}
+
+enum ProcessView {
+        // Default process view of an event includes just basic process information
+        PROCESS_VIEW_BASIC = 0;
+
+        // Full processview of an event includes process ancestory
+        PROCESS_VIEW_FULL  = 1;
 }
