@@ -40,6 +40,18 @@ message Event {
         // process namespace.
         repeated Process process_lineage = 8;
 
+        // Name of container associated with the event
+        string container_name = 30;
+
+        // Unique identifier of the container image
+        string image_id = 31;
+
+        //
+        // Name of the container image (i.e. "busybox" or
+        // "gcr.io/google_containers/nginx-ingress-controller")
+        //
+        string image_name = 32;
+
         oneof event {
                 //
                 // Kernel-level events
