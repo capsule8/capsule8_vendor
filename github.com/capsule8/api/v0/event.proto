@@ -14,7 +14,7 @@ message Event {
         string process_id = 2;
 
         // Unix pid of the process associated with the event
-        sint32 process_pid = 3;
+        int32 process_pid = 3;
 
         // Container identifier associated with the event
         string container_id = 4;
@@ -45,9 +45,10 @@ message Event {
                 // Kernel-level events
                 //
 
-                SyscallEvent syscall = 10;
-                ProcessEvent process = 11;
-                FileEvent file       = 12;
+                SyscallEvent syscall                = 10;
+                ProcessEvent process                = 11;
+                FileEvent file                      = 12;
+                KernelFunctionCallEvent kernel_call = 13;
 
                 //
                 // System-level events (containers, systemd, etc)
@@ -61,6 +62,12 @@ message Event {
                 ChargenEvent chargen = 100;
                 TickerEvent ticker   = 101;
         }
+
+        // Unix tid of the process thread associated with event
+        int32 process_tid = 200;
+
+        // CPU on which the event occurred
+        int32 cpu = 201;
 }
 
 message ChargenEvent {
@@ -181,4 +188,39 @@ message FileEvent {
 message Process {
         sint32 pid = 1;
         string command = 2;
+}
+
+enum KernelFunctionCallEventType {
+        KERNEL_FUNCTION_CALL_EVENT_TYPE_UNKNOWN = 0;
+        KERNEL_FUNCTION_CALL_EVENT_TYPE_ENTER = 1;
+        KERNEL_FUNCTION_CALL_EVENT_TYPE_EXIT = 2;
+}
+
+message KernelFunctionCallEvent {
+        enum FieldType {
+                UNKNOWN = 0;
+                BYTES = 1;
+                STRING = 2;
+                SINT8 = 3;
+                SINT16 = 4;
+                SINT32 = 5;
+                SINT64 = 6;
+                UINT8 = 7;
+                UINT16 = 8;
+                UINT32 = 9;
+                UINT64 = 10;
+        }
+
+        message FieldValue {
+                FieldType field_type = 1;
+
+                oneof value {
+                        bytes  bytes_value = 2;
+                        string string_value = 3;
+                        sint64 signed_int_value = 4;
+                        uint64 unsigned_int_value = 5;
+                };
+        };
+
+        map<string, FieldValue> arguments = 1;
 }

@@ -21,7 +21,7 @@ type Discover struct {
 func (m *Discover) Reset()                    { *m = Discover{} }
 func (m *Discover) String() string            { return proto.CompactTextString(m) }
 func (*Discover) ProtoMessage()               {}
-func (*Discover) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
+func (*Discover) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
 type isDiscover_Info interface {
 	isDiscover_Info()
@@ -106,9 +106,9 @@ func init() {
 	proto.RegisterType((*Discover)(nil), "capsule8.api.v0.Discover")
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/discover.proto", fileDescriptor6) }
+func init() { proto.RegisterFile("capsule8/api/v0/discover.proto", fileDescriptor5) }
 
-var fileDescriptor6 = []byte{
+var fileDescriptor5 = []byte{
 	// 142 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4b, 0x4e, 0x2c, 0x28,
 	0x2e, 0xcd, 0x49, 0xb5, 0xd0, 0x4f, 0x2c, 0xc8, 0xd4, 0x2f, 0x33, 0xd0, 0x4f, 0xc9, 0x2c, 0x4e,

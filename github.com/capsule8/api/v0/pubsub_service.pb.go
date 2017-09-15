@@ -10,10 +10,10 @@ It is generated from these files:
 	capsule8/api/v0/ack.proto
 	capsule8/api/v0/nyql_service.proto
 	capsule8/api/v0/config.proto
-	capsule8/api/v0/subscription.proto
 	capsule8/api/v0/discover.proto
 	capsule8/api/v0/event.proto
 	capsule8/api/v0/telemetry_service.proto
+	capsule8/api/v0/subscription.proto
 
 It has these top-level messages:
 	PublishRequest
@@ -29,19 +29,6 @@ It has these top-level messages:
 	CreateSubscriptionRequest
 	CreateSubscriptionResponse
 	Config
-	Subscription
-	SensorFilter
-	ContainerFilter
-	EventFilter
-	SyscallEventFilter
-	ProcessEventFilter
-	FileEventFilter
-	ContainerEventFilter
-	ChargenEventFilter
-	TickerEventFilter
-	Modifier
-	ThrottleModifier
-	LimitModifier
 	Discover
 	Event
 	ChargenEvent
@@ -51,9 +38,24 @@ It has these top-level messages:
 	SyscallEvent
 	FileEvent
 	Process
+	KernelFunctionCallEvent
 	GetEventsRequest
 	GetEventsResponse
 	TelemetryEvent
+	Subscription
+	SensorFilter
+	ContainerFilter
+	EventFilter
+	SyscallEventFilter
+	ProcessEventFilter
+	FileEventFilter
+	KernelFunctionCallFilter
+	ContainerEventFilter
+	ChargenEventFilter
+	TickerEventFilter
+	Modifier
+	ThrottleModifier
+	LimitModifier
 */
 package v0
 

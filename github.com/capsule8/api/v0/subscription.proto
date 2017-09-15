@@ -67,9 +67,10 @@ message EventFilter {
         //
         // Kernel-level events
         //
-        repeated SyscallEventFilter syscall_events = 1;
-        repeated ProcessEventFilter process_events = 2;
-        repeated FileEventFilter file_events       = 3;
+        repeated SyscallEventFilter syscall_events      = 1;
+        repeated ProcessEventFilter process_events      = 2;
+        repeated FileEventFilter file_events            = 3;
+        repeated KernelFunctionCallFilter kernel_events = 4;
 
         //
         // Operating System-level events (containers, etc)
@@ -133,6 +134,20 @@ message FileEventFilter {
 
         // Optional open(2)/creat(2) mode mask value
         google.protobuf.Int32Value create_mode_mask = 13;
+}
+
+message KernelFunctionCallFilter {
+        // Required
+        KernelFunctionCallEventType type = 1;
+
+        // Required - the kernel symbol to trigger on
+        string symbol = 10;
+
+        // Optional - keys: field type, values: value type
+        map<string, string> arguments = 11;
+
+        // Optional - kernel-level filter
+        string filter = 12;
 }
 
 enum ContainerEventView {
