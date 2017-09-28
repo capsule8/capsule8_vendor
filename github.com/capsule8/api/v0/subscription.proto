@@ -71,6 +71,7 @@ message EventFilter {
         repeated ProcessEventFilter process_events      = 2;
         repeated FileEventFilter file_events            = 3;
         repeated KernelFunctionCallFilter kernel_events = 4;
+        repeated NetworkEventFilter network_events      = 5;
 
         //
         // Operating System-level events (containers, etc)
@@ -150,6 +151,14 @@ message KernelFunctionCallFilter {
         string filter = 12;
 }
 
+message NetworkEventFilter {
+        // Required
+        NetworkEventType type = 1;
+
+        // Optional
+        FilterExpression filter = 10;
+}
+
 enum ContainerEventView {
         // Default view of a ContainerEvent includes just basic information
         BASIC = 0;
@@ -212,4 +221,46 @@ enum ProcessView {
 
         // Full processview of an event includes process ancestory
         PROCESS_VIEW_FULL  = 1;
+}
+
+message FilterExpression {
+        enum FilterExpressionType {
+                PREDICATE = 0;
+                AND = 1;
+                OR = 2;
+        }
+        FilterExpressionType type = 1;
+
+        FilterExpression lhs = 10;
+        FilterExpression rhs = 11;
+        FilterPredicate predicate = 12;
+}
+
+message FilterPredicate {
+        enum PredicateType {
+                CONST = 0;
+                EQ = 1;
+                NE = 2;
+                LT = 3;
+                LE = 4;
+                GT = 5;
+                GE = 6;
+                GLOB = 7;
+        }
+        PredicateType type = 1;
+
+        string field_name = 10;
+
+        enum ValueType {
+                SIGNED = 0;
+                UNSIGNED = 1;
+                STRING = 2;
+        }
+        ValueType value_type = 20;
+
+        oneof value {
+                sint64 signed_int_value = 21;
+                uint64 unsigned_int_value = 22;
+                string string_value = 23;
+        }
 }

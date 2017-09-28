@@ -5,6 +5,8 @@ syntax = "proto3";
 package capsule8.api.v0;
 option go_package = "github.com/capsule8/api/v0";
 
+import "capsule8/api/v0/types.proto";
+
 message Event {
         // Unique identifier for the event
         string id = 1;
@@ -61,6 +63,7 @@ message Event {
                 ProcessEvent process                = 11;
                 FileEvent file                      = 12;
                 KernelFunctionCallEvent kernel_call = 13;
+                NetworkEvent network                = 14;
 
                 //
                 // System-level events (containers, systemd, etc)
@@ -235,4 +238,29 @@ message KernelFunctionCallEvent {
         };
 
         map<string, FieldValue> arguments = 1;
+}
+
+enum NetworkEventType {
+        NETWORK_EVENT_TYPE_UNKNOWN = 0;
+        NETWORK_EVENT_TYPE_CONNECT_ATTEMPT = 1;
+        NETWORK_EVENT_TYPE_CONNECT_RESULT = 2;
+        NETWORK_EVENT_TYPE_BIND_ATTEMPT = 3;
+        NETWORK_EVENT_TYPE_BIND_RESULT = 4;
+        NETWORK_EVENT_TYPE_LISTEN_ATTEMPT = 5;
+        NETWORK_EVENT_TYPE_LISTEN_RESULT = 6;
+        NETWORK_EVENT_TYPE_ACCEPT_ATTEMPT = 7;
+        NETWORK_EVENT_TYPE_ACCEPT_RESULT = 8;
+        NETWORK_EVENT_TYPE_SENDTO_ATTEMPT = 9;
+        NETWORK_EVENT_TYPE_SENDTO_RESULT = 10;
+        NETWORK_EVENT_TYPE_RECVFROM_ATTEMPT = 11;
+        NETWORK_EVENT_TYPE_RECVFROM_RESULT = 12;
+}
+
+message NetworkEvent {
+        NetworkEventType type = 1;
+
+        uint64         sockfd = 10;  // only set for *_ATTEMPT types
+        NetworkAddress address = 11; // set for *_ATTEMPT types
+        sint64         result = 12;  // only set for *_RESULT types
+        uint64         backlog = 13; // only set for NETWORK_EVENT_TYPE_LISTEN_ATTEMPT
 }

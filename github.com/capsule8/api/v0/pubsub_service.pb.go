@@ -6,6 +6,7 @@ Package v0 is a generated protocol buffer package.
 
 It is generated from these files:
 	capsule8/api/v0/pubsub_service.proto
+	capsule8/api/v0/types.proto
 	capsule8/api/v0/sensor.proto
 	capsule8/api/v0/ack.proto
 	capsule8/api/v0/nyql_service.proto
@@ -24,6 +25,11 @@ It has these top-level messages:
 	ReceivedMessage
 	AcknowledgeRequest
 	AcknowledgeResponse
+	IPv4Address
+	IPv4AddressAndPort
+	IPv6Address
+	IPv6AddressAndPort
+	NetworkAddress
 	Sensor
 	Ack
 	CreateSubscriptionRequest
@@ -39,6 +45,7 @@ It has these top-level messages:
 	FileEvent
 	Process
 	KernelFunctionCallEvent
+	NetworkEvent
 	GetEventsRequest
 	GetEventsResponse
 	TelemetryEvent
@@ -50,12 +57,15 @@ It has these top-level messages:
 	ProcessEventFilter
 	FileEventFilter
 	KernelFunctionCallFilter
+	NetworkEventFilter
 	ContainerEventFilter
 	ChargenEventFilter
 	TickerEventFilter
 	Modifier
 	ThrottleModifier
 	LimitModifier
+	FilterExpression
+	FilterPredicate
 */
 package v0
 

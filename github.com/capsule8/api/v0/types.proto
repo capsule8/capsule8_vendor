@@ -1,0 +1,43 @@
+// Copyright 2017 Capsule8 Inc. All rights reserved.
+
+syntax = "proto3";
+
+package capsule8.api.v0;
+option go_package = "github.com/capsule8/api/v0";
+
+// Network types
+enum NetworkAddressFamily {
+        NETWORK_ADDRESS_FAMILY_UNKNOWN = 0;
+        NETWORK_ADDRESS_FAMILY_INET = 1;  // AF_INET
+        NETWORK_ADDRESS_FAMILY_INET6 = 2; // AF_INET6
+        NETWORK_ADDRESS_FAMILY_LOCAL = 3; // AF_LOCAL aka AF_UNIX
+}
+
+message IPv4Address {
+        fixed32 address = 1;
+}
+
+message IPv4AddressAndPort {
+        IPv4Address address = 1;
+        uint32      port = 2;
+}
+
+message IPv6Address {
+        fixed64 high = 1;
+        fixed64 low = 2;
+}
+
+message IPv6AddressAndPort {
+        IPv6Address address = 1;
+        uint32      port = 2;
+}
+
+message NetworkAddress {
+        NetworkAddressFamily family = 1;
+
+        oneof address {
+                IPv4AddressAndPort ipv4_address = 10;
+                IPv6AddressAndPort ipv6_address = 20;
+                string             local_address = 30;
+        };
+}
