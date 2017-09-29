@@ -232,8 +232,8 @@ message KernelFunctionCallEvent {
                 oneof value {
                         bytes  bytes_value = 2;
                         string string_value = 3;
-                        sint64 signed_int_value = 4;
-                        uint64 unsigned_int_value = 5;
+                        sint64 signed_value = 4;
+                        uint64 unsigned_value = 5;
                 };
         };
 

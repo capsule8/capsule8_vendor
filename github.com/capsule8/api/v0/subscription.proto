@@ -259,8 +259,8 @@ message FilterPredicate {
         ValueType value_type = 20;
 
         oneof value {
-                sint64 signed_int_value = 21;
-                uint64 unsigned_int_value = 22;
+                sint64 signed_value = 21;
+                uint64 unsigned_value = 22;
                 string string_value = 23;
         }
 }
