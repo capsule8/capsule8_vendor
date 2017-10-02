@@ -22,5 +22,6 @@ api: $(PROTO_ROOT)/capsule8/api/v0/*.proto
 		--go_out=plugins=grpc:$(GRPC_OUT) \
 		--plugin=protoc-gen-grpc-gateway=$(PROTOC_GEN_GRPC_GATEWAY) \
 		--grpc-gateway_out=logtostderr=true:$(GRPC_GATEWAY_OUT) \
+		--descriptor_set_out=./descriptor.protoset \
 		$(INC) \
 		$?
