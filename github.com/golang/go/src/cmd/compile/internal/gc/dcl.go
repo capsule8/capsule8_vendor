@@ -254,7 +254,11 @@ func anonfield(typ *types.Type) *Node {
 }
 
 func namedfield(s string, typ *types.Type) *Node {
-	return nod(ODCLFIELD, newname(lookup(s)), typenod(typ))
+	return symfield(lookup(s), typ)
+}
+
+func symfield(s *types.Sym, typ *types.Type) *Node {
+	return nod(ODCLFIELD, newname(s), typenod(typ))
 }
 
 // oldname returns the Node that declares symbol s in the current scope.
@@ -971,7 +975,7 @@ func addmethod(msym *types.Sym, t *types.Type, local, nointerface bool) {
 		return
 	}
 
-	if local && !mt.Local() {
+	if local && mt.Sym.Pkg != localpkg {
 		yyerror("cannot define new methods on non-local type %v", mt)
 		return
 	}
@@ -1077,9 +1081,10 @@ func makefuncsym(s *types.Sym) {
 	if s.IsBlank() {
 		return
 	}
-	if compiling_runtime && (s.Name == "getg" || s.Name == "getclosureptr" || s.Name == "getcallerpc") {
-		// runtime.getg(), getclosureptr(), and getcallerpc() are
-		// not real functions and so do not get funcsyms.
+	if compiling_runtime && (s.Name == "getg" || s.Name == "getclosureptr" || s.Name == "getcallerpc" || s.Name == "getcallersp") {
+		// runtime.getg(), getclosureptr(), getcallerpc(), and
+		// getcallersp() are not real functions and so do not
+		// get funcsyms.
 		return
 	}
 	if _, existed := s.Pkg.LookupOK(funcsymname(s)); !existed {

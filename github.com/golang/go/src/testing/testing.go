@@ -360,7 +360,7 @@ func (c *common) decorate(s string) string {
 	_, file, line, ok := runtime.Caller(skip)
 	if ok {
 		// Truncate file name at last file name separator.
-		if index := strings.LastIndexByte(file, '/'); index >= 0 {
+		if index := strings.LastIndex(file, "/"); index >= 0 {
 			file = file[index+1:]
 		} else if index = strings.LastIndex(file, "\\"); index >= 0 {
 			file = file[index+1:]
@@ -675,9 +675,30 @@ func (t *T) Parallel() {
 	t.parent.sub = append(t.parent.sub, t)
 	t.raceErrors += race.Errors()
 
+	if t.chatty {
+		// Print directly to root's io.Writer so there is no delay.
+		root := t.parent
+		for ; root.parent != nil; root = root.parent {
+		}
+		root.mu.Lock()
+		fmt.Fprintf(root.w, "=== PAUSE %s\n", t.name)
+		root.mu.Unlock()
+	}
+
 	t.signal <- true   // Release calling test.
 	<-t.parent.barrier // Wait for the parent test to complete.
 	t.context.waitParallel()
+
+	if t.chatty {
+		// Print directly to root's io.Writer so there is no delay.
+		root := t.parent
+		for ; root.parent != nil; root = root.parent {
+		}
+		root.mu.Lock()
+		fmt.Fprintf(root.w, "=== CONT  %s\n", t.name)
+		root.mu.Unlock()
+	}
+
 	t.start = time.Now()
 	t.raceErrors += -race.Errors()
 }

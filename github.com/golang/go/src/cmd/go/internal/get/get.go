@@ -301,7 +301,7 @@ func download(arg string, parent *load.Package, stk *load.ImportStack, mode int)
 	// due to wildcard expansion.
 	for _, p := range pkgs {
 		if *getFix {
-			files := base.FilterDotUnderscoreFiles(base.RelPaths(p.Internal.AllGoFiles))
+			files := base.RelPaths(p.InternalAllGoFiles())
 			base.Run(cfg.BuildToolexec, str.StringList(base.Tool("fix"), files))
 
 			// The imports might have changed, so reload again.
@@ -439,6 +439,11 @@ func downloadPackage(p *load.Package) error {
 		p.Internal.Build.PkgRoot = filepath.Join(list[0], "pkg")
 	}
 	root := filepath.Join(p.Internal.Build.SrcRoot, filepath.FromSlash(rootPath))
+
+	if err := checkNestedVCS(vcs, root, p.Internal.Build.SrcRoot); err != nil {
+		return err
+	}
+
 	// If we've considered this repository already, don't do it again.
 	if downloadRootCache[root] {
 		return nil
@@ -496,7 +501,7 @@ func downloadPackage(p *load.Package) error {
 		return err
 	}
 	vers := runtime.Version()
-	if i := strings.IndexByte(vers, ' '); i >= 0 {
+	if i := strings.Index(vers, " "); i >= 0 {
 		vers = vers[:i]
 	}
 	if err := vcs.tagSync(root, selectTag(vers, tags)); err != nil {
