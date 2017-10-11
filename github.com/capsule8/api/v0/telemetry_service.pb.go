@@ -27,7 +27,7 @@ type GetEventsRequest struct {
 func (m *GetEventsRequest) Reset()                    { *m = GetEventsRequest{} }
 func (m *GetEventsRequest) String() string            { return proto.CompactTextString(m) }
 func (*GetEventsRequest) ProtoMessage()               {}
-func (*GetEventsRequest) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (*GetEventsRequest) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{0} }
 
 func (m *GetEventsRequest) GetSubscription() *Subscription {
 	if m != nil {
@@ -43,7 +43,7 @@ type GetEventsResponse struct {
 func (m *GetEventsResponse) Reset()                    { *m = GetEventsResponse{} }
 func (m *GetEventsResponse) String() string            { return proto.CompactTextString(m) }
 func (*GetEventsResponse) ProtoMessage()               {}
-func (*GetEventsResponse) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
+func (*GetEventsResponse) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{1} }
 
 func (m *GetEventsResponse) GetEvents() []*TelemetryEvent {
 	if m != nil {
@@ -61,7 +61,7 @@ type TelemetryEvent struct {
 func (m *TelemetryEvent) Reset()                    { *m = TelemetryEvent{} }
 func (m *TelemetryEvent) String() string            { return proto.CompactTextString(m) }
 func (*TelemetryEvent) ProtoMessage()               {}
-func (*TelemetryEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
+func (*TelemetryEvent) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{2} }
 
 func (m *TelemetryEvent) GetPublishTimeMicros() int64 {
 	if m != nil {
@@ -191,9 +191,9 @@ var _TelemetryService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "capsule8/api/v0/telemetry_service.proto",
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/telemetry_service.proto", fileDescriptor8) }
+func init() { proto.RegisterFile("capsule8/api/v0/telemetry_service.proto", fileDescriptor9) }
 
-var fileDescriptor8 = []byte{
+var fileDescriptor9 = []byte{
 	// 345 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0xc1, 0x4a, 0xf3, 0x40,
 	0x14, 0x85, 0x49, 0xc3, 0x5f, 0xf8, 0xa7, 0xc5, 0xb6, 0x23, 0x4a, 0x88, 0x15, 0xeb, 0x6c, 0x2c,

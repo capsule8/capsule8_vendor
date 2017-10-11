@@ -159,6 +159,9 @@ message ProcessEvent {
         sint32 fork_child_pid = 10;
 
         // Optional
+        string fork_child_id = 11;
+
+        // Optional
         string exec_filename              = 20;
         repeated string exec_command_line = 21;
 

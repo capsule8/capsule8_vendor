@@ -108,16 +108,20 @@ message ProcessEventFilter {
 
         // Optional; require exact match on the command name associated
         // with the process as shown in /proc/[pid]/comm
-        // google.protobuf.StringValue comm = 10;
+        // google.protobuf.StringValue fork_comm = 10;
 
         // Optional; require pattern match on the command name associated
         // with the process as shown in /proc/[pid]/comm
-        // google.protobuf.StringValue comm_pattern = 11;
+        // google.protobuf.StringValue fork_comm_pattern = 11;
 
-        // google.protobuf.StringValue exec_filename         = 12;
-        // google.protobuf.StringValue exec_filename_pattern = 13;
+	// Optional; require exact match on the filename passed to execve(2)
+        google.protobuf.StringValue exec_filename         = 12;
 
-        // google.protobuf.Int32Value exit_code = 14;
+	// Optional; require pattern match on the filename passed to execve(2)
+        google.protobuf.StringValue exec_filename_pattern = 13;
+
+	// Optional; require exact match on exit code
+        google.protobuf.Int32Value exit_code = 14;
 }
 
 message FileEventFilter {

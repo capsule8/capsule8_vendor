@@ -77,7 +77,15 @@ func RegisterTelemetryServiceHandlerFromEndpoint(ctx context.Context, mux *runti
 // RegisterTelemetryServiceHandler registers the http handlers for service TelemetryService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
 func RegisterTelemetryServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewTelemetryServiceClient(conn)
+	return RegisterTelemetryServiceHandlerClient(ctx, mux, NewTelemetryServiceClient(conn))
+}
+
+// RegisterTelemetryServiceHandler registers the http handlers for service TelemetryService to "mux".
+// The handlers forward requests to the grpc endpoint over the given implementation of "TelemetryServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "TelemetryServiceClient"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "TelemetryServiceClient" to call the correct interceptors.
+func RegisterTelemetryServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client TelemetryServiceClient) error {
 
 	mux.Handle("POST", pattern_TelemetryService_GetEvents_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)

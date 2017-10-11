@@ -130,6 +130,9 @@ loop:
 			if gnuLongLink != "" {
 				hdr.Linkname = gnuLongLink
 			}
+			if hdr.Typeflag == TypeRegA && strings.HasSuffix(hdr.Name, "/") {
+				hdr.Typeflag = TypeDir // Legacy archives use trailing slash for directories
+			}
 
 			// The extended headers may have updated the size.
 			// Thus, setup the regFileReader again after merging PAX headers.
@@ -611,7 +614,7 @@ func readGNUSparseMap0x1(paxHdrs map[string]string) (sparseDatas, error) {
 // If the current file is sparse, then the regions marked as a hole
 // are read back as NUL-bytes.
 //
-// Calling Read on special types like TypeLink, TypeSymLink, TypeChar,
+// Calling Read on special types like TypeLink, TypeSymlink, TypeChar,
 // TypeBlock, TypeDir, and TypeFifo returns (0, io.EOF) regardless of what
 // the Header.Size claims.
 func (tr *Reader) Read(b []byte) (int, error) {
