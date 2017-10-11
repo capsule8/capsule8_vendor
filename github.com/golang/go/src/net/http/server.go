@@ -2002,7 +2002,7 @@ func Redirect(w ResponseWriter, r *Request, url string, code int) {
 			}
 
 			var query string
-			if i := strings.IndexByte(url, '?'); i != -1 {
+			if i := strings.Index(url, "?"); i != -1 {
 				url, query = url[:i], url[i:]
 			}
 
@@ -3081,11 +3081,19 @@ func (h *timeoutHandler) ServeHTTP(w ResponseWriter, r *Request) {
 		w: w,
 		h: make(Header),
 	}
+	panicChan := make(chan interface{}, 1)
 	go func() {
+		defer func() {
+			if p := recover(); p != nil {
+				panicChan <- p
+			}
+		}()
 		h.handler.ServeHTTP(tw, r)
 		close(done)
 	}()
 	select {
+	case p := <-panicChan:
+		panic(p)
 	case <-done:
 		tw.mu.Lock()
 		defer tw.mu.Unlock()

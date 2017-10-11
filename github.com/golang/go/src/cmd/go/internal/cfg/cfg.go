@@ -37,6 +37,8 @@ var (
 	BuildV                 bool // -v flag
 	BuildWork              bool // -work flag
 	BuildX                 bool // -x flag
+
+	DebugActiongraph string // -debug-actiongraph flag (undocumented, unstable)
 )
 
 func init() {
@@ -132,6 +134,17 @@ func isGOROOT(path string) bool {
 // ExternalLinkingForced reports whether external linking is being
 // forced even for programs that do not use cgo.
 func ExternalLinkingForced() bool {
+	// Some targets must use external linking even inside GOROOT.
+	switch BuildContext.GOOS {
+	case "android":
+		return true
+	case "darwin":
+		switch BuildContext.GOARCH {
+		case "arm", "arm64":
+			return true
+		}
+	}
+
 	if !BuildContext.CgoEnabled {
 		return false
 	}
@@ -151,5 +164,6 @@ func ExternalLinkingForced() bool {
 			linkmodeExternal = true
 		}
 	}
+
 	return BuildBuildmode == "c-shared" || BuildBuildmode == "plugin" || pieCgo || BuildLinkshared || linkmodeExternal
 }

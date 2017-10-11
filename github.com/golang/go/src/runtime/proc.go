@@ -249,9 +249,10 @@ func forcegchelper() {
 	}
 }
 
+//go:nosplit
+
 // Gosched yields the processor, allowing other goroutines to run. It does not
 // suspend the current goroutine, so execution resumes automatically.
-//go:nosplit
 func Gosched() {
 	mcall(gosched_m)
 }
@@ -1498,7 +1499,7 @@ func oneNewExtraM() {
 	casgstatus(gp, _Gidle, _Gdead)
 	gp.m = mp
 	mp.curg = gp
-	mp.locked = _LockInternal
+	mp.lockedInt++
 	mp.lockedg.set(gp)
 	gp.lockedm.set(mp)
 	gp.goid = int64(atomic.Xadd64(&sched.goidgen, 1))
@@ -2402,11 +2403,11 @@ func goexit0(gp *g) {
 	gp.gcscanvalid = true
 	dropg()
 
-	if _g_.m.locked&^_LockExternal != 0 {
-		print("invalid m->locked = ", _g_.m.locked, "\n")
+	if _g_.m.lockedInt != 0 {
+		print("invalid m->lockedInt = ", _g_.m.lockedInt, "\n")
 		throw("internal lockOSThread error")
 	}
-	_g_.m.locked = 0
+	_g_.m.lockedExt = 0
 	gfput(_g_.m.p.ptr(), gp)
 	schedule()
 }
@@ -2935,15 +2936,14 @@ func newproc(siz int32, fn *funcval) {
 	argp := add(unsafe.Pointer(&fn), sys.PtrSize)
 	pc := getcallerpc()
 	systemstack(func() {
-		newproc1(fn, (*uint8)(argp), siz, 0, pc)
+		newproc1(fn, (*uint8)(argp), siz, pc)
 	})
 }
 
 // Create a new g running fn with narg bytes of arguments starting
-// at argp and returning nret bytes of results.  callerpc is the
-// address of the go statement that created this. The new g is put
-// on the queue of g's waiting to run.
-func newproc1(fn *funcval, argp *uint8, narg int32, nret int32, callerpc uintptr) *g {
+// at argp. callerpc is the address of the go statement that created
+// this. The new g is put on the queue of g's waiting to run.
+func newproc1(fn *funcval, argp *uint8, narg int32, callerpc uintptr) {
 	_g_ := getg()
 
 	if fn == nil {
@@ -2951,7 +2951,7 @@ func newproc1(fn *funcval, argp *uint8, narg int32, nret int32, callerpc uintptr
 		throw("go of nil func value")
 	}
 	_g_.m.locks++ // disable preemption because it can be holding p in a local var
-	siz := narg + nret
+	siz := narg
 	siz = (siz + 7) &^ 7
 
 	// We could allocate a larger initial stack if necessary.
@@ -3046,7 +3046,6 @@ func newproc1(fn *funcval, argp *uint8, narg int32, nret int32, callerpc uintptr
 	if _g_.m.locks == 0 && _g_.preempt { // restore the preemption request in case we've cleared it in newstack
 		_g_.stackguard0 = stackPreempt
 	}
-	return newg
 }
 
 // Put on gfree list.
@@ -3172,16 +3171,23 @@ func dolockOSThread() {
 //go:nosplit
 
 // LockOSThread wires the calling goroutine to its current operating system thread.
-// Until the calling goroutine exits or calls UnlockOSThread, it will always
-// execute in that thread, and no other goroutine can.
+// The calling goroutine will always execute in that thread,
+// and no other goroutine will execute in it,
+// until the calling goroutine exits or has made as many calls to
+// UnlockOSThread as to LockOSThread.
 func LockOSThread() {
-	getg().m.locked |= _LockExternal
+	_g_ := getg()
+	_g_.m.lockedExt++
+	if _g_.m.lockedExt == 0 {
+		_g_.m.lockedExt--
+		panic("LockOSThread nesting overflow")
+	}
 	dolockOSThread()
 }
 
 //go:nosplit
 func lockOSThread() {
-	getg().m.locked += _LockInternal
+	getg().m.lockedInt++
 	dolockOSThread()
 }
 
@@ -3191,7 +3197,7 @@ func lockOSThread() {
 //go:nosplit
 func dounlockOSThread() {
 	_g_ := getg()
-	if _g_.m.locked != 0 {
+	if _g_.m.lockedInt != 0 || _g_.m.lockedExt != 0 {
 		return
 	}
 	_g_.m.lockedg = 0
@@ -3200,20 +3206,27 @@ func dounlockOSThread() {
 
 //go:nosplit
 
-// UnlockOSThread unwires the calling goroutine from its fixed operating system thread.
-// If the calling goroutine has not called LockOSThread, UnlockOSThread is a no-op.
+// UnlockOSThread undoes an earlier call to LockOSThread.
+// If this drops the number of active LockOSThread calls on the
+// calling goroutine to zero, it unwires the calling goroutine from
+// its fixed operating system thread.
+// If there are no active LockOSThread calls, this is a no-op.
 func UnlockOSThread() {
-	getg().m.locked &^= _LockExternal
+	_g_ := getg()
+	if _g_.m.lockedExt == 0 {
+		return
+	}
+	_g_.m.lockedExt--
 	dounlockOSThread()
 }
 
 //go:nosplit
 func unlockOSThread() {
 	_g_ := getg()
-	if _g_.m.locked < _LockInternal {
+	if _g_.m.lockedInt == 0 {
 		systemstack(badunlockosthread)
 	}
-	_g_.m.locked -= _LockInternal
+	_g_.m.lockedInt--
 	dounlockOSThread()
 }
 

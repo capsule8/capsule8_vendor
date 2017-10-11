@@ -101,7 +101,7 @@ var pkgDeps = map[string][]string{
 	"crypto/cipher":       {"L2", "crypto/subtle"},
 	"crypto/subtle":       {},
 	"encoding/base32":     {"L2"},
-	"encoding/base64":     {"L2"},
+	"encoding/base64":     {"L2", "encoding/binary"},
 	"encoding/binary":     {"L2", "reflect"},
 	"hash":                {"L2"}, // interfaces
 	"hash/adler32":        {"L2", "hash"},
@@ -156,7 +156,7 @@ var pkgDeps = map[string][]string{
 
 	"internal/poll": {"L0", "internal/race", "syscall", "time", "unicode/utf16", "unicode/utf8"},
 	"os":            {"L1", "os", "syscall", "time", "internal/poll", "internal/syscall/windows"},
-	"path/filepath": {"L2", "os", "syscall"},
+	"path/filepath": {"L2", "os", "syscall", "internal/syscall/windows"},
 	"io/ioutil":     {"L2", "os", "path/filepath", "time"},
 	"os/exec":       {"L2", "os", "context", "path/filepath", "syscall"},
 	"os/signal":     {"L2", "os", "syscall"},
@@ -379,7 +379,7 @@ var pkgDeps = map[string][]string{
 		"L4", "CRYPTO-MATH", "OS", "CGO",
 		"crypto/x509/pkix", "encoding/pem", "encoding/hex", "net", "os/user", "syscall",
 	},
-	"crypto/x509/pkix": {"L4", "CRYPTO-MATH"},
+	"crypto/x509/pkix": {"L4", "CRYPTO-MATH", "encoding/hex"},
 
 	// Simple net+crypto-aware packages.
 	"mime/multipart": {"L4", "OS", "mime", "crypto/rand", "net/textproto", "mime/quotedprintable"},
