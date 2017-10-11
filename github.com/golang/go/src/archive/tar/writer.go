@@ -70,8 +70,19 @@ func (tw *Writer) WriteHeader(hdr *Header) error {
 	if err := tw.Flush(); err != nil {
 		return err
 	}
-
 	tw.hdr = *hdr // Shallow copy of Header
+
+	// Round ModTime and ignore AccessTime and ChangeTime unless
+	// the format is explicitly chosen.
+	// This ensures nominal usage of WriteHeader (without specifying the format)
+	// does not always result in the PAX format being chosen, which
+	// causes a 1KiB increase to every header.
+	if tw.hdr.Format == FormatUnknown {
+		tw.hdr.ModTime = tw.hdr.ModTime.Round(time.Second)
+		tw.hdr.AccessTime = time.Time{}
+		tw.hdr.ChangeTime = time.Time{}
+	}
+
 	allowedFormats, paxHdrs, err := tw.hdr.allowedFormats()
 	switch {
 	case allowedFormats.has(FormatUSTAR):
@@ -323,6 +334,7 @@ func (tw *Writer) writeRawFile(name, data string, flag byte, format Format) erro
 	if len(name) > nameSize {
 		name = name[:nameSize]
 	}
+	name = strings.TrimRight(name, "/")
 
 	var f formatter
 	v7 := tw.blk.V7()
@@ -376,7 +388,7 @@ func splitUSTARPath(name string) (prefix, suffix string, ok bool) {
 		length--
 	}
 
-	i := strings.LastIndexByte(name[:length], '/')
+	i := strings.LastIndex(name[:length], "/")
 	nlen := len(name) - i - 1 // nlen is length of suffix
 	plen := i                 // plen is length of prefix
 	if i <= 0 || nlen > nameSize || nlen == 0 || plen > prefixSize {
@@ -392,7 +404,7 @@ func splitUSTARPath(name string) (prefix, suffix string, ok bool) {
 // If the current file is sparse, then the regions marked as a hole
 // must be written as NUL-bytes.
 //
-// Calling Write on special types like TypeLink, TypeSymLink, TypeChar,
+// Calling Write on special types like TypeLink, TypeSymlink, TypeChar,
 // TypeBlock, TypeDir, and TypeFifo returns (0, ErrWriteTooLong) regardless
 // of what the Header.Size claims.
 func (tw *Writer) Write(b []byte) (int, error) {

@@ -7,6 +7,7 @@ Package v0 is a generated protocol buffer package.
 It is generated from these files:
 	capsule8/api/v0/pubsub_service.proto
 	capsule8/api/v0/types.proto
+	capsule8/api/v0/config_service.proto
 	capsule8/api/v0/sensor.proto
 	capsule8/api/v0/ack.proto
 	capsule8/api/v0/nyql_service.proto
@@ -30,6 +31,14 @@ It has these top-level messages:
 	IPv6Address
 	IPv6AddressAndPort
 	NetworkAddress
+	CreateConfigRequest
+	CreateConfigResponse
+	GetConfigRequest
+	GetConfigResponse
+	WatchConfigRequest
+	WatchConfigResponse
+	ListConfigsRequest
+	ListConfigsResponse
 	Sensor
 	Ack
 	CreateSubscriptionRequest

@@ -166,7 +166,6 @@ func bmap(t *types.Type) *types.Type {
 
 	// link up fields
 	bucket.SetNoalg(true)
-	bucket.SetLocal(t.Local())
 	bucket.SetFields(field[:])
 	dowidth(bucket)
 
@@ -262,7 +261,6 @@ func hmap(t *types.Type) *types.Type {
 
 	hmap := types.New(TSTRUCT)
 	hmap.SetNoalg(true)
-	hmap.SetLocal(t.Local())
 	hmap.SetFields(fields)
 	dowidth(hmap)
 
@@ -440,18 +438,18 @@ func methods(t *types.Type) []*Sig {
 		if !sig.isym.Siggen() {
 			sig.isym.SetSiggen(true)
 			if !eqtype(this, it) || this.Width < int64(Widthptr) {
-				compiling_wrappers = 1
-				genwrapper(it, f, sig.isym, 1)
-				compiling_wrappers = 0
+				compiling_wrappers = true
+				genwrapper(it, f, sig.isym, true)
+				compiling_wrappers = false
 			}
 		}
 
 		if !sig.tsym.Siggen() {
 			sig.tsym.SetSiggen(true)
 			if !eqtype(this, t) {
-				compiling_wrappers = 1
-				genwrapper(t, f, sig.tsym, 0)
-				compiling_wrappers = 0
+				compiling_wrappers = true
+				genwrapper(t, f, sig.tsym, false)
+				compiling_wrappers = false
 			}
 		}
 	}
@@ -502,7 +500,7 @@ func imethods(t *types.Type) []*Sig {
 		isym := methodsym(method, t, false)
 		if !isym.Siggen() {
 			isym.SetSiggen(true)
-			genwrapper(t, f, isym, 0)
+			genwrapper(t, f, isym, false)
 		}
 	}
 
@@ -726,7 +724,7 @@ func dextratypeData(lsym *obj.LSym, ot int, t *types.Type) int {
 		nsym := dname(a.name, "", pkg, exported)
 
 		ot = dsymptrOff(lsym, ot, nsym, 0)
-		ot = dmethodptrOff(lsym, ot, dtypesym(a.mtype).Linksym())
+		ot = dmethodptrOff(lsym, ot, dtypesym(a.mtype))
 		ot = dmethodptrOff(lsym, ot, a.isym.Linksym())
 		ot = dmethodptrOff(lsym, ot, a.tsym.Linksym())
 	}
@@ -865,7 +863,7 @@ func dcommontype(lsym *obj.LSym, ot int, t *types.Type) int {
 		if t.Sym != nil || methods(tptr) != nil {
 			sptrWeak = false
 		}
-		sptr = dtypesym(tptr).Linksym()
+		sptr = dtypesym(tptr)
 	}
 
 	gcsym, useGCProg, ptrdata := dgcsym(t)
@@ -1140,15 +1138,16 @@ func formalType(t *types.Type) *types.Type {
 	return t
 }
 
-func dtypesym(t *types.Type) *types.Sym {
+func dtypesym(t *types.Type) *obj.LSym {
 	t = formalType(t)
 	if t.IsUntyped() {
 		Fatalf("dtypesym %v", t)
 	}
 
 	s := typesym(t)
+	lsym := s.Linksym()
 	if s.Siggen() {
-		return s
+		return lsym
 	}
 	s.SetSiggen(true)
 
@@ -1167,17 +1166,16 @@ func dtypesym(t *types.Type) *types.Sym {
 
 	if myimportpath != "runtime" || (tbase != types.Types[tbase.Etype] && tbase != types.Bytetype && tbase != types.Runetype && tbase != types.Errortype) { // int, float, etc
 		// named types from other files are defined only by those files
-		if tbase.Sym != nil && !tbase.Local() {
-			return s
+		if tbase.Sym != nil && tbase.Sym.Pkg != localpkg {
+			return lsym
 		}
 		// TODO(mdempsky): Investigate whether this can happen.
 		if isforw[tbase.Etype] {
-			return s
+			return lsym
 		}
 	}
 
 	ot := 0
-	lsym := s.Linksym()
 	switch t.Etype {
 	default:
 		ot = dcommontype(lsym, ot, t)
@@ -1189,8 +1187,8 @@ func dtypesym(t *types.Type) *types.Sym {
 		t2 := types.NewSlice(t.Elem())
 		s2 := dtypesym(t2)
 		ot = dcommontype(lsym, ot, t)
-		ot = dsymptr(lsym, ot, s1.Linksym(), 0)
-		ot = dsymptr(lsym, ot, s2.Linksym(), 0)
+		ot = dsymptr(lsym, ot, s1, 0)
+		ot = dsymptr(lsym, ot, s2, 0)
 		ot = duintptr(lsym, ot, uint64(t.NumElem()))
 		ot = dextratype(lsym, ot, t, 0)
 
@@ -1198,14 +1196,14 @@ func dtypesym(t *types.Type) *types.Sym {
 		// ../../../../runtime/type.go:/sliceType
 		s1 := dtypesym(t.Elem())
 		ot = dcommontype(lsym, ot, t)
-		ot = dsymptr(lsym, ot, s1.Linksym(), 0)
+		ot = dsymptr(lsym, ot, s1, 0)
 		ot = dextratype(lsym, ot, t, 0)
 
 	case TCHAN:
 		// ../../../../runtime/type.go:/chanType
 		s1 := dtypesym(t.Elem())
 		ot = dcommontype(lsym, ot, t)
-		ot = dsymptr(lsym, ot, s1.Linksym(), 0)
+		ot = dsymptr(lsym, ot, s1, 0)
 		ot = duintptr(lsym, ot, uint64(t.ChanDir()))
 		ot = dextratype(lsym, ot, t, 0)
 
@@ -1239,13 +1237,13 @@ func dtypesym(t *types.Type) *types.Sym {
 
 		// Array of rtype pointers follows funcType.
 		for _, t1 := range t.Recvs().Fields().Slice() {
-			ot = dsymptr(lsym, ot, dtypesym(t1.Type).Linksym(), 0)
+			ot = dsymptr(lsym, ot, dtypesym(t1.Type), 0)
 		}
 		for _, t1 := range t.Params().Fields().Slice() {
-			ot = dsymptr(lsym, ot, dtypesym(t1.Type).Linksym(), 0)
+			ot = dsymptr(lsym, ot, dtypesym(t1.Type), 0)
 		}
 		for _, t1 := range t.Results().Fields().Slice() {
-			ot = dsymptr(lsym, ot, dtypesym(t1.Type).Linksym(), 0)
+			ot = dsymptr(lsym, ot, dtypesym(t1.Type), 0)
 		}
 
 	case TINTER:
@@ -1280,7 +1278,7 @@ func dtypesym(t *types.Type) *types.Sym {
 			nsym := dname(a.name, "", pkg, exported)
 
 			ot = dsymptrOff(lsym, ot, nsym, 0)
-			ot = dsymptrOff(lsym, ot, dtypesym(a.type_).Linksym(), 0)
+			ot = dsymptrOff(lsym, ot, dtypesym(a.type_), 0)
 		}
 
 	// ../../../../runtime/type.go:/mapType
@@ -1290,10 +1288,10 @@ func dtypesym(t *types.Type) *types.Sym {
 		s3 := dtypesym(bmap(t))
 		s4 := dtypesym(hmap(t))
 		ot = dcommontype(lsym, ot, t)
-		ot = dsymptr(lsym, ot, s1.Linksym(), 0)
-		ot = dsymptr(lsym, ot, s2.Linksym(), 0)
-		ot = dsymptr(lsym, ot, s3.Linksym(), 0)
-		ot = dsymptr(lsym, ot, s4.Linksym(), 0)
+		ot = dsymptr(lsym, ot, s1, 0)
+		ot = dsymptr(lsym, ot, s2, 0)
+		ot = dsymptr(lsym, ot, s3, 0)
+		ot = dsymptr(lsym, ot, s4, 0)
 		if t.Key().Width > MAXKEYSIZE {
 			ot = duint8(lsym, ot, uint8(Widthptr))
 			ot = duint8(lsym, ot, 1) // indirect
@@ -1328,7 +1326,7 @@ func dtypesym(t *types.Type) *types.Sym {
 		s1 := dtypesym(t.Elem())
 
 		ot = dcommontype(lsym, ot, t)
-		ot = dsymptr(lsym, ot, s1.Linksym(), 0)
+		ot = dsymptr(lsym, ot, s1, 0)
 		ot = dextratype(lsym, ot, t, 0)
 
 	// ../../../../runtime/type.go:/structType
@@ -1366,7 +1364,7 @@ func dtypesym(t *types.Type) *types.Sym {
 		for _, f := range t.Fields().Slice() {
 			// ../../../../runtime/type.go:/structField
 			ot = dnameField(lsym, ot, spkg, f)
-			ot = dsymptr(lsym, ot, dtypesym(f.Type).Linksym(), 0)
+			ot = dsymptr(lsym, ot, dtypesym(f.Type), 0)
 			offsetAnon := uint64(f.Offset) << 1
 			if offsetAnon>>1 != uint64(f.Offset) {
 				Fatalf("%v: bad field offset for %s", t, f.Sym.Name)
@@ -1400,7 +1398,7 @@ func dtypesym(t *types.Type) *types.Sym {
 	}
 	lsym.Set(obj.AttrMakeTypelink, keep)
 
-	return s
+	return lsym
 }
 
 // for each itabEntry, gather the methods on
@@ -1520,8 +1518,8 @@ func dumptabs() {
 		//   _      [4]byte
 		//   fun    [1]uintptr // variable sized
 		// }
-		o := dsymptr(i.lsym, 0, dtypesym(i.itype).Linksym(), 0)
-		o = dsymptr(i.lsym, o, dtypesym(i.t).Linksym(), 0)
+		o := dsymptr(i.lsym, 0, dtypesym(i.itype), 0)
+		o = dsymptr(i.lsym, o, dtypesym(i.t), 0)
 		o = duint32(i.lsym, o, typehash(i.t)) // copy of type hash
 		o += 4                                // skip unused field
 		for _, fn := range genfun(i.t, i.itype) {
@@ -1547,7 +1545,7 @@ func dumptabs() {
 			// }
 			nsym := dname(p.s.Name, "", nil, true)
 			ot = dsymptrOff(s, ot, nsym, 0)
-			ot = dsymptrOff(s, ot, dtypesym(p.t).Linksym(), 0)
+			ot = dsymptrOff(s, ot, dtypesym(p.t), 0)
 		}
 		ggloblsym(s, int32(ot), int16(obj.RODATA))
 

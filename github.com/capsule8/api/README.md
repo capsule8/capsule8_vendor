@@ -9,3 +9,13 @@ These definitions are specified using the
 Google's [API Design Guide](https://cloud.google.com/apis/design/).
 For useful examples, see the public
 [Google APIs](https://github.com/googleapis/googleapis).
+
+### Compiling protos
+
+You will need the following dependencies:
+[protoc](https://github.com/golang/protobuf)
+[grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway)
+
+- `git submodule init`
+- `git submodule update`
+- `make`

@@ -28,7 +28,7 @@ type Config struct {
 func (m *Config) Reset()                    { *m = Config{} }
 func (m *Config) String() string            { return proto.CompactTextString(m) }
 func (*Config) ProtoMessage()               {}
-func (*Config) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
+func (*Config) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
 
 func (m *Config) GetTypeName() string {
 	if m != nil {
@@ -55,9 +55,9 @@ func init() {
 	proto.RegisterType((*Config)(nil), "capsule8.api.v0.Config")
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/config.proto", fileDescriptor5) }
+func init() { proto.RegisterFile("capsule8/api/v0/config.proto", fileDescriptor6) }
 
-var fileDescriptor5 = []byte{
+var fileDescriptor6 = []byte{
 	// 212 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x8f, 0x31, 0x4f, 0xc3, 0x30,
 	0x10, 0x85, 0x65, 0x90, 0x0a, 0x75, 0x91, 0x90, 0x3c, 0x59, 0xa5, 0x83, 0xd5, 0x29, 0x93, 0x5d,
