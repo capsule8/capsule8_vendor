@@ -23,6 +23,7 @@ type parser struct {
 	scanner
 
 	first  error  // first error encountered
+	errcnt int    // number of errors encountered
 	pragma Pragma // pragma flags
 
 	fnest  int    // function nesting level (for error handling)
@@ -57,6 +58,7 @@ func (p *parser) init(base *src.PosBase, r io.Reader, errh ErrorHandler, pragh P
 	)
 
 	p.first = nil
+	p.errcnt = 0
 	p.pragma = 0
 
 	p.fnest = 0
@@ -114,6 +116,7 @@ func (p *parser) error_at(pos src.Pos, msg string) {
 	if p.first == nil {
 		p.first = err
 	}
+	p.errcnt++
 	if p.errh == nil {
 		panic(p.first)
 	}
@@ -179,7 +182,6 @@ const stopset uint64 = 1<<_Break |
 	1<<_Defer |
 	1<<_Fallthrough |
 	1<<_For |
-	1<<_Func |
 	1<<_Go |
 	1<<_Goto |
 	1<<_If |
@@ -484,37 +486,30 @@ func (p *parser) funcDeclOrNil() *FuncDecl {
 		return nil
 	}
 
-	// TODO(gri) check for regular functions only
-	// if name.Sym.Name == "init" {
-	// 	name = renameinit()
-	// 	if params != nil || result != nil {
-	// 		p.error("func init must have no arguments and no return values")
-	// 	}
-	// }
-
-	// if localpkg.Name == "main" && name.Name == "main" {
-	// 	if params != nil || result != nil {
-	// 		p.error("func main must have no arguments and no return values")
-	// 	}
-	// }
-
 	f.Name = p.name()
 	f.Type = p.funcType()
 	if p.tok == _Lbrace {
-		f.Body = p.blockStmt("")
-		if p.mode&CheckBranches != 0 {
-			checkBranches(f.Body, p.errh)
-		}
+		f.Body = p.funcBody()
 	}
-
 	f.Pragma = p.pragma
 
-	// TODO(gri) deal with function properties
-	// if noescape && body != nil {
-	// 	p.error("can only use //go:noescape with external func implementations")
-	// }
-
 	return f
+}
+
+func (p *parser) funcBody() *BlockStmt {
+	p.fnest++
+	errcnt := p.errcnt
+	body := p.blockStmt("")
+	p.fnest--
+
+	// Don't check branches if there were syntax errors in the function
+	// as it may lead to spurious errors (e.g., see test/switch2.go) or
+	// possibly crashes due to incomplete syntax trees.
+	if p.mode&CheckBranches != 0 && errcnt == p.errcnt {
+		checkBranches(body, p.errh)
+	}
+
+	return body
 }
 
 // ----------------------------------------------------------------------------
@@ -732,10 +727,7 @@ func (p *parser) operand(keep_parens bool) Expr {
 			f := new(FuncLit)
 			f.pos = pos
 			f.Type = t
-			f.Body = p.blockStmt("")
-			if p.mode&CheckBranches != 0 {
-				checkBranches(f.Body, p.errh)
-			}
+			f.Body = p.funcBody()
 
 			p.xnest--
 			return f
@@ -1655,16 +1647,12 @@ func (p *parser) labeledStmtOrNil(label *Name) Stmt {
 	return nil // avoids follow-on errors (see e.g., fixedbugs/bug274.go)
 }
 
+// context must be a non-empty string unless we know that p.tok == _Lbrace.
 func (p *parser) blockStmt(context string) *BlockStmt {
 	if trace {
 		defer p.trace("blockStmt")()
 	}
 
-	// TODO(gri) If we are in a function we should update p.fnest
-	// accordingly. Currently p.fnest is always zero and thus not
-	// used in error recovery.
-	// Not enabled for for because it performs worse for some code
-	// without more fine tuning (see example in #22164).
 	s := new(BlockStmt)
 	s.pos = p.pos()
 
@@ -1709,9 +1697,6 @@ func (p *parser) forStmt() Stmt {
 	return s
 }
 
-// TODO(gri) This function is now so heavily influenced by the keyword that
-//           it may not make sense anymore to combine all three cases. It
-//           may be simpler to just split it up for each statement kind.
 func (p *parser) header(keyword token) (init SimpleStmt, cond Expr, post SimpleStmt) {
 	p.want(keyword)
 

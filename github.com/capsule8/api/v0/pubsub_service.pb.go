@@ -16,6 +16,7 @@ It is generated from these files:
 	capsule8/api/v0/event.proto
 	capsule8/api/v0/telemetry_service.proto
 	capsule8/api/v0/subscription.proto
+	capsule8/api/v0/alert.proto
 
 It has these top-level messages:
 	PublishRequest
@@ -75,6 +76,7 @@ It has these top-level messages:
 	LimitModifier
 	FilterExpression
 	FilterPredicate
+	Alert
 */
 package v0
 
