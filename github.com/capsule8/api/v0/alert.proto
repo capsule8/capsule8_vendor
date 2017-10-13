@@ -1,0 +1,86 @@
+// Copyright 2017 Capsule8 Inc. All rights reserved.
+
+syntax = "proto3";
+
+package capsule8.api.v0;
+option go_package = "github.com/capsule8/api/v0";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+message Alert {
+        enum Severity {
+                ALERT_SEVERITY_UNSPECIFIED = 0;
+                SEVERITY_LOW               = 1;
+                SEVERITY_MEDIUM            = 2;
+                SEVERITY_HIGH              = 3;
+        }
+
+        enum Confidence {
+                ALERT_CONFIDENCE_UNSPECIFIED = 0;
+                CONFIDENCE_LOW               = 1;
+                CONFIDENCE_MEDIUM            = 2;
+                CONFIDENCE_HIGH              = 3;
+        }
+
+        enum Entity {
+                ALERT_ENTITY_UNSPECIFIED = 0;
+                ENTITY_PROCESS           = 1;
+                ENTITY_CONTAINER         = 2;
+                ENTITY_NODE              = 3;
+                ENTITY_CLUSTER           = 4;
+        }
+
+        enum Scope {
+                ALERT_SCOPE_UNSPECIFIED = 0;
+                SCOPE_PROCESS           = 1;
+                SCOPE_CONTAINER         = 2;
+                SCOPE_NODE              = 3;
+                SCOPE_CLUSTER           = 4;
+        }
+
+        // Unique alert message identifier
+        string id = 1;
+
+        // Timestamp of when the alert message was created
+        google.protobuf.Timestamp create_time = 2;
+
+        // The type of entity where anomalous behavior was detected
+        // (e.g. process, container, node, or cluster).
+        Entity entity = 3;
+
+        // The unique IDs of the entity where anomalous behavior was
+        // detected. Exactly one of these should be non-NULL.
+        string process_id = 4;
+        string container_id = 5;
+        string node_id = 6;
+        string cluster_id = 7;
+  
+        // The scope of impact (just the process, entire container, node, or
+        // cluster). This is the "blast radius" of the security impact
+        // around the source of the alert.
+        Scope scope = 8;
+
+        // Unique identifier of the Strategy that generated the alert
+        string strategy_id = 9;
+
+        // Confidence in the event as determined by the Strategy that generated
+        // the alert
+        Confidence strategy_confidence = 10;
+
+        // Severity of the event as determined by the Strategy that generated
+        // the alert
+        Severity strategy_severity = 11;
+
+        // Confidence in the alert as determined by the Arbiter
+        Confidence confidence = 12;
+
+        // Severity of the alert as determined by the Arbiter
+        Severity severity = 13;
+
+        // Optional; Additional details defined by the Strategy that
+        // generated the alert or the Arbiter. These are less strictly
+        // defined and intended for display to the user in the CLI or
+        // Console. The details field is invisible to NYQL queries.
+        google.protobuf.Any details = 100;
+}

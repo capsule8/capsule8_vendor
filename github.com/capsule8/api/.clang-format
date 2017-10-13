@@ -1,0 +1,5 @@
+---
+Language: Proto
+BasedOnStyle: llvm
+IndentWidth: 8
+AlignConsecutiveAssignments: true

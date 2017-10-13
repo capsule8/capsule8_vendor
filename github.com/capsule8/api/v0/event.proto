@@ -135,8 +135,20 @@ message ContainerEvent {
         // Host process identifier of the container's init process.
         sint32 host_pid = 20;
 
-        // The exit code of the container if it has exited
-        sint32 exit_code = 30;
+        // Optional, only included on CONTAINER_EVENT_TYPE_EXIT events
+	sint32 exit_code = 30;
+
+	// The exit status will typically one of the values defined in
+	// stdlib.h like EXIT_SUCCESS, EXIT_FAILURE, or EXIT_USAGE.
+	uint32 exit_status = 31;
+
+	// If non-zero, this is the signal number that the process
+	// was terminated with.
+	uint32 exit_signal = 32;
+
+	// If true, indicates that the process dumped a core when
+	// it terminated.
+	bool exit_core_dumped = 33;
 
         // Docker container configuration file
         string docker_config_json = 100;
@@ -165,10 +177,22 @@ message ProcessEvent {
         string exec_filename              = 20;
         repeated string exec_command_line = 21;
 
-        // Optional
-        sint32 exit_code = 30;
-}
+        // Optional, only included on PROCESS_EVENT_TYPE_EXIT events
+	sint32 exit_code = 30;
 
+	// The exit status will typically one of the values defined in
+	// stdlib.h like EXIT_SUCCESS, EXIT_FAILURE, or EXIT_USAGE.
+	uint32 exit_status = 31;
+
+	// If non-zero, this is the signal number that the process
+	// was terminated with.
+	uint32 exit_signal = 32;
+
+	// If true, indicates that the process dumped a core when
+	// it terminated.
+	bool exit_core_dumped = 33;
+}
+ 
 enum SyscallEventType {
         SYSCALL_EVENT_TYPE_UNKNOWN = 0;
         SYSCALL_EVENT_TYPE_ENTER   = 1;
