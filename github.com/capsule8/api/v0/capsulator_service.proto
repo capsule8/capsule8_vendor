@@ -1,0 +1,74 @@
+// Copyright 2017 Capsule8 Inc. All rights reserved.
+
+syntax = "proto3";
+
+package capsule8.api.v0;
+option go_package = "github.com/capsule8/api/v0";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+//
+// Capsule8 Capsulator API
+//
+// The Capsulator API is used by platform clients to view the current state 
+// of all connected capsulators and for capsulators to report their current state.
+//
+service CapsulatorService {
+    // Lists all active capsulators connected to the platform
+    rpc ListCapsulators(ListCapsulatorsRequest) returns (ListCapsulatorsResponse) {
+        option (google.api.http) = {
+            get: "/v0/capsulators"
+        };
+    }
+    // Persistent client (capsulator) -> server (c8 platform) stream of capsulator metadata
+    rpc CreateCapsulator(stream CreateCapsulatorRequest) returns (CreateCapsulatorResponse) {
+        option (google.api.http) = {
+            post: "/v0/capsulators"
+            body: "*"
+        };
+    }
+}
+
+// TODO: NYQL integration
+message ListCapsulatorsRequest {}
+
+message ListCapsulatorsResponse {
+    repeated Capsulator capsulators = 1;
+}
+
+message CreateCapsulatorRequest {
+    Capsulator capsulator = 1;
+}
+// Response not expected, clients should continue to actively stream metadata
+// as long as they are connected to the platform.
+message CreateCapsulatorResponse {}
+
+
+// Capsulator Metadata
+message Capsulator {
+    enum Type {
+        CAPSULATOR_TYPE_UNSPECIFIED = 0;
+        TYPE_RECORDER = 1;
+        TYPE_SENSOR = 2;
+        TYPE_PROTECT = 3;
+    }
+
+    // Generic capsulator fields
+    string id = 1;
+    Type type = 2;
+
+    // Auto-populated by the platform API
+    google.protobuf.Timestamp connected_at = 9;
+
+    /* Flattened capsulator type specific fields */
+    // RECORDER
+    google.protobuf.Timestamp recorder_start_date = 10;
+    google.protobuf.Timestamp recorder_end_date = 11;
+
+    // SENSOR
+    string sensor_sysname = 20;
+    string sensor_nodename = 21;
+    string sensor_release = 22;
+    string sensor_version = 23;
+}

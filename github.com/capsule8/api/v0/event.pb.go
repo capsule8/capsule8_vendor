@@ -40,7 +40,7 @@ var ContainerEventType_value = map[string]int32{
 func (x ContainerEventType) String() string {
 	return proto.EnumName(ContainerEventType_name, int32(x))
 }
-func (ContainerEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (ContainerEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
 
 type ProcessEventType int32
 
@@ -67,7 +67,7 @@ var ProcessEventType_value = map[string]int32{
 func (x ProcessEventType) String() string {
 	return proto.EnumName(ProcessEventType_name, int32(x))
 }
-func (ProcessEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
+func (ProcessEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{1} }
 
 type SyscallEventType int32
 
@@ -91,7 +91,7 @@ var SyscallEventType_value = map[string]int32{
 func (x SyscallEventType) String() string {
 	return proto.EnumName(SyscallEventType_name, int32(x))
 }
-func (SyscallEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
+func (SyscallEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{2} }
 
 type FileEventType int32
 
@@ -112,7 +112,7 @@ var FileEventType_value = map[string]int32{
 func (x FileEventType) String() string {
 	return proto.EnumName(FileEventType_name, int32(x))
 }
-func (FileEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
+func (FileEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{3} }
 
 type KernelFunctionCallEventType int32
 
@@ -136,7 +136,7 @@ var KernelFunctionCallEventType_value = map[string]int32{
 func (x KernelFunctionCallEventType) String() string {
 	return proto.EnumName(KernelFunctionCallEventType_name, int32(x))
 }
-func (KernelFunctionCallEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{4} }
+func (KernelFunctionCallEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{4} }
 
 type NetworkEventType int32
 
@@ -190,7 +190,7 @@ var NetworkEventType_value = map[string]int32{
 func (x NetworkEventType) String() string {
 	return proto.EnumName(NetworkEventType_name, int32(x))
 }
-func (NetworkEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{5} }
+func (NetworkEventType) EnumDescriptor() ([]byte, []int) { return fileDescriptor6, []int{5} }
 
 type KernelFunctionCallEvent_FieldType int32
 
@@ -239,7 +239,7 @@ func (x KernelFunctionCallEvent_FieldType) String() string {
 	return proto.EnumName(KernelFunctionCallEvent_FieldType_name, int32(x))
 }
 func (KernelFunctionCallEvent_FieldType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor8, []int{8, 0}
+	return fileDescriptor6, []int{8, 0}
 }
 
 type Event struct {
@@ -297,7 +297,7 @@ type Event struct {
 func (m *Event) Reset()                    { *m = Event{} }
 func (m *Event) String() string            { return proto.CompactTextString(m) }
 func (*Event) ProtoMessage()               {}
-func (*Event) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (*Event) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
 
 type isEvent_Event interface {
 	isEvent_Event()
@@ -690,7 +690,7 @@ type ChargenEvent struct {
 func (m *ChargenEvent) Reset()                    { *m = ChargenEvent{} }
 func (m *ChargenEvent) String() string            { return proto.CompactTextString(m) }
 func (*ChargenEvent) ProtoMessage()               {}
-func (*ChargenEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
+func (*ChargenEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{1} }
 
 func (m *ChargenEvent) GetIndex() uint64 {
 	if m != nil {
@@ -720,7 +720,7 @@ type TickerEvent struct {
 func (m *TickerEvent) Reset()                    { *m = TickerEvent{} }
 func (m *TickerEvent) String() string            { return proto.CompactTextString(m) }
 func (*TickerEvent) ProtoMessage()               {}
-func (*TickerEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
+func (*TickerEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{2} }
 
 func (m *TickerEvent) GetSeconds() int64 {
 	if m != nil {
@@ -769,7 +769,7 @@ type ContainerEvent struct {
 func (m *ContainerEvent) Reset()                    { *m = ContainerEvent{} }
 func (m *ContainerEvent) String() string            { return proto.CompactTextString(m) }
 func (*ContainerEvent) ProtoMessage()               {}
-func (*ContainerEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
+func (*ContainerEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{3} }
 
 func (m *ContainerEvent) GetType() ContainerEventType {
 	if m != nil {
@@ -873,7 +873,7 @@ type ProcessEvent struct {
 func (m *ProcessEvent) Reset()                    { *m = ProcessEvent{} }
 func (m *ProcessEvent) String() string            { return proto.CompactTextString(m) }
 func (*ProcessEvent) ProtoMessage()               {}
-func (*ProcessEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{4} }
+func (*ProcessEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{4} }
 
 func (m *ProcessEvent) GetType() ProcessEventType {
 	if m != nil {
@@ -953,7 +953,7 @@ type SyscallEvent struct {
 func (m *SyscallEvent) Reset()                    { *m = SyscallEvent{} }
 func (m *SyscallEvent) String() string            { return proto.CompactTextString(m) }
 func (*SyscallEvent) ProtoMessage()               {}
-func (*SyscallEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{5} }
+func (*SyscallEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{5} }
 
 func (m *SyscallEvent) GetType() SyscallEventType {
 	if m != nil {
@@ -1028,7 +1028,7 @@ type FileEvent struct {
 func (m *FileEvent) Reset()                    { *m = FileEvent{} }
 func (m *FileEvent) String() string            { return proto.CompactTextString(m) }
 func (*FileEvent) ProtoMessage()               {}
-func (*FileEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{6} }
+func (*FileEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{6} }
 
 func (m *FileEvent) GetType() FileEventType {
 	if m != nil {
@@ -1066,7 +1066,7 @@ type Process struct {
 func (m *Process) Reset()                    { *m = Process{} }
 func (m *Process) String() string            { return proto.CompactTextString(m) }
 func (*Process) ProtoMessage()               {}
-func (*Process) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{7} }
+func (*Process) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{7} }
 
 func (m *Process) GetPid() int32 {
 	if m != nil {
@@ -1089,7 +1089,7 @@ type KernelFunctionCallEvent struct {
 func (m *KernelFunctionCallEvent) Reset()                    { *m = KernelFunctionCallEvent{} }
 func (m *KernelFunctionCallEvent) String() string            { return proto.CompactTextString(m) }
 func (*KernelFunctionCallEvent) ProtoMessage()               {}
-func (*KernelFunctionCallEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{8} }
+func (*KernelFunctionCallEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{8} }
 
 func (m *KernelFunctionCallEvent) GetArguments() map[string]*KernelFunctionCallEvent_FieldValue {
 	if m != nil {
@@ -1112,7 +1112,7 @@ func (m *KernelFunctionCallEvent_FieldValue) Reset()         { *m = KernelFuncti
 func (m *KernelFunctionCallEvent_FieldValue) String() string { return proto.CompactTextString(m) }
 func (*KernelFunctionCallEvent_FieldValue) ProtoMessage()    {}
 func (*KernelFunctionCallEvent_FieldValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor8, []int{8, 0}
+	return fileDescriptor6, []int{8, 0}
 }
 
 type isKernelFunctionCallEvent_FieldValue_Value interface {
@@ -1285,7 +1285,7 @@ type NetworkEvent struct {
 func (m *NetworkEvent) Reset()                    { *m = NetworkEvent{} }
 func (m *NetworkEvent) String() string            { return proto.CompactTextString(m) }
 func (*NetworkEvent) ProtoMessage()               {}
-func (*NetworkEvent) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{9} }
+func (*NetworkEvent) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{9} }
 
 func (m *NetworkEvent) GetType() NetworkEventType {
 	if m != nil {
@@ -1343,9 +1343,9 @@ func init() {
 	proto.RegisterEnum("capsule8.api.v0.KernelFunctionCallEvent_FieldType", KernelFunctionCallEvent_FieldType_name, KernelFunctionCallEvent_FieldType_value)
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/event.proto", fileDescriptor8) }
+func init() { proto.RegisterFile("capsule8/api/v0/event.proto", fileDescriptor6) }
 
-var fileDescriptor8 = []byte{
+var fileDescriptor6 = []byte{
 	// 1724 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x58, 0xbf, 0x77, 0xdb, 0xc8,
 	0x11, 0x36, 0x48, 0x4a, 0x24, 0x87, 0x14, 0x05, 0x6d, 0x74, 0x77, 0x38, 0xc9, 0x27, 0x51, 0x94,
