@@ -39,7 +39,7 @@ var Alert_Severity_value = map[string]int32{
 func (x Alert_Severity) String() string {
 	return proto.EnumName(Alert_Severity_name, int32(x))
 }
-func (Alert_Severity) EnumDescriptor() ([]byte, []int) { return fileDescriptor11, []int{0, 0} }
+func (Alert_Severity) EnumDescriptor() ([]byte, []int) { return fileDescriptor10, []int{0, 0} }
 
 type Alert_Confidence int32
 
@@ -66,7 +66,7 @@ var Alert_Confidence_value = map[string]int32{
 func (x Alert_Confidence) String() string {
 	return proto.EnumName(Alert_Confidence_name, int32(x))
 }
-func (Alert_Confidence) EnumDescriptor() ([]byte, []int) { return fileDescriptor11, []int{0, 1} }
+func (Alert_Confidence) EnumDescriptor() ([]byte, []int) { return fileDescriptor10, []int{0, 1} }
 
 type Alert_Entity int32
 
@@ -96,7 +96,7 @@ var Alert_Entity_value = map[string]int32{
 func (x Alert_Entity) String() string {
 	return proto.EnumName(Alert_Entity_name, int32(x))
 }
-func (Alert_Entity) EnumDescriptor() ([]byte, []int) { return fileDescriptor11, []int{0, 2} }
+func (Alert_Entity) EnumDescriptor() ([]byte, []int) { return fileDescriptor10, []int{0, 2} }
 
 type Alert_Scope int32
 
@@ -126,7 +126,7 @@ var Alert_Scope_value = map[string]int32{
 func (x Alert_Scope) String() string {
 	return proto.EnumName(Alert_Scope_name, int32(x))
 }
-func (Alert_Scope) EnumDescriptor() ([]byte, []int) { return fileDescriptor11, []int{0, 3} }
+func (Alert_Scope) EnumDescriptor() ([]byte, []int) { return fileDescriptor10, []int{0, 3} }
 
 type Alert struct {
 	// Unique alert message identifier
@@ -168,7 +168,7 @@ type Alert struct {
 func (m *Alert) Reset()                    { *m = Alert{} }
 func (m *Alert) String() string            { return proto.CompactTextString(m) }
 func (*Alert) ProtoMessage()               {}
-func (*Alert) Descriptor() ([]byte, []int) { return fileDescriptor11, []int{0} }
+func (*Alert) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{0} }
 
 func (m *Alert) GetId() string {
 	if m != nil {
@@ -276,9 +276,9 @@ func init() {
 	proto.RegisterEnum("capsule8.api.v0.Alert_Scope", Alert_Scope_name, Alert_Scope_value)
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/alert.proto", fileDescriptor11) }
+func init() { proto.RegisterFile("capsule8/api/v0/alert.proto", fileDescriptor10) }
 
-var fileDescriptor11 = []byte{
+var fileDescriptor10 = []byte{
 	// 611 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x94, 0xd1, 0x4f, 0xda, 0x50,
 	0x14, 0xc6, 0x07, 0x0a, 0xe2, 0x41, 0xa1, 0x1e, 0x5d, 0xec, 0x10, 0x27, 0xf2, 0xe4, 0x53, 0x31,

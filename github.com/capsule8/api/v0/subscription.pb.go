@@ -34,7 +34,7 @@ var ContainerEventView_value = map[string]int32{
 func (x ContainerEventView) String() string {
 	return proto.EnumName(ContainerEventView_name, int32(x))
 }
-func (ContainerEventView) EnumDescriptor() ([]byte, []int) { return fileDescriptor10, []int{0} }
+func (ContainerEventView) EnumDescriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
 type ProcessView int32
 
@@ -57,7 +57,7 @@ var ProcessView_value = map[string]int32{
 func (x ProcessView) String() string {
 	return proto.EnumName(ProcessView_name, int32(x))
 }
-func (ProcessView) EnumDescriptor() ([]byte, []int) { return fileDescriptor10, []int{1} }
+func (ProcessView) EnumDescriptor() ([]byte, []int) { return fileDescriptor5, []int{1} }
 
 type ThrottleModifier_IntervalType int32
 
@@ -85,7 +85,7 @@ func (x ThrottleModifier_IntervalType) String() string {
 	return proto.EnumName(ThrottleModifier_IntervalType_name, int32(x))
 }
 func (ThrottleModifier_IntervalType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor10, []int{13, 0}
+	return fileDescriptor5, []int{13, 0}
 }
 
 type FilterExpression_FilterExpressionType int32
@@ -111,7 +111,7 @@ func (x FilterExpression_FilterExpressionType) String() string {
 	return proto.EnumName(FilterExpression_FilterExpressionType_name, int32(x))
 }
 func (FilterExpression_FilterExpressionType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor10, []int{15, 0}
+	return fileDescriptor5, []int{15, 0}
 }
 
 type FilterPredicate_PredicateType int32
@@ -152,7 +152,7 @@ func (x FilterPredicate_PredicateType) String() string {
 	return proto.EnumName(FilterPredicate_PredicateType_name, int32(x))
 }
 func (FilterPredicate_PredicateType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor10, []int{16, 0}
+	return fileDescriptor5, []int{16, 0}
 }
 
 type FilterPredicate_ValueType int32
@@ -178,7 +178,7 @@ func (x FilterPredicate_ValueType) String() string {
 	return proto.EnumName(FilterPredicate_ValueType_name, int32(x))
 }
 func (FilterPredicate_ValueType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor10, []int{16, 1}
+	return fileDescriptor5, []int{16, 1}
 }
 
 //
@@ -219,7 +219,7 @@ type Subscription struct {
 func (m *Subscription) Reset()                    { *m = Subscription{} }
 func (m *Subscription) String() string            { return proto.CompactTextString(m) }
 func (*Subscription) ProtoMessage()               {}
-func (*Subscription) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{0} }
+func (*Subscription) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
 func (m *Subscription) GetEventFilter() *EventFilter {
 	if m != nil {
@@ -276,7 +276,7 @@ type SensorFilter struct {
 func (m *SensorFilter) Reset()                    { *m = SensorFilter{} }
 func (m *SensorFilter) String() string            { return proto.CompactTextString(m) }
 func (*SensorFilter) ProtoMessage()               {}
-func (*SensorFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{1} }
+func (*SensorFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{1} }
 
 type ContainerFilter struct {
 	Ids      []string `protobuf:"bytes,1,rep,name=ids" json:"ids,omitempty"`
@@ -289,7 +289,7 @@ type ContainerFilter struct {
 func (m *ContainerFilter) Reset()                    { *m = ContainerFilter{} }
 func (m *ContainerFilter) String() string            { return proto.CompactTextString(m) }
 func (*ContainerFilter) ProtoMessage()               {}
-func (*ContainerFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{2} }
+func (*ContainerFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{2} }
 
 func (m *ContainerFilter) GetIds() []string {
 	if m != nil {
@@ -342,7 +342,7 @@ type EventFilter struct {
 func (m *EventFilter) Reset()                    { *m = EventFilter{} }
 func (m *EventFilter) String() string            { return proto.CompactTextString(m) }
 func (*EventFilter) ProtoMessage()               {}
-func (*EventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{3} }
+func (*EventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{3} }
 
 func (m *EventFilter) GetSyscallEvents() []*SyscallEventFilter {
 	if m != nil {
@@ -417,7 +417,7 @@ type SyscallEventFilter struct {
 func (m *SyscallEventFilter) Reset()                    { *m = SyscallEventFilter{} }
 func (m *SyscallEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*SyscallEventFilter) ProtoMessage()               {}
-func (*SyscallEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{4} }
+func (*SyscallEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{4} }
 
 func (m *SyscallEventFilter) GetType() SyscallEventType {
 	if m != nil {
@@ -496,7 +496,7 @@ type ProcessEventFilter struct {
 func (m *ProcessEventFilter) Reset()                    { *m = ProcessEventFilter{} }
 func (m *ProcessEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*ProcessEventFilter) ProtoMessage()               {}
-func (*ProcessEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{5} }
+func (*ProcessEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{5} }
 
 func (m *ProcessEventFilter) GetType() ProcessEventType {
 	if m != nil {
@@ -542,7 +542,7 @@ type FileEventFilter struct {
 func (m *FileEventFilter) Reset()                    { *m = FileEventFilter{} }
 func (m *FileEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*FileEventFilter) ProtoMessage()               {}
-func (*FileEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{6} }
+func (*FileEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{6} }
 
 func (m *FileEventFilter) GetType() FileEventType {
 	if m != nil {
@@ -593,7 +593,7 @@ type KernelFunctionCallFilter struct {
 func (m *KernelFunctionCallFilter) Reset()                    { *m = KernelFunctionCallFilter{} }
 func (m *KernelFunctionCallFilter) String() string            { return proto.CompactTextString(m) }
 func (*KernelFunctionCallFilter) ProtoMessage()               {}
-func (*KernelFunctionCallFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{7} }
+func (*KernelFunctionCallFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{7} }
 
 func (m *KernelFunctionCallFilter) GetType() KernelFunctionCallEventType {
 	if m != nil {
@@ -633,7 +633,7 @@ type NetworkEventFilter struct {
 func (m *NetworkEventFilter) Reset()                    { *m = NetworkEventFilter{} }
 func (m *NetworkEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*NetworkEventFilter) ProtoMessage()               {}
-func (*NetworkEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{8} }
+func (*NetworkEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{8} }
 
 func (m *NetworkEventFilter) GetType() NetworkEventType {
 	if m != nil {
@@ -659,7 +659,7 @@ type ContainerEventFilter struct {
 func (m *ContainerEventFilter) Reset()                    { *m = ContainerEventFilter{} }
 func (m *ContainerEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*ContainerEventFilter) ProtoMessage()               {}
-func (*ContainerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{9} }
+func (*ContainerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{9} }
 
 func (m *ContainerEventFilter) GetType() ContainerEventType {
 	if m != nil {
@@ -683,7 +683,7 @@ type ChargenEventFilter struct {
 func (m *ChargenEventFilter) Reset()                    { *m = ChargenEventFilter{} }
 func (m *ChargenEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*ChargenEventFilter) ProtoMessage()               {}
-func (*ChargenEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{10} }
+func (*ChargenEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{10} }
 
 func (m *ChargenEventFilter) GetLength() uint64 {
 	if m != nil {
@@ -700,7 +700,7 @@ type TickerEventFilter struct {
 func (m *TickerEventFilter) Reset()                    { *m = TickerEventFilter{} }
 func (m *TickerEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*TickerEventFilter) ProtoMessage()               {}
-func (*TickerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{11} }
+func (*TickerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{11} }
 
 func (m *TickerEventFilter) GetInterval() int64 {
 	if m != nil {
@@ -722,7 +722,7 @@ type Modifier struct {
 func (m *Modifier) Reset()                    { *m = Modifier{} }
 func (m *Modifier) String() string            { return proto.CompactTextString(m) }
 func (*Modifier) ProtoMessage()               {}
-func (*Modifier) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{12} }
+func (*Modifier) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{12} }
 
 func (m *Modifier) GetThrottle() *ThrottleModifier {
 	if m != nil {
@@ -746,7 +746,7 @@ type ThrottleModifier struct {
 func (m *ThrottleModifier) Reset()                    { *m = ThrottleModifier{} }
 func (m *ThrottleModifier) String() string            { return proto.CompactTextString(m) }
 func (*ThrottleModifier) ProtoMessage()               {}
-func (*ThrottleModifier) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{13} }
+func (*ThrottleModifier) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{13} }
 
 func (m *ThrottleModifier) GetInterval() int64 {
 	if m != nil {
@@ -770,7 +770,7 @@ type LimitModifier struct {
 func (m *LimitModifier) Reset()                    { *m = LimitModifier{} }
 func (m *LimitModifier) String() string            { return proto.CompactTextString(m) }
 func (*LimitModifier) ProtoMessage()               {}
-func (*LimitModifier) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{14} }
+func (*LimitModifier) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{14} }
 
 func (m *LimitModifier) GetLimit() int64 {
 	if m != nil {
@@ -789,7 +789,7 @@ type FilterExpression struct {
 func (m *FilterExpression) Reset()                    { *m = FilterExpression{} }
 func (m *FilterExpression) String() string            { return proto.CompactTextString(m) }
 func (*FilterExpression) ProtoMessage()               {}
-func (*FilterExpression) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{15} }
+func (*FilterExpression) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{15} }
 
 func (m *FilterExpression) GetType() FilterExpression_FilterExpressionType {
 	if m != nil {
@@ -833,7 +833,7 @@ type FilterPredicate struct {
 func (m *FilterPredicate) Reset()                    { *m = FilterPredicate{} }
 func (m *FilterPredicate) String() string            { return proto.CompactTextString(m) }
 func (*FilterPredicate) ProtoMessage()               {}
-func (*FilterPredicate) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{16} }
+func (*FilterPredicate) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{16} }
 
 type isFilterPredicate_Value interface {
 	isFilterPredicate_Value()
@@ -1007,9 +1007,9 @@ func init() {
 	proto.RegisterEnum("capsule8.api.v0.FilterPredicate_ValueType", FilterPredicate_ValueType_name, FilterPredicate_ValueType_value)
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/subscription.proto", fileDescriptor10) }
+func init() { proto.RegisterFile("capsule8/api/v0/subscription.proto", fileDescriptor5) }
 
-var fileDescriptor10 = []byte{
+var fileDescriptor5 = []byte{
 	// 1559 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x58, 0xcb, 0x72, 0xdb, 0x46,
 	0x16, 0x15, 0x41, 0x4a, 0x26, 0x2f, 0x5f, 0x70, 0x8f, 0xec, 0xe1, 0xc8, 0x8f, 0x91, 0xe1, 0x72,
