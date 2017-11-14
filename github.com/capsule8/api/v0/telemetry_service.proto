@@ -1,5 +1,8 @@
 // Copyright 2017 Capsule8 Inc. All rights reserved.
 
+//
+//
+//
 syntax = "proto3";
 
 package capsule8.api.v0;
@@ -12,30 +15,44 @@ import "google/api/annotations.proto";
 //
 // Capsule8 Telemetry API
 //
-// The Telemetry API is used by capsulators to get telemetry events.
+// The Telemetry API allows you to subscribe to streams of live and
+// historical Events from Capsule8 Sensors.
 //
 service TelemetryService {
-    // Get telemetry events
-    rpc GetEvents(GetEventsRequest) returns (stream GetEventsResponse) {
-        option (google.api.http) = {
-            post: "/v0/events"
-            body: "*"
-        };
-    }
+        // Opens a new stream of telemetry events
+        rpc GetEvents(GetEventsRequest) returns (stream GetEventsResponse) {
+                option (google.api.http) = {
+                        post : "/v0/events"
+                        body : "*"
+                };
+        }
 }
 
-// Publishes a message to topic
+// A request message to initiate the streaming of telemetry events
 message GetEventsRequest {
-    // Can publish one or more message(s) at a time
-    Subscription subscription = 1;
+	// The Subscription message defines which events should be
+	// returned in the stream.
+        Subscription subscription = 1;
 }
 
+// A response message containing telemetry events
 message GetEventsResponse {
-    repeated TelemetryEvent events = 1;
+        // Can publish one or more message(s) at a time
+	repeated TelemetryEvent events = 1;
 }
 
+// A telemetry event received from a Sensor or Recorder.
 message TelemetryEvent {
-    int64 publish_time_micros = 1;
-    Event event = 2;
-    bytes ack = 3;
+        // The time that the event was received by the backplane (in micros since Unix epoch)
+        int64 publish_time_micros = 1;
+
+        // The actual event observed by the Sensor. For historical
+        // event subscriptions, this event may be sent from the
+        // Recorder.
+        Event event = 2;
+
+        // An opaque ack for the event. If present, this ack must be sent to
+        // the PubsubService's Acknowledge method or else the TelemetryService
+	// will re-transmit the event.
+        bytes ack = 3;
 }

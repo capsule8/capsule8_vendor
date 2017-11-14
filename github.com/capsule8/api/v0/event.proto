@@ -7,6 +7,7 @@ option go_package = "github.com/capsule8/api/v0";
 
 import "capsule8/api/v0/types.proto";
 
+// An event observed by the Sensor.
 message Event {
         // Unique identifier for the event
         string id = 1;

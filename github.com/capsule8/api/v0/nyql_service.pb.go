@@ -26,7 +26,7 @@ type CreateSubscriptionRequest struct {
 func (m *CreateSubscriptionRequest) Reset()                    { *m = CreateSubscriptionRequest{} }
 func (m *CreateSubscriptionRequest) String() string            { return proto.CompactTextString(m) }
 func (*CreateSubscriptionRequest) ProtoMessage()               {}
-func (*CreateSubscriptionRequest) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
+func (*CreateSubscriptionRequest) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{0} }
 
 func (m *CreateSubscriptionRequest) GetQuery() string {
 	if m != nil {
@@ -43,7 +43,7 @@ type CreateSubscriptionResponse struct {
 func (m *CreateSubscriptionResponse) Reset()                    { *m = CreateSubscriptionResponse{} }
 func (m *CreateSubscriptionResponse) String() string            { return proto.CompactTextString(m) }
 func (*CreateSubscriptionResponse) ProtoMessage()               {}
-func (*CreateSubscriptionResponse) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
+func (*CreateSubscriptionResponse) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{1} }
 
 func (m *CreateSubscriptionResponse) GetSubscription() *Subscription {
 	if m != nil {
@@ -138,9 +138,9 @@ var _NYQLService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "capsule8/api/v0/nyql_service.proto",
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/nyql_service.proto", fileDescriptor3) }
+func init() { proto.RegisterFile("capsule8/api/v0/nyql_service.proto", fileDescriptor4) }
 
-var fileDescriptor3 = []byte{
+var fileDescriptor4 = []byte{
 	// 272 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0x4a, 0x4e, 0x2c, 0x28,
 	0x2e, 0xcd, 0x49, 0xb5, 0xd0, 0x4f, 0x2c, 0xc8, 0xd4, 0x2f, 0x33, 0xd0, 0xcf, 0xab, 0x2c, 0xcc,
