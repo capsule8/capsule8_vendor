@@ -57,6 +57,7 @@ message Capsulator {
     // Generic capsulator fields
     string id = 1;
     Type type = 2;
+    string config_name = 3;  // Fully qualified config name
 
     // Auto-populated by the platform API
     google.protobuf.Timestamp connected_at = 9;

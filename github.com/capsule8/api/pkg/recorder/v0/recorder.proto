@@ -2,12 +2,12 @@
 
 syntax = "proto3";
 
-package capsule8.config;
-option go_package = "github.com/capsule8/api/pkg/config";
+package capsule8.recorder.v0;
+option go_package = "github.com/capsule8/api/pkg/recorder/v0";
 
 import "capsule8/api/v0/subscription.proto";
 
-message RecorderConfig {
+message Config {
     capsule8.api.v0.Subscription subscription = 1;
     int64 storage_capacity_bytes = 2;
 }

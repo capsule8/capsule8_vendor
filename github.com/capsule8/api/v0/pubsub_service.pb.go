@@ -8,13 +8,13 @@ It is generated from these files:
 	capsule8/api/v0/pubsub_service.proto
 	capsule8/api/v0/types.proto
 	capsule8/api/v0/config_service.proto
+	capsule8/api/v0/ack.proto
 	capsule8/api/v0/nyql_service.proto
 	capsule8/api/v0/config.proto
-	capsule8/api/v0/subscription.proto
 	capsule8/api/v0/event.proto
 	capsule8/api/v0/telemetry_service.proto
+	capsule8/api/v0/subscription.proto
 	capsule8/api/v0/capsulator_service.proto
-	capsule8/api/v0/ack.proto
 	capsule8/api/v0/alert.proto
 
 It has these top-level messages:
@@ -39,9 +39,23 @@ It has these top-level messages:
 	WatchConfigResponse
 	ListConfigsRequest
 	ListConfigsResponse
+	Ack
 	CreateSubscriptionRequest
 	CreateSubscriptionResponse
 	Config
+	Event
+	ChargenEvent
+	TickerEvent
+	ContainerEvent
+	ProcessEvent
+	SyscallEvent
+	FileEvent
+	Process
+	KernelFunctionCallEvent
+	NetworkEvent
+	GetEventsRequest
+	GetEventsResponse
+	TelemetryEvent
 	Subscription
 	SensorFilter
 	ContainerFilter
@@ -59,25 +73,11 @@ It has these top-level messages:
 	LimitModifier
 	FilterExpression
 	FilterPredicate
-	Event
-	ChargenEvent
-	TickerEvent
-	ContainerEvent
-	ProcessEvent
-	SyscallEvent
-	FileEvent
-	Process
-	KernelFunctionCallEvent
-	NetworkEvent
-	GetEventsRequest
-	GetEventsResponse
-	TelemetryEvent
 	ListCapsulatorsRequest
 	ListCapsulatorsResponse
 	CreateCapsulatorRequest
 	CreateCapsulatorResponse
 	Capsulator
-	Ack
 	Alert
 */
 package v0
