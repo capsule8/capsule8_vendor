@@ -51,11 +51,11 @@ message Alert {
 
         // The unique IDs of the entity where anomalous behavior was
         // detected. Exactly one of these should be non-NULL.
-        string process_id = 4;
+        string process_id   = 4;
         string container_id = 5;
-        string node_id = 6;
-        string cluster_id = 7;
-  
+        string node_id      = 6;
+        string cluster_id   = 7;
+
         // The scope of impact (just the process, entire container, node, or
         // cluster). This is the "blast radius" of the security impact
         // around the source of the alert.

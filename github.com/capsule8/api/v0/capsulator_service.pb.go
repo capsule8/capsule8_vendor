@@ -7,7 +7,7 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
-import google_protobuf3 "github.com/golang/protobuf/ptypes/timestamp"
+import google_protobuf2 "github.com/golang/protobuf/ptypes/timestamp"
 
 import (
 	context "golang.org/x/net/context"
@@ -44,7 +44,7 @@ var Capsulator_Type_value = map[string]int32{
 func (x Capsulator_Type) String() string {
 	return proto.EnumName(Capsulator_Type_name, int32(x))
 }
-func (Capsulator_Type) EnumDescriptor() ([]byte, []int) { return fileDescriptor9, []int{4, 0} }
+func (Capsulator_Type) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{4, 0} }
 
 // TODO: NYQL integration
 type ListCapsulatorsRequest struct {
@@ -53,7 +53,7 @@ type ListCapsulatorsRequest struct {
 func (m *ListCapsulatorsRequest) Reset()                    { *m = ListCapsulatorsRequest{} }
 func (m *ListCapsulatorsRequest) String() string            { return proto.CompactTextString(m) }
 func (*ListCapsulatorsRequest) ProtoMessage()               {}
-func (*ListCapsulatorsRequest) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{0} }
+func (*ListCapsulatorsRequest) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
 
 type ListCapsulatorsResponse struct {
 	Capsulators []*Capsulator `protobuf:"bytes,1,rep,name=capsulators" json:"capsulators,omitempty"`
@@ -62,7 +62,7 @@ type ListCapsulatorsResponse struct {
 func (m *ListCapsulatorsResponse) Reset()                    { *m = ListCapsulatorsResponse{} }
 func (m *ListCapsulatorsResponse) String() string            { return proto.CompactTextString(m) }
 func (*ListCapsulatorsResponse) ProtoMessage()               {}
-func (*ListCapsulatorsResponse) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{1} }
+func (*ListCapsulatorsResponse) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
 
 func (m *ListCapsulatorsResponse) GetCapsulators() []*Capsulator {
 	if m != nil {
@@ -78,7 +78,7 @@ type CreateCapsulatorRequest struct {
 func (m *CreateCapsulatorRequest) Reset()                    { *m = CreateCapsulatorRequest{} }
 func (m *CreateCapsulatorRequest) String() string            { return proto.CompactTextString(m) }
 func (*CreateCapsulatorRequest) ProtoMessage()               {}
-func (*CreateCapsulatorRequest) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{2} }
+func (*CreateCapsulatorRequest) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
 
 func (m *CreateCapsulatorRequest) GetCapsulator() *Capsulator {
 	if m != nil {
@@ -95,7 +95,7 @@ type CreateCapsulatorResponse struct {
 func (m *CreateCapsulatorResponse) Reset()                    { *m = CreateCapsulatorResponse{} }
 func (m *CreateCapsulatorResponse) String() string            { return proto.CompactTextString(m) }
 func (*CreateCapsulatorResponse) ProtoMessage()               {}
-func (*CreateCapsulatorResponse) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{3} }
+func (*CreateCapsulatorResponse) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
 
 // Capsulator Metadata
 type Capsulator struct {
@@ -104,10 +104,10 @@ type Capsulator struct {
 	Type       Capsulator_Type `protobuf:"varint,2,opt,name=type,enum=capsule8.api.v0.Capsulator_Type" json:"type,omitempty"`
 	ConfigName string          `protobuf:"bytes,3,opt,name=config_name,json=configName" json:"config_name,omitempty"`
 	// Auto-populated by the platform API
-	ConnectedAt *google_protobuf3.Timestamp `protobuf:"bytes,9,opt,name=connected_at,json=connectedAt" json:"connected_at,omitempty"`
+	ConnectedAt *google_protobuf2.Timestamp `protobuf:"bytes,9,opt,name=connected_at,json=connectedAt" json:"connected_at,omitempty"`
 	// RECORDER
-	RecorderStartDate *google_protobuf3.Timestamp `protobuf:"bytes,10,opt,name=recorder_start_date,json=recorderStartDate" json:"recorder_start_date,omitempty"`
-	RecorderEndDate   *google_protobuf3.Timestamp `protobuf:"bytes,11,opt,name=recorder_end_date,json=recorderEndDate" json:"recorder_end_date,omitempty"`
+	RecorderStartDate *google_protobuf2.Timestamp `protobuf:"bytes,10,opt,name=recorder_start_date,json=recorderStartDate" json:"recorder_start_date,omitempty"`
+	RecorderEndDate   *google_protobuf2.Timestamp `protobuf:"bytes,11,opt,name=recorder_end_date,json=recorderEndDate" json:"recorder_end_date,omitempty"`
 	// SENSOR
 	SensorSysname  string `protobuf:"bytes,20,opt,name=sensor_sysname,json=sensorSysname" json:"sensor_sysname,omitempty"`
 	SensorNodename string `protobuf:"bytes,21,opt,name=sensor_nodename,json=sensorNodename" json:"sensor_nodename,omitempty"`
@@ -118,7 +118,7 @@ type Capsulator struct {
 func (m *Capsulator) Reset()                    { *m = Capsulator{} }
 func (m *Capsulator) String() string            { return proto.CompactTextString(m) }
 func (*Capsulator) ProtoMessage()               {}
-func (*Capsulator) Descriptor() ([]byte, []int) { return fileDescriptor9, []int{4} }
+func (*Capsulator) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{4} }
 
 func (m *Capsulator) GetId() string {
 	if m != nil {
@@ -141,21 +141,21 @@ func (m *Capsulator) GetConfigName() string {
 	return ""
 }
 
-func (m *Capsulator) GetConnectedAt() *google_protobuf3.Timestamp {
+func (m *Capsulator) GetConnectedAt() *google_protobuf2.Timestamp {
 	if m != nil {
 		return m.ConnectedAt
 	}
 	return nil
 }
 
-func (m *Capsulator) GetRecorderStartDate() *google_protobuf3.Timestamp {
+func (m *Capsulator) GetRecorderStartDate() *google_protobuf2.Timestamp {
 	if m != nil {
 		return m.RecorderStartDate
 	}
 	return nil
 }
 
-func (m *Capsulator) GetRecorderEndDate() *google_protobuf3.Timestamp {
+func (m *Capsulator) GetRecorderEndDate() *google_protobuf2.Timestamp {
 	if m != nil {
 		return m.RecorderEndDate
 	}
@@ -212,7 +212,8 @@ const _ = grpc.SupportPackageIsVersion4
 type CapsulatorServiceClient interface {
 	// Lists all active capsulators connected to the platform
 	ListCapsulators(ctx context.Context, in *ListCapsulatorsRequest, opts ...grpc.CallOption) (*ListCapsulatorsResponse, error)
-	// Persistent client (capsulator) -> server (c8 platform) stream of capsulator metadata
+	// Persistent client (capsulator) -> server (c8 platform) stream of
+	// capsulator metadata
 	CreateCapsulator(ctx context.Context, opts ...grpc.CallOption) (CapsulatorService_CreateCapsulatorClient, error)
 }
 
@@ -272,7 +273,8 @@ func (x *capsulatorServiceCreateCapsulatorClient) CloseAndRecv() (*CreateCapsula
 type CapsulatorServiceServer interface {
 	// Lists all active capsulators connected to the platform
 	ListCapsulators(context.Context, *ListCapsulatorsRequest) (*ListCapsulatorsResponse, error)
-	// Persistent client (capsulator) -> server (c8 platform) stream of capsulator metadata
+	// Persistent client (capsulator) -> server (c8 platform) stream of
+	// capsulator metadata
 	CreateCapsulator(CapsulatorService_CreateCapsulatorServer) error
 }
 
@@ -343,9 +345,9 @@ var _CapsulatorService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "capsule8/api/v0/capsulator_service.proto",
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/capsulator_service.proto", fileDescriptor9) }
+func init() { proto.RegisterFile("capsule8/api/v0/capsulator_service.proto", fileDescriptor8) }
 
-var fileDescriptor9 = []byte{
+var fileDescriptor8 = []byte{
 	// 594 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x94, 0xc1, 0x6e, 0xd3, 0x4c,
 	0x10, 0xc7, 0x3f, 0xa7, 0xd5, 0x27, 0x75, 0xd2, 0x36, 0xc9, 0x52, 0x1a, 0xcb, 0xad, 0xd4, 0xc8,

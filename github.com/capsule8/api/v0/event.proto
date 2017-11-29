@@ -80,7 +80,8 @@ message Event {
         }
 
         // Unix tid of the process thread associated with event
-        int32 process_tid = 200;
+        // Deprecated since pid really is the tid.
+        // int32 process_tid = 200;
 
         // CPU on which the event occurred
         int32 cpu = 201;
@@ -137,19 +138,19 @@ message ContainerEvent {
         sint32 host_pid = 20;
 
         // Optional, only included on CONTAINER_EVENT_TYPE_EXIT events
-	sint32 exit_code = 30;
+        sint32 exit_code = 30;
 
-	// The exit status will typically one of the values defined in
-	// stdlib.h like EXIT_SUCCESS, EXIT_FAILURE, or EXIT_USAGE.
-	uint32 exit_status = 31;
+        // The exit status will typically one of the values defined in
+        // stdlib.h like EXIT_SUCCESS, EXIT_FAILURE, or EXIT_USAGE.
+        uint32 exit_status = 31;
 
-	// If non-zero, this is the signal number that the process
-	// was terminated with.
-	uint32 exit_signal = 32;
+        // If non-zero, this is the signal number that the process
+        // was terminated with.
+        uint32 exit_signal = 32;
 
-	// If true, indicates that the process dumped a core when
-	// it terminated.
-	bool exit_core_dumped = 33;
+        // If true, indicates that the process dumped a core when
+        // it terminated.
+        bool exit_core_dumped = 33;
 
         // Docker container configuration file
         string docker_config_json = 100;
@@ -158,137 +159,291 @@ message ContainerEvent {
         string oci_config_json = 101;
 }
 
+// Possible ProcessEvent types
 enum ProcessEventType {
+        // The type of event is unknown
         PROCESS_EVENT_TYPE_UNKNOWN = 0;
-        PROCESS_EVENT_TYPE_FORK    = 1;
-        PROCESS_EVENT_TYPE_EXEC    = 2;
-        PROCESS_EVENT_TYPE_EXIT    = 3;
+
+        // The event is a process fork event
+        PROCESS_EVENT_TYPE_FORK = 1;
+
+        // The event is a process exec event
+        PROCESS_EVENT_TYPE_EXEC = 2;
+
+        // The event is a process exit event
+        PROCESS_EVENT_TYPE_EXIT = 3;
 }
 
+// ProcessEvent describes an event that occurred related to processes starting
+// and exiting as detected by the Sensor.
 message ProcessEvent {
+        // The type of event described by this ProcessEvent message
         ProcessEventType type = 1;
 
-        // Optional
+        // Present when the event is a fork event. This is the PID of the
+        // new child process.
         sint32 fork_child_pid = 10;
 
-        // Optional
+        // Present when the event is a fork event. This is the Sensor's process
+        // ID of the new child process.
         string fork_child_id = 11;
 
-        // Optional
-        string exec_filename              = 20;
+        // Present when the event is an exec event. This is the filename of the
+        // executable that was executed.
+        string exec_filename = 20;
+
+        // Present when the event is an exec event. Repeated for each argument
+        // passed to the executable on the command-line.
         repeated string exec_command_line = 21;
 
-        // Optional, only included on PROCESS_EVENT_TYPE_EXIT events
-	sint32 exit_code = 30;
+        // Present when the event is an exit event. This is the exit code that
+        // the process exited with.
+        sint32 exit_code = 30;
 
-	// The exit status will typically one of the values defined in
-	// stdlib.h like EXIT_SUCCESS, EXIT_FAILURE, or EXIT_USAGE.
-	uint32 exit_status = 31;
+        // Present when the event is an exit event. This will typically be one9
+        // of the values defined in stdlib.h like EXIT_SUCCESS, EXIT_FAILURE,
+        // or EXIT_USAGE.
+        uint32 exit_status = 31;
 
-	// If non-zero, this is the signal number that the process
-	// was terminated with.
-	uint32 exit_signal = 32;
+        // Present when the event is an exit event. If non-zero, this is the
+        // signal number that the process was terminated with.
+        uint32 exit_signal = 32;
 
-	// If true, indicates that the process dumped a core when
-	// it terminated.
-	bool exit_core_dumped = 33;
+        // Present when the event is an exit event. If true, indicates that the
+        // process dumped a core when it terminated.
+        bool exit_core_dumped = 33;
 }
- 
+
+// Possible SyscallEvent types
 enum SyscallEventType {
+        // The type of event is unknown
         SYSCALL_EVENT_TYPE_UNKNOWN = 0;
-        SYSCALL_EVENT_TYPE_ENTER   = 1;
-        SYSCALL_EVENT_TYPE_EXIT    = 2;
+
+        // The event is a syscall enter event
+        SYSCALL_EVENT_TYPE_ENTER = 1;
+
+        // The event is a syscall exit event
+        SYSCALL_EVENT_TYPE_EXIT = 2;
 }
 
+// SyscallEvent describes an event that occurred related to system calls being
+// made or returning as detected by the Sensor.
 message SyscallEvent {
+        // The type of event described by this SyscallEvent message
         SyscallEventType type = 1;
 
+        // The syscall number for either enter or exit events.
         int64 id = 2;
 
+        // Present when the event is an enter event. This is the first
+        // argument passed to the system call.
         uint64 arg0 = 10;
+
+        // Present when the event is an enter event. This is the second
+        // argument passed to the system call.
         uint64 arg1 = 11;
+
+        // Present when the event is an enter event. This is the third
+        // argument passed to the system call.
         uint64 arg2 = 12;
+
+        // Present when the event is an enter event. This is the fourth
+        // argument passed to the system call.
         uint64 arg3 = 13;
+
+        // Present when the event is an enter event. This is the fifth
+        // argument passed to the system call.
         uint64 arg4 = 14;
+
+        // Present when the event is an enter event. This is the sixth
+        // argument passed to the system call.
         uint64 arg5 = 15;
 
+        // Present when the event is an exit event. This is the value that was
+        // returned from the system call.
         int64 ret = 20;
 }
 
+// Possible FileEvent types
 enum FileEventType {
+        // The type of event is unknown
         FILE_EVENT_TYPE_UNKNOWN = 0;
-        FILE_EVENT_TYPE_OPEN    = 1;
+
+        // The event is a file open event
+        FILE_EVENT_TYPE_OPEN = 1;
 }
 
+// FileEvent describes an event that occurred related to file operations
+// occurring as detected by the Sensor.
 message FileEvent {
+        // The type of event described by this FileEvent message
         FileEventType type = 1;
 
-        string filename   = 10;
+        // Present when the event is a file open event. This is the filename of
+        // the file being opened.
+        string filename = 10;
+
+        // Present when the event is a file open event. This is the set of
+        // flags with which the file was opened (e.g., O_RDONLY, O_NONBLOCK,
+        // etc.).
         sint32 open_flags = 11;
-        sint32 open_mode  = 12;
+
+        // Present when the event is a file open event. This is the set of file
+        // permissions used in a creat(2) system call.
+        sint32 open_mode = 12;
 }
 
 message Process {
-        sint32 pid = 1;
+        sint32 pid     = 1;
         string command = 2;
 }
 
+// Possible KernelFunctionCallEvent types
 enum KernelFunctionCallEventType {
+        // The type of event is unknown
         KERNEL_FUNCTION_CALL_EVENT_TYPE_UNKNOWN = 0;
+
+        // The event is a kernel function being entered.
         KERNEL_FUNCTION_CALL_EVENT_TYPE_ENTER = 1;
+
+        // The event is a kernel function being exited.
         KERNEL_FUNCTION_CALL_EVENT_TYPE_EXIT = 2;
 }
 
+// KernelFunctionCallEvent describes an event that occurred related to kernel
+// functions being entered or exited.
 message KernelFunctionCallEvent {
+        // Possible field types
         enum FieldType {
+                // The field type is unknown
                 UNKNOWN = 0;
+
+                // The field type is an array of bytes
                 BYTES = 1;
+
+                // The field type is a string
                 STRING = 2;
+
+                // The field type is a signed 8-bit integer
                 SINT8 = 3;
+
+                // The field type is a signed 16-bit integer
                 SINT16 = 4;
+
+                // The field type is a signed 32-bit integer
                 SINT32 = 5;
+
+                // The field type is a signed 64-bit integer
                 SINT64 = 6;
+
+                // The field type is an unsigned 8-bit integer
                 UINT8 = 7;
+
+                // The field type is an unsigned 16-bit integer
                 UINT16 = 8;
+
+                // The field type is an unsigned 32-bit integer
                 UINT32 = 9;
+
+                // The field type is an unsigned 64-bit integer
                 UINT64 = 10;
         }
 
+        // The representation of a field value, which is composed of type
+        // information and the value itself.
         message FieldValue {
+                // The type represented by this field value.
                 FieldType field_type = 1;
 
                 oneof value {
-                        bytes  bytes_value = 2;
+                        // An array of bytes
+                        bytes bytes_value = 2;
+
+                        // A string
                         string string_value = 3;
+
+                        // A signed value (8-bit, 16-bit, 32-bit, or 64-bit)
                         sint64 signed_value = 4;
+
+                        // An unsigned value (8-bit, 16--bit, 32-bit, or 64-bit)
                         uint64 unsigned_value = 5;
                 };
         };
 
+        // Label repeated w/ a `mapEntry` option set to `true`.
+        // This is a map of argument names and values. The keys are strings
+        // that are the names of the arguments, and the values are the actual
+        // values for each field.
         map<string, FieldValue> arguments = 1;
 }
 
+// Possible network event types
 enum NetworkEventType {
+        // The type of event is unknown
         NETWORK_EVENT_TYPE_UNKNOWN = 0;
+
+        // The event is an attempt to connect to an address
         NETWORK_EVENT_TYPE_CONNECT_ATTEMPT = 1;
+
+        // The event is the result of an attempt to connect to an address
         NETWORK_EVENT_TYPE_CONNECT_RESULT = 2;
+
+        // The event is an attempt to bind to a local address
         NETWORK_EVENT_TYPE_BIND_ATTEMPT = 3;
+
+        // The event is the result of an attempt to bind to a local address
         NETWORK_EVENT_TYPE_BIND_RESULT = 4;
+
+        // The event is an attempt to listen for connections
         NETWORK_EVENT_TYPE_LISTEN_ATTEMPT = 5;
+
+        // The event is the result of an attempt to listen for connections
         NETWORK_EVENT_TYPE_LISTEN_RESULT = 6;
+
+        // The event is an attempt to accept an incoming connection
         NETWORK_EVENT_TYPE_ACCEPT_ATTEMPT = 7;
+
+        // The event is the result of an attempt to accept an incoming
+        // connection
         NETWORK_EVENT_TYPE_ACCEPT_RESULT = 8;
+
+        // The event is an attempt to send data to a specific address
         NETWORK_EVENT_TYPE_SENDTO_ATTEMPT = 9;
+
+        // The event is the result of an attempt to send data to a specific
+        // address
         NETWORK_EVENT_TYPE_SENDTO_RESULT = 10;
+
+        // The event is an attempt to receive data from a specific address
         NETWORK_EVENT_TYPE_RECVFROM_ATTEMPT = 11;
+
+        // The event is the result of an attempt to receive data from a
+        // specific address
         NETWORK_EVENT_TYPE_RECVFROM_RESULT = 12;
 }
 
+// NetworkEvent describes an event that occurred related to network activity
+// occurring as detected by the Sensor.
 message NetworkEvent {
+        // The type of event described by this NetworkEvent message.
         NetworkEventType type = 1;
 
-        uint64         sockfd = 10;  // only set for *_ATTEMPT types
-        NetworkAddress address = 11; // set for *_ATTEMPT types
-        sint64         result = 12;  // only set for *_RESULT types
-        uint64         backlog = 13; // only set for NETWORK_EVENT_TYPE_LISTEN_ATTEMPT
+        // Present when the event describes a network event that is an attempt
+        // to perform a network related action. This is the socket descriptor
+        // used to perform the action.
+        uint64 sockfd = 10;
+
+        // Present when the event describes a network event that is an attempt
+        // to perform a network related action that includes an address. This
+        // is that address.
+        NetworkAddress address = 11;
+
+        // Present when the event describes a network event that is the result
+        // of an attempted network related action. This is the return code from
+        // the system call.
+        sint64 result = 12;
+
+        // Present only when the event describes a listen attempt. This is the
+        // value of the backlog argument passed to listen(2).
+        uint64 backlog = 13;
 }

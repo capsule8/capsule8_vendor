@@ -8,13 +8,14 @@ It is generated from these files:
 	capsule8/api/v0/pubsub_service.proto
 	capsule8/api/v0/types.proto
 	capsule8/api/v0/config_service.proto
-	capsule8/api/v0/ack.proto
 	capsule8/api/v0/nyql_service.proto
 	capsule8/api/v0/config.proto
+	capsule8/api/v0/subscription.proto
 	capsule8/api/v0/event.proto
 	capsule8/api/v0/telemetry_service.proto
-	capsule8/api/v0/subscription.proto
 	capsule8/api/v0/capsulator_service.proto
+	capsule8/api/v0/expression.proto
+	capsule8/api/v0/ack.proto
 	capsule8/api/v0/alert.proto
 
 It has these top-level messages:
@@ -39,25 +40,10 @@ It has these top-level messages:
 	WatchConfigResponse
 	ListConfigsRequest
 	ListConfigsResponse
-	Ack
 	CreateSubscriptionRequest
 	CreateSubscriptionResponse
 	Config
-	Event
-	ChargenEvent
-	TickerEvent
-	ContainerEvent
-	ProcessEvent
-	SyscallEvent
-	FileEvent
-	Process
-	KernelFunctionCallEvent
-	NetworkEvent
-	GetEventsRequest
-	GetEventsResponse
-	TelemetryEvent
 	Subscription
-	SensorFilter
 	ContainerFilter
 	EventFilter
 	SyscallEventFilter
@@ -71,13 +57,28 @@ It has these top-level messages:
 	Modifier
 	ThrottleModifier
 	LimitModifier
-	FilterExpression
-	FilterPredicate
+	Event
+	ChargenEvent
+	TickerEvent
+	ContainerEvent
+	ProcessEvent
+	SyscallEvent
+	FileEvent
+	Process
+	KernelFunctionCallEvent
+	NetworkEvent
+	GetEventsRequest
+	GetEventsResponse
+	TelemetryEvent
 	ListCapsulatorsRequest
 	ListCapsulatorsResponse
 	CreateCapsulatorRequest
 	CreateCapsulatorResponse
 	Capsulator
+	Value
+	BinaryOp
+	Expression
+	Ack
 	Alert
 */
 package v0
@@ -217,7 +218,8 @@ type ReceivedMessage struct {
 	Ack     []byte `protobuf:"bytes,1,opt,name=ack,proto3" json:"ack,omitempty"`
 	Payload []byte `protobuf:"bytes,2,opt,name=payload,proto3" json:"payload,omitempty"`
 	// Optional, timestamp that the pubsub backend received the message
-	// NOTE: some pubsub backends do not support timestamps in the messaging protocol (ie. NATS)
+	// NOTE: some pubsub backends do not support timestamps in the messaging
+	// protocol (ie. NATS)
 	PublishTimeMicros int64 `protobuf:"varint,3,opt,name=publish_time_micros,json=publishTimeMicros" json:"publish_time_micros,omitempty"`
 }
 

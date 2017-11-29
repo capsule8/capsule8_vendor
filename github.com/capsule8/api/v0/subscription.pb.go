@@ -6,19 +6,22 @@ package v0
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import google_protobuf2 "github.com/golang/protobuf/ptypes/wrappers"
+import google_protobuf3 "github.com/golang/protobuf/ptypes/wrappers"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// The ContainerEventView specifies the level of detail to include for
+// ContainerEvents.
 type ContainerEventView int32
 
 const (
 	// Default view of a ContainerEvent includes just basic information
 	ContainerEventView_BASIC ContainerEventView = 0
 	// Full view of a ContainerEvent includes raw Docker and OCI config JSON
+	// payloads
 	ContainerEventView_FULL ContainerEventView = 1
 )
 
@@ -34,38 +37,20 @@ var ContainerEventView_value = map[string]int32{
 func (x ContainerEventView) String() string {
 	return proto.EnumName(ContainerEventView_name, int32(x))
 }
-func (ContainerEventView) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (ContainerEventView) EnumDescriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
-type ProcessView int32
-
-const (
-	// Default process view of an event includes just basic process information
-	ProcessView_PROCESS_VIEW_BASIC ProcessView = 0
-	// Full processview of an event includes process ancestory
-	ProcessView_PROCESS_VIEW_FULL ProcessView = 1
-)
-
-var ProcessView_name = map[int32]string{
-	0: "PROCESS_VIEW_BASIC",
-	1: "PROCESS_VIEW_FULL",
-}
-var ProcessView_value = map[string]int32{
-	"PROCESS_VIEW_BASIC": 0,
-	"PROCESS_VIEW_FULL":  1,
-}
-
-func (x ProcessView) String() string {
-	return proto.EnumName(ProcessView_name, int32(x))
-}
-func (ProcessView) EnumDescriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
-
+// Possible interval types
 type ThrottleModifier_IntervalType int32
 
 const (
+	// milliseconds
 	ThrottleModifier_MILLISECOND ThrottleModifier_IntervalType = 0
-	ThrottleModifier_SECOND      ThrottleModifier_IntervalType = 1
-	ThrottleModifier_MINUTE      ThrottleModifier_IntervalType = 2
-	ThrottleModifier_HOUR        ThrottleModifier_IntervalType = 3
+	// seconds
+	ThrottleModifier_SECOND ThrottleModifier_IntervalType = 1
+	// minutes
+	ThrottleModifier_MINUTE ThrottleModifier_IntervalType = 2
+	// hours
+	ThrottleModifier_HOUR ThrottleModifier_IntervalType = 3
 )
 
 var ThrottleModifier_IntervalType_name = map[int32]string{
@@ -85,107 +70,12 @@ func (x ThrottleModifier_IntervalType) String() string {
 	return proto.EnumName(ThrottleModifier_IntervalType_name, int32(x))
 }
 func (ThrottleModifier_IntervalType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor8, []int{13, 0}
-}
-
-type FilterExpression_FilterExpressionType int32
-
-const (
-	FilterExpression_PREDICATE FilterExpression_FilterExpressionType = 0
-	FilterExpression_AND       FilterExpression_FilterExpressionType = 1
-	FilterExpression_OR        FilterExpression_FilterExpressionType = 2
-)
-
-var FilterExpression_FilterExpressionType_name = map[int32]string{
-	0: "PREDICATE",
-	1: "AND",
-	2: "OR",
-}
-var FilterExpression_FilterExpressionType_value = map[string]int32{
-	"PREDICATE": 0,
-	"AND":       1,
-	"OR":        2,
-}
-
-func (x FilterExpression_FilterExpressionType) String() string {
-	return proto.EnumName(FilterExpression_FilterExpressionType_name, int32(x))
-}
-func (FilterExpression_FilterExpressionType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor8, []int{15, 0}
-}
-
-type FilterPredicate_PredicateType int32
-
-const (
-	FilterPredicate_CONST FilterPredicate_PredicateType = 0
-	FilterPredicate_EQ    FilterPredicate_PredicateType = 1
-	FilterPredicate_NE    FilterPredicate_PredicateType = 2
-	FilterPredicate_LT    FilterPredicate_PredicateType = 3
-	FilterPredicate_LE    FilterPredicate_PredicateType = 4
-	FilterPredicate_GT    FilterPredicate_PredicateType = 5
-	FilterPredicate_GE    FilterPredicate_PredicateType = 6
-	FilterPredicate_GLOB  FilterPredicate_PredicateType = 7
-)
-
-var FilterPredicate_PredicateType_name = map[int32]string{
-	0: "CONST",
-	1: "EQ",
-	2: "NE",
-	3: "LT",
-	4: "LE",
-	5: "GT",
-	6: "GE",
-	7: "GLOB",
-}
-var FilterPredicate_PredicateType_value = map[string]int32{
-	"CONST": 0,
-	"EQ":    1,
-	"NE":    2,
-	"LT":    3,
-	"LE":    4,
-	"GT":    5,
-	"GE":    6,
-	"GLOB":  7,
-}
-
-func (x FilterPredicate_PredicateType) String() string {
-	return proto.EnumName(FilterPredicate_PredicateType_name, int32(x))
-}
-func (FilterPredicate_PredicateType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor8, []int{16, 0}
-}
-
-type FilterPredicate_ValueType int32
-
-const (
-	FilterPredicate_SIGNED   FilterPredicate_ValueType = 0
-	FilterPredicate_UNSIGNED FilterPredicate_ValueType = 1
-	FilterPredicate_STRING   FilterPredicate_ValueType = 2
-)
-
-var FilterPredicate_ValueType_name = map[int32]string{
-	0: "SIGNED",
-	1: "UNSIGNED",
-	2: "STRING",
-}
-var FilterPredicate_ValueType_value = map[string]int32{
-	"SIGNED":   0,
-	"UNSIGNED": 1,
-	"STRING":   2,
-}
-
-func (x FilterPredicate_ValueType) String() string {
-	return proto.EnumName(FilterPredicate_ValueType_name, int32(x))
-}
-func (FilterPredicate_ValueType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor8, []int{16, 1}
+	return fileDescriptor5, []int{12, 0}
 }
 
 //
-// Subscription identifies a subscriber's interest in events. The optional
-// Filter field restricts the subscription to the nodes and processes
-// specified within. The optional Selector field specifies the types and
-// properties of the events desired by the subscriber.
+// The Subscription message identifies a subscriber's interest in
+// telemetry events.
 //
 type Subscription struct {
 	// Return events matching one or more of the specified event
@@ -195,31 +85,25 @@ type Subscription struct {
 	// If not empty, then only return events from containers matched
 	// by one or more of the specified container filters.
 	ContainerFilter *ContainerFilter `protobuf:"bytes,2,opt,name=container_filter,json=containerFilter" json:"container_filter,omitempty"`
-	// If not empty, then only return events from Sensors matched by
-	// one or more of the specified sensor filters.
-	SensorFilter *SensorFilter `protobuf:"bytes,3,opt,name=sensor_filter,json=sensorFilter" json:"sensor_filter,omitempty"`
 	// If not empty, then only return events that occurred after
 	// the specified relative duration subtracted from the current
 	// time (recorder time). If the resulting time is in the past, then the
 	// subscription will search for historic events before streaming
 	// live ones.
-	SinceDuration *google_protobuf2.Int64Value `protobuf:"bytes,10,opt,name=since_duration,json=sinceDuration" json:"since_duration,omitempty"`
+	SinceDuration *google_protobuf3.Int64Value `protobuf:"bytes,10,opt,name=since_duration,json=sinceDuration" json:"since_duration,omitempty"`
 	// If not empty, then only return events that occurred before
 	// the specified relative duration added to `since_duration`.
 	// If `since_duration` is not supplied, return events from now and until
 	// the specified relative duration is hit.
-	ForDuration *google_protobuf2.Int64Value `protobuf:"bytes,11,opt,name=for_duration,json=forDuration" json:"for_duration,omitempty"`
+	ForDuration *google_protobuf3.Int64Value `protobuf:"bytes,11,opt,name=for_duration,json=forDuration" json:"for_duration,omitempty"`
 	// If not empty, apply the specified modifier to the subscription.
 	Modifier *Modifier `protobuf:"bytes,20,opt,name=modifier" json:"modifier,omitempty"`
-	// If PROCESS_VIEW_FULL, every event will include additional process
-	// ancestry context.
-	ProcessView ProcessView `protobuf:"varint,30,opt,name=process_view,json=processView,enum=capsule8.api.v0.ProcessView" json:"process_view,omitempty"`
 }
 
 func (m *Subscription) Reset()                    { *m = Subscription{} }
 func (m *Subscription) String() string            { return proto.CompactTextString(m) }
 func (*Subscription) ProtoMessage()               {}
-func (*Subscription) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{0} }
+func (*Subscription) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
 func (m *Subscription) GetEventFilter() *EventFilter {
 	if m != nil {
@@ -235,21 +119,14 @@ func (m *Subscription) GetContainerFilter() *ContainerFilter {
 	return nil
 }
 
-func (m *Subscription) GetSensorFilter() *SensorFilter {
-	if m != nil {
-		return m.SensorFilter
-	}
-	return nil
-}
-
-func (m *Subscription) GetSinceDuration() *google_protobuf2.Int64Value {
+func (m *Subscription) GetSinceDuration() *google_protobuf3.Int64Value {
 	if m != nil {
 		return m.SinceDuration
 	}
 	return nil
 }
 
-func (m *Subscription) GetForDuration() *google_protobuf2.Int64Value {
+func (m *Subscription) GetForDuration() *google_protobuf3.Int64Value {
 	if m != nil {
 		return m.ForDuration
 	}
@@ -263,33 +140,29 @@ func (m *Subscription) GetModifier() *Modifier {
 	return nil
 }
 
-func (m *Subscription) GetProcessView() ProcessView {
-	if m != nil {
-		return m.ProcessView
-	}
-	return ProcessView_PROCESS_VIEW_BASIC
-}
-
-type SensorFilter struct {
-}
-
-func (m *SensorFilter) Reset()                    { *m = SensorFilter{} }
-func (m *SensorFilter) String() string            { return proto.CompactTextString(m) }
-func (*SensorFilter) ProtoMessage()               {}
-func (*SensorFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{1} }
-
+// The ContainerFilter restricts events in the Subscription to the
+// running containers indicated. All of the fields in this message are
+// effectively "ORed" together to create the list of containers to
+// monitor for the subscription.
 type ContainerFilter struct {
-	Ids      []string `protobuf:"bytes,1,rep,name=ids" json:"ids,omitempty"`
-	Names    []string `protobuf:"bytes,2,rep,name=names" json:"names,omitempty"`
+	// Zero or more container IDs (e.g.
+	// 254dd98a7bf1581560ddace9f98b7933bfb3c2f5fc0504ec1b8dcc9614bc7062)
+	Ids []string `protobuf:"bytes,1,rep,name=ids" json:"ids,omitempty"`
+	// Zero or more container names (e.g. /ecstatic_darwin)
+	Names []string `protobuf:"bytes,2,rep,name=names" json:"names,omitempty"`
+	// Zero or more container image IDs (e.g.
+	// d462265d362c919b7dd37f8ba80caa822d13704695f47c8fc42a1c2266ecd164)
 	ImageIds []string `protobuf:"bytes,3,rep,name=image_ids,json=imageIds" json:"image_ids,omitempty"`
-	// Container image name (shell-style globs are supported)
+	// Container image name (shell-style globs are supported). May be of the
+	// form "busybox", "foo/bar" or
+	// "sha256:d462265d362c919b7dd37f8ba80caa822d13704695f47c8fc42a1c2266ecd164"
 	ImageNames []string `protobuf:"bytes,4,rep,name=image_names,json=imageNames" json:"image_names,omitempty"`
 }
 
 func (m *ContainerFilter) Reset()                    { *m = ContainerFilter{} }
 func (m *ContainerFilter) String() string            { return proto.CompactTextString(m) }
 func (*ContainerFilter) ProtoMessage()               {}
-func (*ContainerFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{2} }
+func (*ContainerFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{1} }
 
 func (m *ContainerFilter) GetIds() []string {
 	if m != nil {
@@ -319,30 +192,34 @@ func (m *ContainerFilter) GetImageNames() []string {
 	return nil
 }
 
+// The EventFilter specifies events to include. All of the specified
+// fields are effectively "ORed" together to create the list of events
+// included in the Subscription.
 type EventFilter struct {
-	//
-	// Kernel-level events
-	//
-	SyscallEvents []*SyscallEventFilter       `protobuf:"bytes,1,rep,name=syscall_events,json=syscallEvents" json:"syscall_events,omitempty"`
-	ProcessEvents []*ProcessEventFilter       `protobuf:"bytes,2,rep,name=process_events,json=processEvents" json:"process_events,omitempty"`
-	FileEvents    []*FileEventFilter          `protobuf:"bytes,3,rep,name=file_events,json=fileEvents" json:"file_events,omitempty"`
-	KernelEvents  []*KernelFunctionCallFilter `protobuf:"bytes,4,rep,name=kernel_events,json=kernelEvents" json:"kernel_events,omitempty"`
-	NetworkEvents []*NetworkEventFilter       `protobuf:"bytes,5,rep,name=network_events,json=networkEvents" json:"network_events,omitempty"`
-	//
-	// Operating System-level events (containers, etc)
-	//
+	// Zero or more filters specifying which system calls to include
+	SyscallEvents []*SyscallEventFilter `protobuf:"bytes,1,rep,name=syscall_events,json=syscallEvents" json:"syscall_events,omitempty"`
+	// Zero or more filters specifying which process events to include
+	ProcessEvents []*ProcessEventFilter `protobuf:"bytes,2,rep,name=process_events,json=processEvents" json:"process_events,omitempty"`
+	// Zero or more filters specifying which file events to include
+	FileEvents []*FileEventFilter `protobuf:"bytes,3,rep,name=file_events,json=fileEvents" json:"file_events,omitempty"`
+	// Zero or more kernel functional calls to include
+	KernelEvents []*KernelFunctionCallFilter `protobuf:"bytes,4,rep,name=kernel_events,json=kernelEvents" json:"kernel_events,omitempty"`
+	// Zero or more network events to include
+	NetworkEvents []*NetworkEventFilter `protobuf:"bytes,5,rep,name=network_events,json=networkEvents" json:"network_events,omitempty"`
+	// Zero or more container events to include
 	ContainerEvents []*ContainerEventFilter `protobuf:"bytes,10,rep,name=container_events,json=containerEvents" json:"container_events,omitempty"`
-	//
-	// Debugging events (>= 100)
-	//
+	// Zero or more character generators to configure and return events from
+	// (for debugging)
 	ChargenEvents []*ChargenEventFilter `protobuf:"bytes,100,rep,name=chargen_events,json=chargenEvents" json:"chargen_events,omitempty"`
-	TickerEvents  []*TickerEventFilter  `protobuf:"bytes,101,rep,name=ticker_events,json=tickerEvents" json:"ticker_events,omitempty"`
+	// Zero or more ticker generators to configure and return events from
+	// (for debugging)
+	TickerEvents []*TickerEventFilter `protobuf:"bytes,101,rep,name=ticker_events,json=tickerEvents" json:"ticker_events,omitempty"`
 }
 
 func (m *EventFilter) Reset()                    { *m = EventFilter{} }
 func (m *EventFilter) String() string            { return proto.CompactTextString(m) }
 func (*EventFilter) ProtoMessage()               {}
-func (*EventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{3} }
+func (*EventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{2} }
 
 func (m *EventFilter) GetSyscallEvents() []*SyscallEventFilter {
 	if m != nil {
@@ -400,24 +277,24 @@ func (m *EventFilter) GetTickerEvents() []*TickerEventFilter {
 	return nil
 }
 
+// The SyscallEventFilter specifies which system call events to
+// include in the Subscription. The specified fields are effectively
+// "ANDed" to specify a matching event.
 type SyscallEventFilter struct {
-	// Type of system call event (entry w/ args or exit w/ ret)
-	Type SyscallEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.SyscallEventType" json:"type,omitempty"`
-	// System call number (arch/x86/entry/syscalls/syscall_64.tbl)
-	Id   *google_protobuf2.Int64Value  `protobuf:"bytes,2,opt,name=id" json:"id,omitempty"`
-	Arg0 *google_protobuf2.UInt64Value `protobuf:"bytes,10,opt,name=arg0" json:"arg0,omitempty"`
-	Arg1 *google_protobuf2.UInt64Value `protobuf:"bytes,11,opt,name=arg1" json:"arg1,omitempty"`
-	Arg2 *google_protobuf2.UInt64Value `protobuf:"bytes,12,opt,name=arg2" json:"arg2,omitempty"`
-	Arg3 *google_protobuf2.UInt64Value `protobuf:"bytes,13,opt,name=arg3" json:"arg3,omitempty"`
-	Arg4 *google_protobuf2.UInt64Value `protobuf:"bytes,14,opt,name=arg4" json:"arg4,omitempty"`
-	Arg5 *google_protobuf2.UInt64Value `protobuf:"bytes,15,opt,name=arg5" json:"arg5,omitempty"`
-	Ret  *google_protobuf2.Int64Value  `protobuf:"bytes,20,opt,name=ret" json:"ret,omitempty"`
+	// Required; type of system call event (entry or exit)
+	Type             SyscallEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.SyscallEventType" json:"type,omitempty"`
+	FilterExpression *Expression      `protobuf:"bytes,100,opt,name=filter_expression,json=filterExpression" json:"filter_expression,omitempty"`
+	// Required; system call number from
+	// arch/x86/entry/syscalls/syscall_64.tbl
+	Id *google_protobuf3.Int64Value `protobuf:"bytes,2,opt,name=id" json:"id,omitempty"`
+	// Optional; return value of the system call (if type indicates exit).
+	Ret *google_protobuf3.Int64Value `protobuf:"bytes,20,opt,name=ret" json:"ret,omitempty"`
 }
 
 func (m *SyscallEventFilter) Reset()                    { *m = SyscallEventFilter{} }
 func (m *SyscallEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*SyscallEventFilter) ProtoMessage()               {}
-func (*SyscallEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{4} }
+func (*SyscallEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{3} }
 
 func (m *SyscallEventFilter) GetType() SyscallEventType {
 	if m != nil {
@@ -426,77 +303,46 @@ func (m *SyscallEventFilter) GetType() SyscallEventType {
 	return SyscallEventType_SYSCALL_EVENT_TYPE_UNKNOWN
 }
 
-func (m *SyscallEventFilter) GetId() *google_protobuf2.Int64Value {
+func (m *SyscallEventFilter) GetFilterExpression() *Expression {
+	if m != nil {
+		return m.FilterExpression
+	}
+	return nil
+}
+
+func (m *SyscallEventFilter) GetId() *google_protobuf3.Int64Value {
 	if m != nil {
 		return m.Id
 	}
 	return nil
 }
 
-func (m *SyscallEventFilter) GetArg0() *google_protobuf2.UInt64Value {
-	if m != nil {
-		return m.Arg0
-	}
-	return nil
-}
-
-func (m *SyscallEventFilter) GetArg1() *google_protobuf2.UInt64Value {
-	if m != nil {
-		return m.Arg1
-	}
-	return nil
-}
-
-func (m *SyscallEventFilter) GetArg2() *google_protobuf2.UInt64Value {
-	if m != nil {
-		return m.Arg2
-	}
-	return nil
-}
-
-func (m *SyscallEventFilter) GetArg3() *google_protobuf2.UInt64Value {
-	if m != nil {
-		return m.Arg3
-	}
-	return nil
-}
-
-func (m *SyscallEventFilter) GetArg4() *google_protobuf2.UInt64Value {
-	if m != nil {
-		return m.Arg4
-	}
-	return nil
-}
-
-func (m *SyscallEventFilter) GetArg5() *google_protobuf2.UInt64Value {
-	if m != nil {
-		return m.Arg5
-	}
-	return nil
-}
-
-func (m *SyscallEventFilter) GetRet() *google_protobuf2.Int64Value {
+func (m *SyscallEventFilter) GetRet() *google_protobuf3.Int64Value {
 	if m != nil {
 		return m.Ret
 	}
 	return nil
 }
 
+// The ProcessEventFilter specifies which process events to include in
+// the Subscription. The specified fields are effectively "ANDed" to
+// specify a matching event.
 type ProcessEventFilter struct {
 	// Required; the process event type to match
-	Type ProcessEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.ProcessEventType" json:"type,omitempty"`
+	Type             ProcessEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.ProcessEventType" json:"type,omitempty"`
+	FilterExpression *Expression      `protobuf:"bytes,100,opt,name=filter_expression,json=filterExpression" json:"filter_expression,omitempty"`
 	// Optional; require exact match on the filename passed to execve(2)
-	ExecFilename *google_protobuf2.StringValue `protobuf:"bytes,12,opt,name=exec_filename,json=execFilename" json:"exec_filename,omitempty"`
+	ExecFilename *google_protobuf3.StringValue `protobuf:"bytes,12,opt,name=exec_filename,json=execFilename" json:"exec_filename,omitempty"`
 	// Optional; require pattern match on the filename passed to execve(2)
-	ExecFilenamePattern *google_protobuf2.StringValue `protobuf:"bytes,13,opt,name=exec_filename_pattern,json=execFilenamePattern" json:"exec_filename_pattern,omitempty"`
+	ExecFilenamePattern *google_protobuf3.StringValue `protobuf:"bytes,13,opt,name=exec_filename_pattern,json=execFilenamePattern" json:"exec_filename_pattern,omitempty"`
 	// Optional; require exact match on exit code
-	ExitCode *google_protobuf2.Int32Value `protobuf:"bytes,14,opt,name=exit_code,json=exitCode" json:"exit_code,omitempty"`
+	ExitCode *google_protobuf3.Int32Value `protobuf:"bytes,14,opt,name=exit_code,json=exitCode" json:"exit_code,omitempty"`
 }
 
 func (m *ProcessEventFilter) Reset()                    { *m = ProcessEventFilter{} }
 func (m *ProcessEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*ProcessEventFilter) ProtoMessage()               {}
-func (*ProcessEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{5} }
+func (*ProcessEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{4} }
 
 func (m *ProcessEventFilter) GetType() ProcessEventType {
 	if m != nil {
@@ -505,44 +351,57 @@ func (m *ProcessEventFilter) GetType() ProcessEventType {
 	return ProcessEventType_PROCESS_EVENT_TYPE_UNKNOWN
 }
 
-func (m *ProcessEventFilter) GetExecFilename() *google_protobuf2.StringValue {
+func (m *ProcessEventFilter) GetFilterExpression() *Expression {
+	if m != nil {
+		return m.FilterExpression
+	}
+	return nil
+}
+
+func (m *ProcessEventFilter) GetExecFilename() *google_protobuf3.StringValue {
 	if m != nil {
 		return m.ExecFilename
 	}
 	return nil
 }
 
-func (m *ProcessEventFilter) GetExecFilenamePattern() *google_protobuf2.StringValue {
+func (m *ProcessEventFilter) GetExecFilenamePattern() *google_protobuf3.StringValue {
 	if m != nil {
 		return m.ExecFilenamePattern
 	}
 	return nil
 }
 
-func (m *ProcessEventFilter) GetExitCode() *google_protobuf2.Int32Value {
+func (m *ProcessEventFilter) GetExitCode() *google_protobuf3.Int32Value {
 	if m != nil {
 		return m.ExitCode
 	}
 	return nil
 }
 
+// The FileEventFilter specifies which file events to include in the
+// Subscription. The specified fields are effectively "ANDed" to
+// specify a matching event.
 type FileEventFilter struct {
-	// Required
-	Type FileEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.FileEventType" json:"type,omitempty"`
-	// Optional filename exact match
-	Filename *google_protobuf2.StringValue `protobuf:"bytes,10,opt,name=filename" json:"filename,omitempty"`
-	// Optional filename pattern
-	FilenamePattern *google_protobuf2.StringValue `protobuf:"bytes,11,opt,name=filename_pattern,json=filenamePattern" json:"filename_pattern,omitempty"`
-	// Optional open(2) flags mask value
-	OpenFlagsMask *google_protobuf2.Int32Value `protobuf:"bytes,12,opt,name=open_flags_mask,json=openFlagsMask" json:"open_flags_mask,omitempty"`
-	// Optional open(2)/creat(2) mode mask value
-	CreateModeMask *google_protobuf2.Int32Value `protobuf:"bytes,13,opt,name=create_mode_mask,json=createModeMask" json:"create_mode_mask,omitempty"`
+	// Required; the file event type to match
+	Type             FileEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.FileEventType" json:"type,omitempty"`
+	FilterExpression *Expression   `protobuf:"bytes,100,opt,name=filter_expression,json=filterExpression" json:"filter_expression,omitempty"`
+	// Optional; require exact match on the filename being acted upon
+	Filename *google_protobuf3.StringValue `protobuf:"bytes,10,opt,name=filename" json:"filename,omitempty"`
+	// Optional; require pattern match on the filename being acted upon
+	FilenamePattern *google_protobuf3.StringValue `protobuf:"bytes,11,opt,name=filename_pattern,json=filenamePattern" json:"filename_pattern,omitempty"`
+	// Optional; for file open events, require a match of the bits set
+	// for the open(2) flags argument
+	OpenFlagsMask *google_protobuf3.Int32Value `protobuf:"bytes,12,opt,name=open_flags_mask,json=openFlagsMask" json:"open_flags_mask,omitempty"`
+	// Optional; for file open events, require a match of the bits set
+	// for the open(2) or creat(2) mode argument
+	CreateModeMask *google_protobuf3.Int32Value `protobuf:"bytes,13,opt,name=create_mode_mask,json=createModeMask" json:"create_mode_mask,omitempty"`
 }
 
 func (m *FileEventFilter) Reset()                    { *m = FileEventFilter{} }
 func (m *FileEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*FileEventFilter) ProtoMessage()               {}
-func (*FileEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{6} }
+func (*FileEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{5} }
 
 func (m *FileEventFilter) GetType() FileEventType {
 	if m != nil {
@@ -551,49 +410,70 @@ func (m *FileEventFilter) GetType() FileEventType {
 	return FileEventType_FILE_EVENT_TYPE_UNKNOWN
 }
 
-func (m *FileEventFilter) GetFilename() *google_protobuf2.StringValue {
+func (m *FileEventFilter) GetFilterExpression() *Expression {
+	if m != nil {
+		return m.FilterExpression
+	}
+	return nil
+}
+
+func (m *FileEventFilter) GetFilename() *google_protobuf3.StringValue {
 	if m != nil {
 		return m.Filename
 	}
 	return nil
 }
 
-func (m *FileEventFilter) GetFilenamePattern() *google_protobuf2.StringValue {
+func (m *FileEventFilter) GetFilenamePattern() *google_protobuf3.StringValue {
 	if m != nil {
 		return m.FilenamePattern
 	}
 	return nil
 }
 
-func (m *FileEventFilter) GetOpenFlagsMask() *google_protobuf2.Int32Value {
+func (m *FileEventFilter) GetOpenFlagsMask() *google_protobuf3.Int32Value {
 	if m != nil {
 		return m.OpenFlagsMask
 	}
 	return nil
 }
 
-func (m *FileEventFilter) GetCreateModeMask() *google_protobuf2.Int32Value {
+func (m *FileEventFilter) GetCreateModeMask() *google_protobuf3.Int32Value {
 	if m != nil {
 		return m.CreateModeMask
 	}
 	return nil
 }
 
+// The KernelFunctionCallFilter specifies which kernel function call
+// events to include in the Subscription. The arguments map defines
+// values that will be fetched at each call and returned along with
+// the event. In order to minimize event volume, a filter may be
+// included that filters the kernel function calls based on the
+// observed values of the specified arguments at the time of the
+// kernel function call.
 type KernelFunctionCallFilter struct {
-	// Required
+	// Required; the kernel function call event type to match
 	Type KernelFunctionCallEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.KernelFunctionCallEventType" json:"type,omitempty"`
-	// Required - the kernel symbol to trigger on
+	// Required; the kernel symbol to match on
 	Symbol string `protobuf:"bytes,10,opt,name=symbol" json:"symbol,omitempty"`
-	// Optional - keys: field type, values: value type
+	// Optional; the field names and data to be returned by the kernel
+	// when the event triggers. Note that this is a map. The keys are the
+	// names to assign to the returned fields, and the values are a string
+	// describing the data to return, usually an expression involving the
+	// register containing the desired data and a suffix indicating the
+	// type of the data (e.g., "s32", "string", "u64", etc.). This map is
+	// used to construct the "fetchargs" passed to the kernel when creating
+	// the kernel probe.
 	Arguments map[string]string `protobuf:"bytes,11,rep,name=arguments" json:"arguments,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Optional - kernel-level filter
-	Filter string `protobuf:"bytes,12,opt,name=filter" json:"filter,omitempty"`
+	// Optional; a filter to apply to kernel probe.
+	FilterExpression *Expression `protobuf:"bytes,100,opt,name=filter_expression,json=filterExpression" json:"filter_expression,omitempty"`
 }
 
 func (m *KernelFunctionCallFilter) Reset()                    { *m = KernelFunctionCallFilter{} }
 func (m *KernelFunctionCallFilter) String() string            { return proto.CompactTextString(m) }
 func (*KernelFunctionCallFilter) ProtoMessage()               {}
-func (*KernelFunctionCallFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{7} }
+func (*KernelFunctionCallFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{6} }
 
 func (m *KernelFunctionCallFilter) GetType() KernelFunctionCallEventType {
 	if m != nil {
@@ -616,24 +496,28 @@ func (m *KernelFunctionCallFilter) GetArguments() map[string]string {
 	return nil
 }
 
-func (m *KernelFunctionCallFilter) GetFilter() string {
+func (m *KernelFunctionCallFilter) GetFilterExpression() *Expression {
 	if m != nil {
-		return m.Filter
+		return m.FilterExpression
 	}
-	return ""
+	return nil
 }
 
+// The NetworkEventFilter specifies which network events to include in
+// the Subscription. The included filter can be used to specify
+// precisely which network events should be included.
 type NetworkEventFilter struct {
-	// Required
+	// Required; the network event type to match
 	Type NetworkEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.NetworkEventType" json:"type,omitempty"`
-	// Optional
-	Filter *FilterExpression `protobuf:"bytes,10,opt,name=filter" json:"filter,omitempty"`
+	// Optional; a filter to apply to events. Only events for which the
+	// evaluation of the filter expression is true will be returned.
+	FilterExpression *Expression `protobuf:"bytes,100,opt,name=filter_expression,json=filterExpression" json:"filter_expression,omitempty"`
 }
 
 func (m *NetworkEventFilter) Reset()                    { *m = NetworkEventFilter{} }
 func (m *NetworkEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*NetworkEventFilter) ProtoMessage()               {}
-func (*NetworkEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{8} }
+func (*NetworkEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{7} }
 
 func (m *NetworkEventFilter) GetType() NetworkEventType {
 	if m != nil {
@@ -642,24 +526,30 @@ func (m *NetworkEventFilter) GetType() NetworkEventType {
 	return NetworkEventType_NETWORK_EVENT_TYPE_UNKNOWN
 }
 
-func (m *NetworkEventFilter) GetFilter() *FilterExpression {
+func (m *NetworkEventFilter) GetFilterExpression() *Expression {
 	if m != nil {
-		return m.Filter
+		return m.FilterExpression
 	}
 	return nil
 }
 
+// The ContainerEventFilter specifies which container lifecycle events
+// to include in the Subscription. In order to restrict them to
+// specific containers, use the ContainerFilter.
 type ContainerEventFilter struct {
 	// Required, specify the particular type of event type to match
 	Type ContainerEventType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.ContainerEventType" json:"type,omitempty"`
 	// Optional, specifies how much detail to include in container events
 	View ContainerEventView `protobuf:"varint,2,opt,name=view,enum=capsule8.api.v0.ContainerEventView" json:"view,omitempty"`
+	// Optional; a filter to apply to events. Only events for which the
+	// evaluation of the filter expression is true will be returned.
+	FilterExpression *Expression `protobuf:"bytes,100,opt,name=filter_expression,json=filterExpression" json:"filter_expression,omitempty"`
 }
 
 func (m *ContainerEventFilter) Reset()                    { *m = ContainerEventFilter{} }
 func (m *ContainerEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*ContainerEventFilter) ProtoMessage()               {}
-func (*ContainerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{9} }
+func (*ContainerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{8} }
 
 func (m *ContainerEventFilter) GetType() ContainerEventType {
 	if m != nil {
@@ -675,15 +565,24 @@ func (m *ContainerEventFilter) GetView() ContainerEventView {
 	return ContainerEventView_BASIC
 }
 
+func (m *ContainerEventFilter) GetFilterExpression() *Expression {
+	if m != nil {
+		return m.FilterExpression
+	}
+	return nil
+}
+
+// The ChargenEventFilter configures a character stream generator and
+// includes events from it in the Subscription.
 type ChargenEventFilter struct {
-	// Length of character sequence strings to generate
+	// Required; the length of character sequence strings to generate
 	Length uint64 `protobuf:"varint,1,opt,name=length" json:"length,omitempty"`
 }
 
 func (m *ChargenEventFilter) Reset()                    { *m = ChargenEventFilter{} }
 func (m *ChargenEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*ChargenEventFilter) ProtoMessage()               {}
-func (*ChargenEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{10} }
+func (*ChargenEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{9} }
 
 func (m *ChargenEventFilter) GetLength() uint64 {
 	if m != nil {
@@ -692,15 +591,17 @@ func (m *ChargenEventFilter) GetLength() uint64 {
 	return 0
 }
 
+// The TickerEventFilter configures a ticker stream generator and
+// includes events from it in the Subscription.
 type TickerEventFilter struct {
-	// The interval at which ticker events are generated
+	// Required; the interval at which ticker events are generated
 	Interval int64 `protobuf:"varint,1,opt,name=interval" json:"interval,omitempty"`
 }
 
 func (m *TickerEventFilter) Reset()                    { *m = TickerEventFilter{} }
 func (m *TickerEventFilter) String() string            { return proto.CompactTextString(m) }
 func (*TickerEventFilter) ProtoMessage()               {}
-func (*TickerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{11} }
+func (*TickerEventFilter) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{10} }
 
 func (m *TickerEventFilter) GetInterval() int64 {
 	if m != nil {
@@ -709,11 +610,9 @@ func (m *TickerEventFilter) GetInterval() int64 {
 	return 0
 }
 
-//
 // Modifier specifies which stream modifiers to apply if any. For a given
 // stream, a modifier can apply a throttle or limit etc. Modifiers can be
 // used together.
-//
 type Modifier struct {
 	Throttle *ThrottleModifier `protobuf:"bytes,1,opt,name=throttle" json:"throttle,omitempty"`
 	Limit    *LimitModifier    `protobuf:"bytes,2,opt,name=limit" json:"limit,omitempty"`
@@ -722,7 +621,7 @@ type Modifier struct {
 func (m *Modifier) Reset()                    { *m = Modifier{} }
 func (m *Modifier) String() string            { return proto.CompactTextString(m) }
 func (*Modifier) ProtoMessage()               {}
-func (*Modifier) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{12} }
+func (*Modifier) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{11} }
 
 func (m *Modifier) GetThrottle() *ThrottleModifier {
 	if m != nil {
@@ -738,15 +637,19 @@ func (m *Modifier) GetLimit() *LimitModifier {
 	return nil
 }
 
+// The ThrottleModifier modulates events sent by the Sensor to one per
+// time interval specified.
 type ThrottleModifier struct {
-	Interval     int64                         `protobuf:"varint,1,opt,name=interval" json:"interval,omitempty"`
+	// Required; the interval to use
+	Interval int64 `protobuf:"varint,1,opt,name=interval" json:"interval,omitempty"`
+	// Required; the intreval type (milliseconds, seconds, etc.)
 	IntervalType ThrottleModifier_IntervalType `protobuf:"varint,2,opt,name=interval_type,json=intervalType,enum=capsule8.api.v0.ThrottleModifier_IntervalType" json:"interval_type,omitempty"`
 }
 
 func (m *ThrottleModifier) Reset()                    { *m = ThrottleModifier{} }
 func (m *ThrottleModifier) String() string            { return proto.CompactTextString(m) }
 func (*ThrottleModifier) ProtoMessage()               {}
-func (*ThrottleModifier) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{13} }
+func (*ThrottleModifier) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{12} }
 
 func (m *ThrottleModifier) GetInterval() int64 {
 	if m != nil {
@@ -762,6 +665,9 @@ func (m *ThrottleModifier) GetIntervalType() ThrottleModifier_IntervalType {
 	return ThrottleModifier_MILLISECOND
 }
 
+// The LimitModifier cancels the subscription on each Sensor after the
+// specified number of events. The entire Subscription may return more
+// events that this depending on how many active Sensors there are.
 type LimitModifier struct {
 	// Limit the number of events
 	Limit int64 `protobuf:"varint,1,opt,name=limit" json:"limit,omitempty"`
@@ -770,7 +676,7 @@ type LimitModifier struct {
 func (m *LimitModifier) Reset()                    { *m = LimitModifier{} }
 func (m *LimitModifier) String() string            { return proto.CompactTextString(m) }
 func (*LimitModifier) ProtoMessage()               {}
-func (*LimitModifier) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{14} }
+func (*LimitModifier) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{13} }
 
 func (m *LimitModifier) GetLimit() int64 {
 	if m != nil {
@@ -779,211 +685,8 @@ func (m *LimitModifier) GetLimit() int64 {
 	return 0
 }
 
-type FilterExpression struct {
-	Type      FilterExpression_FilterExpressionType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.FilterExpression_FilterExpressionType" json:"type,omitempty"`
-	Lhs       *FilterExpression                     `protobuf:"bytes,10,opt,name=lhs" json:"lhs,omitempty"`
-	Rhs       *FilterExpression                     `protobuf:"bytes,11,opt,name=rhs" json:"rhs,omitempty"`
-	Predicate *FilterPredicate                      `protobuf:"bytes,12,opt,name=predicate" json:"predicate,omitempty"`
-}
-
-func (m *FilterExpression) Reset()                    { *m = FilterExpression{} }
-func (m *FilterExpression) String() string            { return proto.CompactTextString(m) }
-func (*FilterExpression) ProtoMessage()               {}
-func (*FilterExpression) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{15} }
-
-func (m *FilterExpression) GetType() FilterExpression_FilterExpressionType {
-	if m != nil {
-		return m.Type
-	}
-	return FilterExpression_PREDICATE
-}
-
-func (m *FilterExpression) GetLhs() *FilterExpression {
-	if m != nil {
-		return m.Lhs
-	}
-	return nil
-}
-
-func (m *FilterExpression) GetRhs() *FilterExpression {
-	if m != nil {
-		return m.Rhs
-	}
-	return nil
-}
-
-func (m *FilterExpression) GetPredicate() *FilterPredicate {
-	if m != nil {
-		return m.Predicate
-	}
-	return nil
-}
-
-type FilterPredicate struct {
-	Type      FilterPredicate_PredicateType `protobuf:"varint,1,opt,name=type,enum=capsule8.api.v0.FilterPredicate_PredicateType" json:"type,omitempty"`
-	FieldName string                        `protobuf:"bytes,10,opt,name=field_name,json=fieldName" json:"field_name,omitempty"`
-	ValueType FilterPredicate_ValueType     `protobuf:"varint,20,opt,name=value_type,json=valueType,enum=capsule8.api.v0.FilterPredicate_ValueType" json:"value_type,omitempty"`
-	// Types that are valid to be assigned to Value:
-	//	*FilterPredicate_SignedValue
-	//	*FilterPredicate_UnsignedValue
-	//	*FilterPredicate_StringValue
-	Value isFilterPredicate_Value `protobuf_oneof:"value"`
-}
-
-func (m *FilterPredicate) Reset()                    { *m = FilterPredicate{} }
-func (m *FilterPredicate) String() string            { return proto.CompactTextString(m) }
-func (*FilterPredicate) ProtoMessage()               {}
-func (*FilterPredicate) Descriptor() ([]byte, []int) { return fileDescriptor8, []int{16} }
-
-type isFilterPredicate_Value interface {
-	isFilterPredicate_Value()
-}
-
-type FilterPredicate_SignedValue struct {
-	SignedValue int64 `protobuf:"zigzag64,21,opt,name=signed_value,json=signedValue,oneof"`
-}
-type FilterPredicate_UnsignedValue struct {
-	UnsignedValue uint64 `protobuf:"varint,22,opt,name=unsigned_value,json=unsignedValue,oneof"`
-}
-type FilterPredicate_StringValue struct {
-	StringValue string `protobuf:"bytes,23,opt,name=string_value,json=stringValue,oneof"`
-}
-
-func (*FilterPredicate_SignedValue) isFilterPredicate_Value()   {}
-func (*FilterPredicate_UnsignedValue) isFilterPredicate_Value() {}
-func (*FilterPredicate_StringValue) isFilterPredicate_Value()   {}
-
-func (m *FilterPredicate) GetValue() isFilterPredicate_Value {
-	if m != nil {
-		return m.Value
-	}
-	return nil
-}
-
-func (m *FilterPredicate) GetType() FilterPredicate_PredicateType {
-	if m != nil {
-		return m.Type
-	}
-	return FilterPredicate_CONST
-}
-
-func (m *FilterPredicate) GetFieldName() string {
-	if m != nil {
-		return m.FieldName
-	}
-	return ""
-}
-
-func (m *FilterPredicate) GetValueType() FilterPredicate_ValueType {
-	if m != nil {
-		return m.ValueType
-	}
-	return FilterPredicate_SIGNED
-}
-
-func (m *FilterPredicate) GetSignedValue() int64 {
-	if x, ok := m.GetValue().(*FilterPredicate_SignedValue); ok {
-		return x.SignedValue
-	}
-	return 0
-}
-
-func (m *FilterPredicate) GetUnsignedValue() uint64 {
-	if x, ok := m.GetValue().(*FilterPredicate_UnsignedValue); ok {
-		return x.UnsignedValue
-	}
-	return 0
-}
-
-func (m *FilterPredicate) GetStringValue() string {
-	if x, ok := m.GetValue().(*FilterPredicate_StringValue); ok {
-		return x.StringValue
-	}
-	return ""
-}
-
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*FilterPredicate) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _FilterPredicate_OneofMarshaler, _FilterPredicate_OneofUnmarshaler, _FilterPredicate_OneofSizer, []interface{}{
-		(*FilterPredicate_SignedValue)(nil),
-		(*FilterPredicate_UnsignedValue)(nil),
-		(*FilterPredicate_StringValue)(nil),
-	}
-}
-
-func _FilterPredicate_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*FilterPredicate)
-	// value
-	switch x := m.Value.(type) {
-	case *FilterPredicate_SignedValue:
-		b.EncodeVarint(21<<3 | proto.WireVarint)
-		b.EncodeZigzag64(uint64(x.SignedValue))
-	case *FilterPredicate_UnsignedValue:
-		b.EncodeVarint(22<<3 | proto.WireVarint)
-		b.EncodeVarint(uint64(x.UnsignedValue))
-	case *FilterPredicate_StringValue:
-		b.EncodeVarint(23<<3 | proto.WireBytes)
-		b.EncodeStringBytes(x.StringValue)
-	case nil:
-	default:
-		return fmt.Errorf("FilterPredicate.Value has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _FilterPredicate_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*FilterPredicate)
-	switch tag {
-	case 21: // value.signed_value
-		if wire != proto.WireVarint {
-			return true, proto.ErrInternalBadWireType
-		}
-		x, err := b.DecodeZigzag64()
-		m.Value = &FilterPredicate_SignedValue{int64(x)}
-		return true, err
-	case 22: // value.unsigned_value
-		if wire != proto.WireVarint {
-			return true, proto.ErrInternalBadWireType
-		}
-		x, err := b.DecodeVarint()
-		m.Value = &FilterPredicate_UnsignedValue{x}
-		return true, err
-	case 23: // value.string_value
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		x, err := b.DecodeStringBytes()
-		m.Value = &FilterPredicate_StringValue{x}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _FilterPredicate_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*FilterPredicate)
-	// value
-	switch x := m.Value.(type) {
-	case *FilterPredicate_SignedValue:
-		n += proto.SizeVarint(21<<3 | proto.WireVarint)
-		n += proto.SizeVarint(uint64(uint64(x.SignedValue<<1) ^ uint64((int64(x.SignedValue) >> 63))))
-	case *FilterPredicate_UnsignedValue:
-		n += proto.SizeVarint(22<<3 | proto.WireVarint)
-		n += proto.SizeVarint(uint64(x.UnsignedValue))
-	case *FilterPredicate_StringValue:
-		n += proto.SizeVarint(23<<3 | proto.WireBytes)
-		n += proto.SizeVarint(uint64(len(x.StringValue)))
-		n += len(x.StringValue)
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
-}
-
 func init() {
 	proto.RegisterType((*Subscription)(nil), "capsule8.api.v0.Subscription")
-	proto.RegisterType((*SensorFilter)(nil), "capsule8.api.v0.SensorFilter")
 	proto.RegisterType((*ContainerFilter)(nil), "capsule8.api.v0.ContainerFilter")
 	proto.RegisterType((*EventFilter)(nil), "capsule8.api.v0.EventFilter")
 	proto.RegisterType((*SyscallEventFilter)(nil), "capsule8.api.v0.SyscallEventFilter")
@@ -997,116 +700,85 @@ func init() {
 	proto.RegisterType((*Modifier)(nil), "capsule8.api.v0.Modifier")
 	proto.RegisterType((*ThrottleModifier)(nil), "capsule8.api.v0.ThrottleModifier")
 	proto.RegisterType((*LimitModifier)(nil), "capsule8.api.v0.LimitModifier")
-	proto.RegisterType((*FilterExpression)(nil), "capsule8.api.v0.FilterExpression")
-	proto.RegisterType((*FilterPredicate)(nil), "capsule8.api.v0.FilterPredicate")
 	proto.RegisterEnum("capsule8.api.v0.ContainerEventView", ContainerEventView_name, ContainerEventView_value)
-	proto.RegisterEnum("capsule8.api.v0.ProcessView", ProcessView_name, ProcessView_value)
 	proto.RegisterEnum("capsule8.api.v0.ThrottleModifier_IntervalType", ThrottleModifier_IntervalType_name, ThrottleModifier_IntervalType_value)
-	proto.RegisterEnum("capsule8.api.v0.FilterExpression_FilterExpressionType", FilterExpression_FilterExpressionType_name, FilterExpression_FilterExpressionType_value)
-	proto.RegisterEnum("capsule8.api.v0.FilterPredicate_PredicateType", FilterPredicate_PredicateType_name, FilterPredicate_PredicateType_value)
-	proto.RegisterEnum("capsule8.api.v0.FilterPredicate_ValueType", FilterPredicate_ValueType_name, FilterPredicate_ValueType_value)
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/subscription.proto", fileDescriptor8) }
+func init() { proto.RegisterFile("capsule8/api/v0/subscription.proto", fileDescriptor5) }
 
-var fileDescriptor8 = []byte{
-	// 1559 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x58, 0xcb, 0x72, 0xdb, 0x46,
-	0x16, 0x15, 0x41, 0x4a, 0x26, 0x2f, 0x5f, 0x70, 0x8f, 0xec, 0xe1, 0xc8, 0x8f, 0x91, 0xe1, 0x72,
-	0x8d, 0xec, 0xf1, 0x50, 0xb2, 0x1e, 0xb6, 0x26, 0xe5, 0x38, 0x91, 0x68, 0x4a, 0xa6, 0x2d, 0x51,
-	0x0a, 0x48, 0x29, 0x55, 0xd9, 0xa0, 0x20, 0xb0, 0x49, 0x75, 0x09, 0x04, 0x50, 0x68, 0x50, 0xb2,
-	0x56, 0xd9, 0xa5, 0xf2, 0x0d, 0x59, 0xe6, 0x4b, 0xb2, 0x48, 0xe5, 0x07, 0x92, 0x65, 0xfe, 0x20,
-	0x3f, 0x91, 0xea, 0x07, 0x48, 0x80, 0x10, 0x45, 0xae, 0x88, 0xbe, 0x38, 0xe7, 0xa0, 0xfb, 0xf4,
-	0xed, 0x7b, 0x5b, 0x02, 0xcd, 0x32, 0x3d, 0x3a, 0xb0, 0xf1, 0xf6, 0xaa, 0xe9, 0x91, 0xd5, 0xcb,
-	0xb5, 0x55, 0x3a, 0x38, 0xa3, 0x96, 0x4f, 0xbc, 0x80, 0xb8, 0x4e, 0xd5, 0xf3, 0xdd, 0xc0, 0x45,
-	0xe5, 0x10, 0x53, 0x35, 0x3d, 0x52, 0xbd, 0x5c, 0x5b, 0x7a, 0x30, 0x4e, 0xc2, 0x97, 0xd8, 0x09,
-	0x04, 0x7a, 0xe9, 0x71, 0xcf, 0x75, 0x7b, 0x36, 0x5e, 0xe5, 0xa3, 0xb3, 0x41, 0x77, 0xf5, 0xca,
-	0x37, 0x3d, 0x0f, 0xfb, 0x54, 0xbc, 0xd7, 0xfe, 0x4c, 0x43, 0xa1, 0x15, 0xf9, 0x08, 0xfa, 0x0a,
-	0x0a, 0x9c, 0x6f, 0x74, 0x89, 0x1d, 0x60, 0xbf, 0x92, 0x5a, 0x4e, 0xad, 0xe4, 0xd7, 0x1f, 0x56,
-	0xc7, 0xbe, 0x5a, 0xad, 0x33, 0xd0, 0x1e, 0xc7, 0xe8, 0x79, 0x3c, 0x1a, 0xa0, 0x4f, 0xa0, 0x5a,
-	0xae, 0x13, 0x98, 0xc4, 0xc1, 0x7e, 0x28, 0xa2, 0x70, 0x91, 0xe5, 0x84, 0x48, 0x2d, 0x04, 0x4a,
-	0xa1, 0xb2, 0x15, 0x0f, 0xa0, 0x5d, 0x28, 0x52, 0xec, 0x50, 0x77, 0xa8, 0x94, 0xe6, 0x4a, 0x8f,
-	0x12, 0x4a, 0x2d, 0x8e, 0x92, 0x32, 0x05, 0x1a, 0x19, 0xa1, 0x5d, 0x28, 0x51, 0xe2, 0x58, 0xd8,
-	0xe8, 0x0c, 0x7c, 0x93, 0xad, 0xb1, 0x02, 0x5c, 0xe4, 0x41, 0x55, 0x78, 0x53, 0x0d, 0xbd, 0xa9,
-	0x36, 0x9c, 0xe0, 0xf5, 0xe6, 0xa9, 0x69, 0x0f, 0xb0, 0x5e, 0xe4, 0x94, 0xf7, 0x92, 0x81, 0xde,
-	0x41, 0xa1, 0xeb, 0xfa, 0x23, 0x85, 0xfc, 0x74, 0x85, 0x7c, 0xd7, 0xf5, 0x87, 0xfc, 0x2d, 0xc8,
-	0xf6, 0xdd, 0x0e, 0xe9, 0x12, 0xec, 0x57, 0x16, 0x39, 0xf7, 0x5f, 0x89, 0x25, 0x1c, 0x4a, 0x80,
-	0x3e, 0x84, 0xb2, 0xcd, 0xf0, 0x7c, 0xd7, 0xc2, 0x94, 0x1a, 0x97, 0x04, 0x5f, 0x55, 0x1e, 0x2f,
-	0xa7, 0x56, 0x4a, 0x37, 0x6c, 0xc6, 0xb1, 0x00, 0x9d, 0x12, 0x7c, 0xa5, 0xe7, 0xbd, 0xd1, 0x40,
-	0x2b, 0x41, 0x21, 0xea, 0x8c, 0x76, 0x05, 0xe5, 0x31, 0xcf, 0x91, 0x0a, 0x69, 0xd2, 0xa1, 0x95,
-	0xd4, 0x72, 0x7a, 0x25, 0xa7, 0xb3, 0x47, 0xb4, 0x08, 0xf3, 0x8e, 0xd9, 0xc7, 0xb4, 0xa2, 0xf0,
-	0x98, 0x18, 0xa0, 0x07, 0x90, 0x23, 0x7d, 0xb3, 0x87, 0x0d, 0x86, 0x4e, 0xf3, 0x37, 0x59, 0x1e,
-	0x68, 0x74, 0x28, 0xfa, 0x37, 0xe4, 0xc5, 0x4b, 0x41, 0xcc, 0xf0, 0xd7, 0xc0, 0x43, 0x4d, 0x16,
-	0xd1, 0xfe, 0xca, 0x40, 0x3e, 0x92, 0x32, 0xe8, 0x23, 0x94, 0xe8, 0x35, 0xb5, 0x4c, 0xdb, 0x36,
-	0x78, 0xf2, 0x88, 0x09, 0xe4, 0xd7, 0x9f, 0x26, 0x77, 0x56, 0xc0, 0xa2, 0xf9, 0x56, 0xa4, 0x91,
-	0x18, 0x65, 0x5a, 0xa1, 0x4b, 0x52, 0x4b, 0x99, 0xa0, 0x25, 0x7d, 0x8a, 0x69, 0x79, 0x91, 0x18,
-	0x45, 0x3b, 0x90, 0xef, 0x12, 0x1b, 0x87, 0x42, 0x69, 0x2e, 0x94, 0x4c, 0xdc, 0x3d, 0x62, 0xe3,
-	0xa8, 0x0a, 0x74, 0xc3, 0x00, 0x45, 0x4d, 0x28, 0x5e, 0x60, 0xdf, 0xc1, 0xc3, 0x95, 0x65, 0xb8,
-	0xc8, 0xf3, 0x84, 0xc8, 0x27, 0x8e, 0xda, 0x1b, 0x38, 0x16, 0xcb, 0x91, 0x9a, 0x69, 0xdb, 0x61,
-	0xfe, 0x0a, 0xfe, 0x68, 0x79, 0x0e, 0x0e, 0xae, 0x5c, 0xff, 0x22, 0x14, 0x9c, 0x9f, 0xb0, 0xbc,
-	0xa6, 0x80, 0xc5, 0x96, 0xe7, 0x44, 0x62, 0x14, 0x1d, 0x47, 0x0f, 0xa7, 0x54, 0x03, 0xae, 0xf6,
-	0x6c, 0xf2, 0xe1, 0x8c, 0xea, 0x8d, 0x4e, 0xe8, 0x68, 0x76, 0xd6, 0xb9, 0xe9, 0xf7, 0xb0, 0x13,
-	0xea, 0x75, 0x26, 0xcc, 0xae, 0x26, 0x60, 0xb1, 0xd9, 0x59, 0x91, 0x18, 0x45, 0xfb, 0x50, 0x0c,
-	0x88, 0x75, 0x31, 0x9a, 0x1a, 0xe6, 0x52, 0x5a, 0x42, 0xaa, 0xcd, 0x51, 0x51, 0xa5, 0x42, 0x30,
-	0x0a, 0x51, 0xed, 0xf7, 0x34, 0xa0, 0x64, 0xde, 0xa0, 0x2d, 0xc8, 0x04, 0xd7, 0x1e, 0xe6, 0x35,
-	0xad, 0xb4, 0xfe, 0xe4, 0xd6, 0x54, 0x6b, 0x5f, 0x7b, 0x58, 0xe7, 0x70, 0xf4, 0x5f, 0x50, 0x48,
-	0x47, 0xd6, 0xb0, 0x5b, 0x8f, 0xbc, 0x42, 0x3a, 0x68, 0x0d, 0x32, 0xa6, 0xdf, 0x5b, 0x93, 0x35,
-	0xe6, 0x61, 0x02, 0x7e, 0x12, 0xc1, 0x73, 0xa4, 0x64, 0xbc, 0x92, 0x35, 0x65, 0x3a, 0xe3, 0x95,
-	0x64, 0xac, 0x57, 0x0a, 0x33, 0x32, 0xd6, 0x25, 0x63, 0xa3, 0x52, 0x9c, 0x91, 0xb1, 0x21, 0x19,
-	0x9b, 0x95, 0xd2, 0x8c, 0x8c, 0x4d, 0xc9, 0xd8, 0xaa, 0x94, 0x67, 0x64, 0x6c, 0xa1, 0xff, 0x41,
-	0xda, 0xc7, 0x81, 0x2c, 0x88, 0xb7, 0x3a, 0xcb, 0x70, 0xda, 0x4f, 0x0a, 0xa0, 0xe4, 0x09, 0x9e,
-	0xba, 0xab, 0x51, 0x4a, 0x64, 0x57, 0x77, 0xa0, 0x88, 0x3f, 0x63, 0x8b, 0x35, 0x16, 0xcc, 0xaa,
-	0xd6, 0x44, 0x37, 0x5b, 0x81, 0x4f, 0x9c, 0x9e, 0x98, 0x47, 0x81, 0x51, 0xf6, 0x24, 0x03, 0x1d,
-	0xc3, 0xbd, 0x98, 0x84, 0xe1, 0x99, 0x41, 0x80, 0x7d, 0x67, 0xa2, 0xcd, 0x51, 0xa9, 0x7f, 0x44,
-	0xa5, 0x8e, 0x05, 0x11, 0x6d, 0x43, 0x0e, 0x7f, 0x26, 0x81, 0x61, 0xb9, 0x1d, 0x2c, 0xad, 0xbf,
-	0xd1, 0x97, 0x8d, 0x75, 0x21, 0x92, 0x65, 0xe8, 0x9a, 0xdb, 0xc1, 0xda, 0x1f, 0x0a, 0x94, 0xc7,
-	0xaa, 0x12, 0x5a, 0x8f, 0x39, 0xf3, 0x78, 0x72, 0x15, 0x8b, 0xd8, 0xb2, 0x0d, 0xd9, 0xa1, 0x23,
-	0x30, 0xc3, 0x32, 0x86, 0x68, 0xb4, 0x0f, 0x6a, 0xc2, 0x88, 0xfc, 0x0c, 0x0a, 0xe5, 0xee, 0x98,
-	0x09, 0x35, 0x28, 0xbb, 0x1e, 0x76, 0x8c, 0xae, 0x6d, 0xf6, 0xa8, 0xd1, 0x37, 0xe9, 0x85, 0xdc,
-	0x9b, 0x5b, 0xad, 0x28, 0x32, 0xce, 0x1e, 0xa3, 0x1c, 0x9a, 0xf4, 0x02, 0xd5, 0x41, 0xb5, 0x7c,
-	0x6c, 0x06, 0xd8, 0xe8, 0xbb, 0x1d, 0x2c, 0x54, 0x8a, 0xd3, 0x55, 0x4a, 0x82, 0x74, 0xe8, 0x76,
-	0x30, 0x93, 0xd1, 0x7e, 0x56, 0xa0, 0x32, 0xa9, 0x4e, 0xa3, 0xaf, 0x63, 0xfe, 0xbe, 0x9c, 0xa1,
-	0xc0, 0x8f, 0xbb, 0x7d, 0x1f, 0x16, 0xe8, 0x75, 0xff, 0xcc, 0xb5, 0xb9, 0xd7, 0x39, 0x5d, 0x8e,
-	0xd0, 0x29, 0xe4, 0x4c, 0xbf, 0x37, 0xe8, 0xf3, 0x2a, 0x98, 0xe7, 0x55, 0x70, 0x7b, 0xe6, 0xfe,
-	0x51, 0xdd, 0x09, 0xa9, 0x75, 0x27, 0xf0, 0xaf, 0xf5, 0x91, 0x14, 0xfb, 0x9e, 0xbc, 0x48, 0x15,
-	0xc4, 0xf7, 0xc4, 0x68, 0xe9, 0x2d, 0x94, 0xe2, 0x24, 0x76, 0x2d, 0xb8, 0xc0, 0xd7, 0x7c, 0x69,
-	0x39, 0x9d, 0x3d, 0xb2, 0x6b, 0xc1, 0x25, 0xf3, 0x88, 0x57, 0xc2, 0x9c, 0x2e, 0x06, 0x5f, 0x28,
-	0xdb, 0x29, 0xed, 0x87, 0x14, 0xa0, 0x64, 0xef, 0x99, 0x7a, 0x30, 0xa3, 0x94, 0x88, 0x27, 0xff,
-	0x1f, 0xce, 0x51, 0xe4, 0xdf, 0x93, 0x9b, 0xf2, 0x36, 0xc0, 0x7e, 0xfd, 0xb3, 0xe7, 0x63, 0x4a,
-	0x89, 0xeb, 0x84, 0xcb, 0xd0, 0x7e, 0x4c, 0xc1, 0xe2, 0x4d, 0x6d, 0x0b, 0xbd, 0x89, 0x4d, 0xe5,
-	0xe9, 0x94, 0x5e, 0x17, 0x99, 0xcc, 0x1b, 0xc8, 0xf0, 0x9b, 0x97, 0x32, 0x13, 0x91, 0x5f, 0xc0,
-	0x38, 0x41, 0x7b, 0x09, 0x28, 0xd9, 0xf0, 0x98, 0xff, 0x36, 0x76, 0x7a, 0xc1, 0x39, 0x9f, 0x49,
-	0x46, 0x97, 0x23, 0x6d, 0x15, 0xee, 0x26, 0x7a, 0x1a, 0x5a, 0x82, 0x2c, 0x71, 0x02, 0xec, 0x5f,
-	0x9a, 0x36, 0x87, 0xa7, 0xf5, 0xe1, 0x58, 0xfb, 0x1e, 0xb2, 0xe1, 0x7d, 0x11, 0x7d, 0x09, 0xd9,
-	0xe0, 0xdc, 0x77, 0x83, 0xc0, 0xc6, 0xf2, 0xba, 0x9e, 0xb4, 0xac, 0x2d, 0x01, 0xa3, 0x4b, 0x66,
-	0x48, 0x41, 0x9b, 0x30, 0x6f, 0x93, 0x3e, 0x09, 0x64, 0x87, 0x4b, 0x96, 0x89, 0x03, 0xf6, 0x76,
-	0x48, 0x14, 0x60, 0xed, 0xb7, 0x14, 0xa8, 0xe3, 0xa2, 0xb7, 0xcd, 0x18, 0xb5, 0xa0, 0x18, 0x3e,
-	0x1b, 0x7c, 0x2f, 0x84, 0xa5, 0xd5, 0xa9, 0x53, 0x65, 0xc7, 0x93, 0xd3, 0xf8, 0xb6, 0x14, 0x48,
-	0x64, 0xa4, 0xed, 0x40, 0x21, 0xfa, 0x16, 0x95, 0x21, 0x7f, 0xd8, 0x38, 0x38, 0x68, 0xb4, 0xea,
-	0xb5, 0xa3, 0xe6, 0x7b, 0x75, 0x0e, 0x01, 0x2c, 0xc8, 0xe7, 0x14, 0x7b, 0x3e, 0x6c, 0x34, 0x4f,
-	0xda, 0x75, 0x55, 0x41, 0x59, 0xc8, 0x7c, 0x38, 0x3a, 0xd1, 0xd5, 0xb4, 0xf6, 0x0c, 0x8a, 0xb1,
-	0x05, 0xb2, 0x3c, 0x17, 0x7e, 0x88, 0x15, 0xc8, 0xf5, 0xfe, 0xa2, 0x80, 0x3a, 0x9e, 0x77, 0xe8,
-	0x63, 0x2c, 0xad, 0x5e, 0x4f, 0x4d, 0xd4, 0x44, 0x20, 0x92, 0x69, 0x1b, 0x90, 0xb6, 0xcf, 0xe9,
-	0xec, 0x39, 0xcf, 0xd0, 0x8c, 0xe4, 0x9f, 0x53, 0x59, 0x66, 0x67, 0x21, 0xf9, 0xe7, 0x14, 0xbd,
-	0x83, 0x9c, 0xe7, 0xe3, 0x0e, 0xb1, 0xcc, 0x20, 0xec, 0x7a, 0xcb, 0x13, 0xa8, 0xc7, 0x21, 0x4e,
-	0x1f, 0x51, 0xb4, 0xd7, 0xb0, 0x78, 0xd3, 0x3a, 0x50, 0x11, 0x72, 0xc7, 0x7a, 0xfd, 0x7d, 0xa3,
-	0xb6, 0xd3, 0xae, 0xab, 0x73, 0xe8, 0x0e, 0xa4, 0x77, 0xb8, 0xef, 0x0b, 0xa0, 0x1c, 0xe9, 0xaa,
-	0xa2, 0xfd, 0x9a, 0xe6, 0x2d, 0x2a, 0x2a, 0x8b, 0x76, 0x63, 0x0e, 0x56, 0xa7, 0x4d, 0xa3, 0x3a,
-	0x7c, 0x8a, 0x38, 0xf7, 0x08, 0xa0, 0x4b, 0xb0, 0xdd, 0x31, 0x86, 0x4d, 0x2b, 0xa7, 0xe7, 0x78,
-	0x84, 0xfd, 0xed, 0x81, 0x1a, 0x00, 0xbc, 0x54, 0x89, 0xac, 0x5b, 0xe4, 0x1f, 0x7a, 0x31, 0xf5,
-	0x43, 0xbc, 0x1d, 0xf0, 0x8f, 0xe4, 0x2e, 0xc3, 0x47, 0xf4, 0x14, 0x0a, 0x94, 0xf4, 0x1c, 0xdc,
-	0x31, 0x44, 0x25, 0xbc, 0xb7, 0x9c, 0x5a, 0x41, 0x1f, 0xe6, 0xf4, 0xbc, 0x88, 0x72, 0x0e, 0xfa,
-	0x0f, 0x94, 0x06, 0x4e, 0x0c, 0x76, 0x9f, 0x9d, 0xf5, 0x0f, 0x73, 0x7a, 0x31, 0x8c, 0x0b, 0x20,
-	0x53, 0xe3, 0x7d, 0x50, 0xc2, 0xfe, 0xc9, 0x66, 0xce, 0xd5, 0x46, 0xdd, 0x51, 0x6b, 0x43, 0x31,
-	0xb6, 0x66, 0x94, 0x83, 0xf9, 0xda, 0x51, 0xb3, 0xd5, 0x56, 0xe7, 0x98, 0xb1, 0xf5, 0x6f, 0x84,
-	0xc1, 0x4d, 0x96, 0xd4, 0x0b, 0xa0, 0x1c, 0xb4, 0xd5, 0x34, 0xff, 0xad, 0xab, 0x19, 0xf6, 0xbb,
-	0xdf, 0x56, 0xe7, 0xf9, 0x6f, 0x5d, 0x5d, 0x60, 0x49, 0xbf, 0x7f, 0x70, 0xb4, 0xab, 0xde, 0xd1,
-	0x5e, 0x41, 0x6e, 0xb8, 0x40, 0x7e, 0x46, 0x1a, 0xfb, 0xcd, 0x3a, 0x3b, 0x2f, 0x05, 0xc8, 0x9e,
-	0x34, 0xe5, 0x88, 0x9f, 0x98, 0x56, 0x5b, 0x6f, 0x34, 0xf7, 0x55, 0x65, 0xf7, 0x8e, 0x2c, 0xff,
-	0x2f, 0x9e, 0x03, 0x4a, 0x56, 0x3d, 0x36, 0xad, 0xdd, 0x9d, 0x56, 0xa3, 0xa6, 0xce, 0xb1, 0xcf,
-	0xec, 0x9d, 0x1c, 0x1c, 0xa8, 0xa9, 0x17, 0x6f, 0x21, 0x1f, 0xf9, 0xd3, 0x14, 0xdd, 0x07, 0x74,
-	0xac, 0x1f, 0xd5, 0xea, 0xad, 0x96, 0x71, 0xda, 0xa8, 0x7f, 0x6b, 0x84, 0x84, 0x7b, 0x70, 0x37,
-	0x16, 0x17, 0xec, 0xdd, 0x87, 0xdf, 0x2d, 0xf5, 0x48, 0x70, 0x3e, 0x38, 0xab, 0x5a, 0x6e, 0x7f,
-	0x75, 0xec, 0xbf, 0x1c, 0x67, 0x0b, 0xbc, 0x7d, 0x6f, 0xfc, 0x1d, 0x00, 0x00, 0xff, 0xff, 0xad,
-	0xf3, 0x06, 0x92, 0x34, 0x11, 0x00, 0x00,
+var fileDescriptor5 = []byte{
+	// 1153 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0xcb, 0x6e, 0xdb, 0x46,
+	0x14, 0x8d, 0x1e, 0x0e, 0xa4, 0xab, 0x17, 0x33, 0x4d, 0x0b, 0x55, 0x09, 0x52, 0x97, 0x41, 0x80,
+	0xa4, 0x4d, 0xa9, 0xc0, 0x49, 0x1a, 0xa3, 0xe8, 0xcb, 0x56, 0xac, 0x44, 0x8d, 0xed, 0x18, 0x94,
+	0xed, 0x45, 0x37, 0x04, 0x4d, 0x8e, 0xe4, 0x81, 0x28, 0x92, 0x98, 0x19, 0xc9, 0xd6, 0xaa, 0x5f,
+	0xd1, 0x6d, 0x3f, 0xa7, 0x1f, 0x50, 0x14, 0xe8, 0x0f, 0x74, 0xd7, 0x55, 0xff, 0xa0, 0x98, 0x19,
+	0x52, 0xa4, 0xc4, 0xca, 0xf2, 0x22, 0xde, 0xcd, 0xbd, 0x73, 0xce, 0xd1, 0x7d, 0xcc, 0xdc, 0xa1,
+	0x40, 0x77, 0xec, 0x90, 0x4d, 0x3c, 0xbc, 0xdd, 0xb6, 0x43, 0xd2, 0x9e, 0x3e, 0x6b, 0xb3, 0xc9,
+	0x19, 0x73, 0x28, 0x09, 0x39, 0x09, 0x7c, 0x23, 0xa4, 0x01, 0x0f, 0x50, 0x23, 0xc6, 0x18, 0x76,
+	0x48, 0x8c, 0xe9, 0xb3, 0xd6, 0xbd, 0x65, 0x12, 0x9e, 0x62, 0x9f, 0x2b, 0x74, 0x6b, 0x33, 0xb3,
+	0x79, 0x19, 0x52, 0xcc, 0xd8, 0x5c, 0xaf, 0xf5, 0x60, 0x18, 0x04, 0x43, 0x0f, 0xb7, 0xa5, 0x75,
+	0x36, 0x19, 0xb4, 0x2f, 0xa8, 0x1d, 0x86, 0x98, 0x32, 0xb5, 0xaf, 0xff, 0x95, 0x87, 0x6a, 0x3f,
+	0x15, 0x06, 0xfa, 0x01, 0xaa, 0xf2, 0x17, 0xac, 0x01, 0xf1, 0x38, 0xa6, 0xcd, 0xdc, 0x66, 0xee,
+	0x71, 0x65, 0xeb, 0xbe, 0xb1, 0x14, 0x97, 0xb1, 0x27, 0x40, 0x5d, 0x89, 0x31, 0x2b, 0x38, 0x31,
+	0xd0, 0x3b, 0xd0, 0x9c, 0xc0, 0xe7, 0x36, 0xf1, 0x31, 0x8d, 0x45, 0xf2, 0x52, 0x64, 0x33, 0x23,
+	0xd2, 0x89, 0x81, 0x91, 0x50, 0xc3, 0x59, 0x74, 0xa0, 0x5d, 0xa8, 0x33, 0xe2, 0x3b, 0xd8, 0x72,
+	0x27, 0xd4, 0x16, 0xf1, 0x35, 0x41, 0x4a, 0xdd, 0x33, 0x54, 0x5e, 0x46, 0x9c, 0x97, 0xd1, 0xf3,
+	0xf9, 0xd7, 0x2f, 0x4e, 0x6d, 0x6f, 0x82, 0xcd, 0x9a, 0xa4, 0xbc, 0x8e, 0x18, 0xe8, 0x7b, 0xa8,
+	0x0e, 0x02, 0x9a, 0x28, 0x54, 0xd6, 0x2b, 0x54, 0x06, 0x01, 0x9d, 0xf3, 0x5f, 0x42, 0x69, 0x1c,
+	0xb8, 0x64, 0x40, 0x30, 0x6d, 0xde, 0x95, 0xdc, 0x4f, 0x33, 0x89, 0x1c, 0x44, 0x00, 0x73, 0x0e,
+	0xd5, 0x2f, 0xa0, 0xb1, 0x94, 0x1e, 0xd2, 0xa0, 0x40, 0x5c, 0xd6, 0xcc, 0x6d, 0x16, 0x1e, 0x97,
+	0x4d, 0xb1, 0x44, 0x77, 0x61, 0xc3, 0xb7, 0xc7, 0x98, 0x35, 0xf3, 0xd2, 0xa7, 0x0c, 0x74, 0x0f,
+	0xca, 0x64, 0x6c, 0x0f, 0xb1, 0x25, 0xd0, 0x05, 0xb9, 0x53, 0x92, 0x8e, 0x9e, 0xcb, 0xd0, 0x67,
+	0x50, 0x51, 0x9b, 0x8a, 0x58, 0x94, 0xdb, 0x20, 0x5d, 0x87, 0xc2, 0xa3, 0xff, 0x53, 0x84, 0x4a,
+	0xaa, 0x3b, 0xe8, 0x27, 0xa8, 0xb3, 0x19, 0x73, 0x6c, 0xcf, 0xb3, 0x64, 0x9f, 0x54, 0x00, 0x95,
+	0xad, 0x87, 0x99, 0x2c, 0xfa, 0x0a, 0x96, 0x6e, 0x6d, 0x8d, 0xa5, 0x7c, 0x4c, 0x68, 0x85, 0x34,
+	0x70, 0x30, 0x63, 0xb1, 0x56, 0x7e, 0x85, 0xd6, 0x91, 0x82, 0x2d, 0x68, 0x85, 0x29, 0x1f, 0x43,
+	0x3b, 0x50, 0x19, 0x10, 0x0f, 0xc7, 0x42, 0x05, 0x29, 0x94, 0x3d, 0x23, 0x5d, 0xe2, 0xe1, 0xb4,
+	0x0a, 0x0c, 0x62, 0x07, 0x43, 0x87, 0x50, 0x1b, 0x61, 0xea, 0xe3, 0x79, 0x66, 0x45, 0x29, 0xf2,
+	0x24, 0x23, 0xf2, 0x4e, 0xa2, 0xba, 0x13, 0xdf, 0x11, 0x2d, 0xed, 0xd8, 0x9e, 0x17, 0xa9, 0x55,
+	0x15, 0x3f, 0x49, 0xcf, 0xc7, 0xfc, 0x22, 0xa0, 0xa3, 0x58, 0x70, 0x63, 0x45, 0x7a, 0x87, 0x0a,
+	0xb6, 0x90, 0x9e, 0x9f, 0xf2, 0x31, 0x74, 0x94, 0xbe, 0x07, 0x91, 0x1a, 0x48, 0xb5, 0x47, 0xab,
+	0xef, 0x41, 0x5a, 0x2f, 0xb9, 0x0c, 0x49, 0x74, 0xce, 0xb9, 0x4d, 0x87, 0xd8, 0x8f, 0xf5, 0xdc,
+	0x15, 0xd1, 0x75, 0x14, 0x6c, 0x21, 0x3a, 0x27, 0xe5, 0x63, 0xe8, 0x0d, 0xd4, 0x38, 0x71, 0x46,
+	0x49, 0x68, 0x58, 0x4a, 0xe9, 0x19, 0xa9, 0x63, 0x89, 0x4a, 0x2b, 0x55, 0x79, 0xe2, 0x62, 0xfa,
+	0xbf, 0x39, 0x40, 0xd9, 0x73, 0x83, 0x5e, 0x42, 0x91, 0xcf, 0x42, 0x2c, 0xc7, 0x47, 0x7d, 0xeb,
+	0xf3, 0x2b, 0x8f, 0xda, 0xf1, 0x2c, 0xc4, 0xa6, 0x84, 0xa3, 0xb7, 0x70, 0x47, 0x8d, 0x0c, 0x2b,
+	0x99, 0x64, 0x4d, 0x37, 0xba, 0xb0, 0x99, 0x11, 0x34, 0x87, 0x98, 0x9a, 0x62, 0x25, 0x1e, 0xf4,
+	0x25, 0xe4, 0x89, 0x1b, 0x0d, 0x9e, 0x2b, 0xef, 0x7a, 0x9e, 0xb8, 0xe8, 0x2b, 0x28, 0x50, 0xcc,
+	0xa3, 0xdb, 0x7d, 0x25, 0x5a, 0xe0, 0xf4, 0xbf, 0xf3, 0x80, 0xb2, 0xe7, 0x7b, 0x6d, 0xce, 0x69,
+	0xca, 0x8d, 0xe4, 0xbc, 0x03, 0x35, 0x7c, 0x89, 0x1d, 0x31, 0x75, 0xb1, 0x98, 0x0e, 0xcd, 0x6a,
+	0x34, 0xbc, 0x97, 0x13, 0xea, 0x73, 0x4a, 0xfc, 0xa1, 0xca, 0xa8, 0x2a, 0x28, 0xdd, 0x88, 0x81,
+	0x8e, 0xe0, 0xe3, 0x05, 0x09, 0x2b, 0xb4, 0x39, 0xc7, 0xd4, 0x6f, 0xd6, 0xae, 0x21, 0xf5, 0x51,
+	0x5a, 0xea, 0x48, 0x11, 0xd1, 0x36, 0x94, 0xf1, 0x25, 0xe1, 0x96, 0x13, 0xb8, 0xb8, 0x59, 0x5f,
+	0x5d, 0xe1, 0xe7, 0x5b, 0x4a, 0xa4, 0x24, 0xd0, 0x9d, 0xc0, 0xc5, 0xfa, 0x6f, 0x05, 0x68, 0x2c,
+	0xdd, 0x7e, 0xb4, 0xb5, 0x50, 0xe3, 0x07, 0xab, 0xa7, 0xc5, 0x8d, 0x14, 0x78, 0x1b, 0x4a, 0xf3,
+	0xda, 0xc2, 0x35, 0x0a, 0x32, 0x47, 0xa3, 0x37, 0xa0, 0x65, 0x4a, 0x5a, 0xb9, 0x86, 0x42, 0x63,
+	0xb0, 0x54, 0xce, 0x0e, 0x34, 0x82, 0x10, 0xfb, 0xd6, 0xc0, 0xb3, 0x87, 0xcc, 0x1a, 0xdb, 0x6c,
+	0x14, 0x75, 0xf9, 0xca, 0xa2, 0xd6, 0x04, 0xa7, 0x2b, 0x28, 0x07, 0x36, 0x1b, 0xa1, 0x3d, 0xd0,
+	0x1c, 0x8a, 0x6d, 0x8e, 0xad, 0x71, 0xe0, 0x62, 0xa5, 0x52, 0x5b, 0xaf, 0x52, 0x57, 0xa4, 0x83,
+	0xc0, 0xc5, 0x42, 0x46, 0xff, 0x33, 0x0f, 0xcd, 0x55, 0x93, 0x15, 0xfd, 0xb8, 0xd0, 0xa9, 0xa7,
+	0xd7, 0x18, 0xc9, 0xcb, 0x7d, 0xfb, 0x04, 0x6e, 0xb3, 0xd9, 0xf8, 0x2c, 0xf0, 0x64, 0xad, 0xcb,
+	0x66, 0x64, 0xa1, 0x53, 0x28, 0xdb, 0x74, 0x38, 0x19, 0xcb, 0xb9, 0x55, 0x91, 0x73, 0x6b, 0xfb,
+	0xda, 0x13, 0xdf, 0xd8, 0x89, 0xa9, 0x7b, 0x3e, 0xa7, 0x33, 0x33, 0x91, 0xfa, 0x70, 0xe7, 0xa4,
+	0xf5, 0x2d, 0xd4, 0x17, 0x7f, 0x46, 0x3c, 0xfd, 0x23, 0x3c, 0x93, 0xc5, 0x28, 0x9b, 0x62, 0x29,
+	0x9e, 0xfe, 0xa9, 0xa8, 0xaa, 0x9c, 0x51, 0x65, 0x53, 0x19, 0xdf, 0xe4, 0xb7, 0x73, 0xfa, 0xaf,
+	0x39, 0x40, 0xd9, 0xf7, 0x65, 0xed, 0x78, 0x49, 0x53, 0x6e, 0xe2, 0xf4, 0xeb, 0x7f, 0xe4, 0xe0,
+	0xee, 0xff, 0xbd, 0x54, 0xe8, 0xd5, 0x42, 0x64, 0x0f, 0xd7, 0x3c, 0x6f, 0xa9, 0xd8, 0x5e, 0x41,
+	0x71, 0x4a, 0xf0, 0x85, 0x2c, 0xc1, 0x7a, 0xe2, 0x29, 0xc1, 0x17, 0xa6, 0x24, 0x7c, 0xc0, 0xa4,
+	0x9e, 0x02, 0xca, 0xbe, 0x96, 0xe2, 0xe8, 0x79, 0xd8, 0x1f, 0xf2, 0x73, 0x99, 0x53, 0xd1, 0x8c,
+	0x2c, 0xbd, 0x0d, 0x77, 0x32, 0x0f, 0x22, 0x6a, 0x41, 0x89, 0xf8, 0x1c, 0xd3, 0xa9, 0xed, 0x49,
+	0x78, 0xc1, 0x9c, 0xdb, 0xfa, 0x2f, 0x50, 0x8a, 0xbf, 0x0d, 0xd1, 0x77, 0x50, 0xe2, 0xe7, 0x34,
+	0xe0, 0xdc, 0xc3, 0xd1, 0x67, 0x75, 0xb6, 0x89, 0xc7, 0x11, 0x20, 0xf9, 0xa0, 0x8c, 0x29, 0xe8,
+	0x05, 0x6c, 0x78, 0x64, 0x4c, 0x78, 0xf4, 0xa8, 0x65, 0x67, 0xdf, 0xbe, 0xd8, 0x9d, 0x13, 0x15,
+	0x58, 0xff, 0x3d, 0x07, 0xda, 0xb2, 0xe8, 0x55, 0x11, 0xa3, 0x3e, 0xd4, 0xe2, 0xb5, 0x25, 0xbb,
+	0xaa, 0x9a, 0x63, 0xac, 0x0d, 0x55, 0x4c, 0x0a, 0x49, 0x93, 0x0d, 0xae, 0x92, 0x94, 0xa5, 0xef,
+	0x40, 0x35, 0xbd, 0x8b, 0x1a, 0x50, 0x39, 0xe8, 0xed, 0xef, 0xf7, 0xfa, 0x7b, 0x9d, 0xf7, 0x87,
+	0xaf, 0xb5, 0x5b, 0x08, 0xe0, 0x76, 0xb4, 0xce, 0x89, 0xf5, 0x41, 0xef, 0xf0, 0xe4, 0x78, 0x4f,
+	0xcb, 0xa3, 0x12, 0x14, 0xdf, 0xbe, 0x3f, 0x31, 0xb5, 0x82, 0xfe, 0x08, 0x6a, 0x0b, 0x09, 0x8a,
+	0x0b, 0xa4, 0xea, 0xa1, 0x32, 0x50, 0xc6, 0x17, 0x4f, 0x00, 0x65, 0x4f, 0x0d, 0x2a, 0xc3, 0xc6,
+	0xee, 0x4e, 0xbf, 0xd7, 0xd1, 0x6e, 0x09, 0xc5, 0xee, 0xc9, 0xfe, 0xbe, 0x96, 0xdb, 0xbd, 0xff,
+	0x73, 0x6b, 0x48, 0xf8, 0xf9, 0xe4, 0xcc, 0x70, 0x82, 0x71, 0x7b, 0xe9, 0xaf, 0xd4, 0xd9, 0x6d,
+	0x39, 0x01, 0x9f, 0xff, 0x17, 0x00, 0x00, 0xff, 0xff, 0xf2, 0xe5, 0x72, 0xad, 0xb6, 0x0d, 0x00,
+	0x00,
 }
