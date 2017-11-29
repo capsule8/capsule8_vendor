@@ -14,21 +14,22 @@ import "google/api/annotations.proto";
 // The NYQL API is used by capsulators to convert NYQL queries into other forms.
 //
 service NYQLService {
-    // Publishes messages to a topic
-    rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse) {
-        option (google.api.http) = {
-            post: "/v0/nyql/subscription"
-            body: "*"
-        };
-    }
+        // Publishes messages to a topic
+        rpc CreateSubscription(CreateSubscriptionRequest)
+            returns (CreateSubscriptionResponse) {
+                option (google.api.http) = {
+                        post : "/v0/nyql/subscription"
+                        body : "*"
+                };
+        }
 }
 
 message CreateSubscriptionRequest {
-    // NYQL query string
-    string query = 1;
+        // NYQL query string
+        string query = 1;
 }
 
 message CreateSubscriptionResponse {
-    Subscription subscription = 1;
-    repeated string errors = 2;
+        Subscription subscription = 1;
+        repeated string errors    = 2;
 }

@@ -12,14 +12,18 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// Network types
+// Supported network address families
 type NetworkAddressFamily int32
 
 const (
+	// The network address family is unknown
 	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_UNKNOWN NetworkAddressFamily = 0
-	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_INET    NetworkAddressFamily = 1
-	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_INET6   NetworkAddressFamily = 2
-	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_LOCAL   NetworkAddressFamily = 3
+	// AF_INET; IPv4 address formats
+	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_INET NetworkAddressFamily = 1
+	// AF_INET6; IPv6 address formats
+	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_INET6 NetworkAddressFamily = 2
+	// AF_LOCAL / AF_UNIX; local filesystem address formats
+	NetworkAddressFamily_NETWORK_ADDRESS_FAMILY_LOCAL NetworkAddressFamily = 3
 )
 
 var NetworkAddressFamily_name = map[int32]string{
@@ -40,7 +44,9 @@ func (x NetworkAddressFamily) String() string {
 }
 func (NetworkAddressFamily) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
+// An IPv4 address
 type IPv4Address struct {
+	// The IPv4 address is network byte order (big endian)
 	Address uint32 `protobuf:"fixed32,1,opt,name=address" json:"address,omitempty"`
 }
 
@@ -56,9 +62,12 @@ func (m *IPv4Address) GetAddress() uint32 {
 	return 0
 }
 
+// An IPv4 address and port
 type IPv4AddressAndPort struct {
+	// The IPv4 address
 	Address *IPv4Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Port    uint32       `protobuf:"varint,2,opt,name=port" json:"port,omitempty"`
+	// The port
+	Port uint32 `protobuf:"varint,2,opt,name=port" json:"port,omitempty"`
 }
 
 func (m *IPv4AddressAndPort) Reset()                    { *m = IPv4AddressAndPort{} }
@@ -80,9 +89,12 @@ func (m *IPv4AddressAndPort) GetPort() uint32 {
 	return 0
 }
 
+// An IPv6 address
 type IPv6Address struct {
+	// The high-order bytes of the IPv6 address
 	High uint64 `protobuf:"fixed64,1,opt,name=high" json:"high,omitempty"`
-	Low  uint64 `protobuf:"fixed64,2,opt,name=low" json:"low,omitempty"`
+	// The low-order bytes of the IPv6 address
+	Low uint64 `protobuf:"fixed64,2,opt,name=low" json:"low,omitempty"`
 }
 
 func (m *IPv6Address) Reset()                    { *m = IPv6Address{} }
@@ -104,9 +116,12 @@ func (m *IPv6Address) GetLow() uint64 {
 	return 0
 }
 
+// An IPv6 address and port
 type IPv6AddressAndPort struct {
+	// The IPv6 address
 	Address *IPv6Address `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
-	Port    uint32       `protobuf:"varint,2,opt,name=port" json:"port,omitempty"`
+	// The port
+	Port uint32 `protobuf:"varint,2,opt,name=port" json:"port,omitempty"`
 }
 
 func (m *IPv6AddressAndPort) Reset()                    { *m = IPv6AddressAndPort{} }
@@ -128,7 +143,9 @@ func (m *IPv6AddressAndPort) GetPort() uint32 {
 	return 0
 }
 
+// A network address
 type NetworkAddress struct {
+	// The address family that specifies which address format is in use
 	Family NetworkAddressFamily `protobuf:"varint,1,opt,name=family,enum=capsule8.api.v0.NetworkAddressFamily" json:"family,omitempty"`
 	// Types that are valid to be assigned to Address:
 	//	*NetworkAddress_Ipv4Address

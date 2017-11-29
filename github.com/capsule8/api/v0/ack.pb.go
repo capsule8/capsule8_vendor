@@ -21,7 +21,7 @@ type Ack struct {
 func (m *Ack) Reset()                    { *m = Ack{} }
 func (m *Ack) String() string            { return proto.CompactTextString(m) }
 func (*Ack) ProtoMessage()               {}
-func (*Ack) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
+func (*Ack) Descriptor() ([]byte, []int) { return fileDescriptor10, []int{0} }
 
 func (m *Ack) GetInbox() string {
 	if m != nil {
@@ -48,9 +48,9 @@ func init() {
 	proto.RegisterType((*Ack)(nil), "capsule8.api.v0.Ack")
 }
 
-func init() { proto.RegisterFile("capsule8/api/v0/ack.proto", fileDescriptor3) }
+func init() { proto.RegisterFile("capsule8/api/v0/ack.proto", fileDescriptor10) }
 
-var fileDescriptor3 = []byte{
+var fileDescriptor10 = []byte{
 	// 147 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4c, 0x4e, 0x2c, 0x28,
 	0x2e, 0xcd, 0x49, 0xb5, 0xd0, 0x4f, 0x2c, 0xc8, 0xd4, 0x2f, 0x33, 0xd0, 0x4f, 0x4c, 0xce, 0xd6,

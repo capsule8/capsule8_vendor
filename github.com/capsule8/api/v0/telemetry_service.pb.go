@@ -18,9 +18,10 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// Publishes a message to topic
+// A request message to initiate the streaming of telemetry events
 type GetEventsRequest struct {
-	// Can publish one or more message(s) at a time
+	// The Subscription message defines which events should be
+	// returned in the stream.
 	Subscription *Subscription `protobuf:"bytes,1,opt,name=subscription" json:"subscription,omitempty"`
 }
 
@@ -36,7 +37,9 @@ func (m *GetEventsRequest) GetSubscription() *Subscription {
 	return nil
 }
 
+// A response message containing telemetry events
 type GetEventsResponse struct {
+	// Can publish one or more message(s) at a time
 	Events []*TelemetryEvent `protobuf:"bytes,1,rep,name=events" json:"events,omitempty"`
 }
 
@@ -52,10 +55,19 @@ func (m *GetEventsResponse) GetEvents() []*TelemetryEvent {
 	return nil
 }
 
+// A telemetry event received from a Sensor or Recorder.
 type TelemetryEvent struct {
-	PublishTimeMicros int64  `protobuf:"varint,1,opt,name=publish_time_micros,json=publishTimeMicros" json:"publish_time_micros,omitempty"`
-	Event             *Event `protobuf:"bytes,2,opt,name=event" json:"event,omitempty"`
-	Ack               []byte `protobuf:"bytes,3,opt,name=ack,proto3" json:"ack,omitempty"`
+	// The time that the event was received by the backplane (in micros
+	// since Unix epoch)
+	PublishTimeMicros int64 `protobuf:"varint,1,opt,name=publish_time_micros,json=publishTimeMicros" json:"publish_time_micros,omitempty"`
+	// The actual event observed by the Sensor. For historical
+	// event subscriptions, this event may be sent from the
+	// Recorder.
+	Event *Event `protobuf:"bytes,2,opt,name=event" json:"event,omitempty"`
+	// An opaque ack for the event. If present, this ack must be sent to
+	// the PubsubService's Acknowledge method or else the TelemetryService
+	// will re-transmit the event.
+	Ack []byte `protobuf:"bytes,3,opt,name=ack,proto3" json:"ack,omitempty"`
 }
 
 func (m *TelemetryEvent) Reset()                    { *m = TelemetryEvent{} }
@@ -101,7 +113,7 @@ const _ = grpc.SupportPackageIsVersion4
 // Client API for TelemetryService service
 
 type TelemetryServiceClient interface {
-	// Get telemetry events
+	// Opens a new stream of telemetry events
 	GetEvents(ctx context.Context, in *GetEventsRequest, opts ...grpc.CallOption) (TelemetryService_GetEventsClient, error)
 }
 
@@ -148,7 +160,7 @@ func (x *telemetryServiceGetEventsClient) Recv() (*GetEventsResponse, error) {
 // Server API for TelemetryService service
 
 type TelemetryServiceServer interface {
-	// Get telemetry events
+	// Opens a new stream of telemetry events
 	GetEvents(*GetEventsRequest, TelemetryService_GetEventsServer) error
 }
 

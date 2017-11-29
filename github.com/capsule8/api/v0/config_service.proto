@@ -15,62 +15,55 @@ import "google/api/annotations.proto";
 // The Config API is used by capsulators to get and set configurations
 //
 service ConfigService {
-    // Create a config
-    rpc CreateConfig(CreateConfigRequest) returns (CreateConfigResponse) {
-        option (google.api.http) = {
-            post: "/v0/configs/create"
-            body: "*"
-        };
-    }
-    // Get a config
-    rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
-        option (google.api.http) = {
-            get: "/v0/configs/{name}"
-        };
-    }
-    // Watch a config
-    rpc WatchConfig(WatchConfigRequest) returns (stream WatchConfigResponse) {
-        option (google.api.http) = {
-            get: "/v0/configs/{name}/watch"
-        };
-    }
-    // List all available configs
-    rpc ListConfigs(ListConfigsRequest) returns (ListConfigsResponse) {
-        option (google.api.http) = {
-            get: "/v0/configs"
-        };
-    }
+        // Create a config
+        rpc CreateConfig(CreateConfigRequest) returns (CreateConfigResponse) {
+                option (google.api.http) = {
+                        post : "/v0/configs/create"
+                        body : "*"
+                };
+        }
+        // Get a config
+        rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
+                option (google.api.http) = {
+                        get : "/v0/configs/{name}"
+                };
+        }
+        // Watch a config
+        rpc WatchConfig(WatchConfigRequest)
+            returns (stream WatchConfigResponse) {
+                option (google.api.http) = {
+                        get : "/v0/configs/{name}/watch"
+                };
+        }
+        // List all available configs
+        rpc ListConfigs(ListConfigsRequest) returns (ListConfigsResponse) {
+                option (google.api.http) = {
+                        get : "/v0/configs"
+                };
+        }
 }
 
-message CreateConfigRequest {
-    Config config = 1;
-}
+message CreateConfigRequest { Config config = 1; }
 
-message CreateConfigResponse {
-    google.rpc.Status error = 1;
-}
+message CreateConfigResponse { google.rpc.Status error = 1; }
 
-message GetConfigRequest {
-    string name = 1;
-}
+message GetConfigRequest { string name = 1; }
 
 message GetConfigResponse {
-    Config config = 1;
-    google.rpc.Status error = 2;
+        Config config           = 1;
+        google.rpc.Status error = 2;
 }
 
-message WatchConfigRequest {
-    string name = 1;
-}
+message WatchConfigRequest { string name = 1; }
 
 message WatchConfigResponse {
-    Config config = 1; 
-    google.rpc.Status error = 2;    
-}   
+        Config config           = 1;
+        google.rpc.Status error = 2;
+}
 
 message ListConfigsRequest {}
 
 message ListConfigsResponse {
-    repeated string names = 1;
-    google.rpc.Status error = 2;    
+        repeated string names   = 1;
+        google.rpc.Status error = 2;
 }

@@ -30,20 +30,21 @@ service TelemetryService {
 
 // A request message to initiate the streaming of telemetry events
 message GetEventsRequest {
-	// The Subscription message defines which events should be
-	// returned in the stream.
+        // The Subscription message defines which events should be
+        // returned in the stream.
         Subscription subscription = 1;
 }
 
 // A response message containing telemetry events
 message GetEventsResponse {
         // Can publish one or more message(s) at a time
-	repeated TelemetryEvent events = 1;
+        repeated TelemetryEvent events = 1;
 }
 
 // A telemetry event received from a Sensor or Recorder.
 message TelemetryEvent {
-        // The time that the event was received by the backplane (in micros since Unix epoch)
+        // The time that the event was received by the backplane (in micros
+        // since Unix epoch)
         int64 publish_time_micros = 1;
 
         // The actual event observed by the Sensor. For historical
@@ -53,6 +54,6 @@ message TelemetryEvent {
 
         // An opaque ack for the event. If present, this ack must be sent to
         // the PubsubService's Acknowledge method or else the TelemetryService
-	// will re-transmit the event.
+        // will re-transmit the event.
         bytes ack = 3;
 }
