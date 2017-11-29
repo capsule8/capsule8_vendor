@@ -19,3 +19,10 @@ You will need the following dependencies:
 - `git submodule init`
 - `git submodule update`
 - `make`
+
+
+### Compiling docs
+
+Just run the following:
+
+- `make docs`

@@ -15,7 +15,7 @@ package v0
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import capsule8_api_v02 "github.com/capsule8/api/v0"
+import capsule8_api_v03 "github.com/capsule8/api/v0"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -29,7 +29,7 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type Config struct {
-	Subscription         *capsule8_api_v02.Subscription `protobuf:"bytes,1,opt,name=subscription" json:"subscription,omitempty"`
+	Subscription         *capsule8_api_v03.Subscription `protobuf:"bytes,1,opt,name=subscription" json:"subscription,omitempty"`
 	StorageCapacityBytes int64                          `protobuf:"varint,2,opt,name=storage_capacity_bytes,json=storageCapacityBytes" json:"storage_capacity_bytes,omitempty"`
 }
 
@@ -38,7 +38,7 @@ func (m *Config) String() string            { return proto.CompactTextString(m) 
 func (*Config) ProtoMessage()               {}
 func (*Config) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *Config) GetSubscription() *capsule8_api_v02.Subscription {
+func (m *Config) GetSubscription() *capsule8_api_v03.Subscription {
 	if m != nil {
 		return m.Subscription
 	}
